@@ -2,8 +2,8 @@
 
 This is the corrected-plus-literal-steering scratch protocol made reproducible:
 five fixed seeds, one architecture, two checkpoint criteria, and all-member
-equal means. Validation controls checkpoints and the small predeclared blend
-grid. It is not an independent estimate of generalization.
+equal means. Validation controls checkpoints. The final mixture is frozen
+in run_project.py; validation is not independent generalization evidence.
 """
 from __future__ import annotations
 
@@ -12,7 +12,6 @@ from dataclasses import asdict, dataclass
 import json
 from pathlib import Path
 
-import joblib
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -200,8 +199,6 @@ def fit_robust_pool(train_frame, y_train, validation_frame, y_val,
         raise ValueError(f'Missing robust ANN predictors: {sorted(missing)}')
     destination = Path(output_dir)
     destination.mkdir(parents=True, exist_ok=True)
-    checkpoint_dir = destination / 'robust_ann_checkpoints'
-    checkpoint_dir.mkdir(exist_ok=True)
     prep = make_robust_preprocessor(config.min_frequency, additional_numeric=additional_numeric)
     x = prep.fit_transform(training)
     v = prep.transform(validation)
@@ -253,8 +250,6 @@ def fit_robust_pool(train_frame, y_train, validation_frame, y_val,
                 component = Component(wrapped, 'enhanced', prep)
                 pools[key].append(component)
                 values = _metrics(validation_target, wrapped.predict(v), baseline)
-                checkpoint_path = Path('robust_ann_checkpoints') / f'seed_{network_seed}_{key}.joblib'
-                joblib.dump(component, destination / checkpoint_path)
                 selected_row = next(row for row in seed_history if row['epoch'] == best_epoch)
                 checkpoints[key] = {
                     'best_epoch': best_epoch, 'best_value': float(best_value),
@@ -265,7 +260,6 @@ def fit_robust_pool(train_frame, y_train, validation_frame, y_val,
                     'generalization_gap_scaled_log_mse': selected_row['val_scaled_log_mse'] - selected_row['train_scaled_log_mse'],
                     'validation_log_mse_change_after_checkpoint': seed_history[-1]['val_scaled_log_mse'] - selected_row['val_scaled_log_mse'],
                     'validation_mae_change_after_checkpoint_kzt': seed_history[-1]['val_mae_kzt'] - selected_row['val_mae_kzt'],
-                    'artifact': checkpoint_path.as_posix(),
                 }
             members.append({
                 'seed': int(network_seed), 'epochs_run': epoch,
@@ -273,7 +267,7 @@ def fit_robust_pool(train_frame, y_train, validation_frame, y_val,
                 'checkpoints': checkpoints,
                 'assessment': 'Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence.',
             })
-        models, candidate_metrics, model_files = {}, {}, {}
+        models, candidate_metrics = {}, {}
         for key, components in pools.items():
             name = _POOL_NAMES[key]
             pool = PredictionEnsemble(components, [1. / len(components)] * len(components))
@@ -282,9 +276,6 @@ def fit_robust_pool(train_frame, y_train, validation_frame, y_val,
             candidate_metrics[name] = {**values, 'validation_mae_kzt': values['mae_kzt'],
                                        'validation_within_20pct': values['within_20pct'],
                                        'checkpoint_metric': key}
-            filename = f'robust_ann_pool_{"mae" if key == "mae_kzt" else "dual"}.joblib'
-            joblib.dump(pool, destination / filename)
-            model_files[name] = filename
     history = pd.DataFrame(histories)
     history.to_csv(destination / 'robust_ann_history.csv', index=False)
     _plot_history(history, members, destination / 'robust_ann_history.png')
@@ -305,74 +296,14 @@ def fit_robust_pool(train_frame, y_train, validation_frame, y_val,
         'member_epochs_run': [member['epochs_run'] for member in members],
         'loss': 'Ordinary MSE of training-standardized log1p targets, without optimizer one-half factor or L2 term.',
         'checkpoint_selection': 'Strictly lower validation original-KZT MAE or 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction); ties keep the first checkpoint. Stop 45 epochs after both best epochs stop improving under the default protocol.',
-        'checkpoint_selection_caveat': 'Validation is reused to select every checkpoint and the blend. Its reported gains and convergence are selection-dependent, not independent generalization evidence. The historical test was already known and any final evaluation is retrospective.',
+        'checkpoint_selection_caveat': 'Validation selects checkpoints. The final mixture is frozen before this run, but validation performance remains selection-dependent. The historical test was already known and final evaluation is retrospective.',
         'source': {'csv': 'kolesa_cars_2025.csv', 'source_url': data.SOURCE,
                    'features': ('Original per-row vehicle fields and literal pre-КПП steering clauses'
                                 + (' plus explicitly declared fixed-snapshot age/usage proxies' if additional_numeric else '')
                                 + ' only; price, price_raw, ad_id and link are not predictors.')},
         'artifacts': {'history_csv': 'robust_ann_history.csv', 'history_plot': 'robust_ann_history.png',
-                      'models': model_files, 'report_json': 'robust_ann_report.json'},
+                      'report_json': 'robust_ann_report.json'},
         'test_data_used': False, 'test_data_policy': 'Test data is not accepted or evaluated by this API.',
     }
     (destination / 'robust_ann_report.json').write_text(json.dumps(report, indent=2, allow_nan=False), encoding='utf-8')
     return models, report
-
-
-def select_dual_blend(validation_predictions, y_val, baseline_name, ann_names,
-                      forest_name, weights=(.25, .5, .75), *, include_baseline_blends=False):
-    """Select from the original nine candidates or an explicit expanded grid.
-
-    Both validation MAE and within-20% hit rate must improve strictly over the
-    baseline. Among eligible candidates minimize the equally weighted
-    normalized MAE/miss score; if none qualify, retain the baseline. With
-    ``include_baseline_blends=True``, each pool is also blended with the same
-    baseline at every declared weight (15 candidates with the default grid).
-    Normalization always uses that baseline, including for baseline mixtures.
-    """
-    target = _target(y_val, 'Validation')
-    ann_names = tuple(ann_names)
-    if len(ann_names) != 2 or len(set((baseline_name, *ann_names, forest_name))) != 4:
-        raise ValueError('Specify distinct baseline, two ANN pool names and forest name')
-    declared_weights = tuple(float(weight) for weight in weights)
-    if not declared_weights or any(not np.isfinite(weight) or not 0 < weight < 1 for weight in declared_weights):
-        raise ValueError('Blend weights must be finite and strictly between zero and one')
-    predictions = {name: _prediction(validation_predictions[name], target, name)
-                   for name in (baseline_name, *ann_names, forest_name)}
-    baseline = _reference(target, predictions[baseline_name])
-    candidates = []
-
-    def record(name, components, component_weights, prediction):
-        values = _metrics(target, prediction, baseline)
-        candidates.append({
-            'name': name, 'candidate': name, 'components': list(components), 'weights': list(component_weights),
-            **values, 'validation_mae_kzt': values['mae_kzt'],
-            'validation_within_20pct': values['within_20pct'],
-            'eligible': bool(values['mae_kzt'] < baseline['mae_kzt']
-                             and values['within_20pct'] > baseline['within_20pct']),
-        })
-
-    record(baseline_name, [baseline_name], [1.], predictions[baseline_name])
-    for name in ann_names:
-        record(name, [name], [1.], predictions[name])
-    for name in ann_names:
-        for other in ((forest_name, baseline_name) if include_baseline_blends else (forest_name,)):
-            for weight in declared_weights:
-                record(f'{name} {weight:g} + {other} {1 - weight:g}',
-                       [name, other], [weight, 1 - weight],
-                       weight * predictions[name] + (1 - weight) * predictions[other])
-    eligible = [row for row in candidates if row['eligible']]
-    selected = min(eligible, key=lambda row: row['dual_score']) if eligible else candidates[0]
-    return {
-        'selected_name': selected['name'], 'selected_components': selected['components'],
-        'weights': selected['weights'], 'validation_mae_kzt': selected['mae_kzt'],
-        'validation_within_20pct': selected['within_20pct'],
-        'mae_kzt': selected['mae_kzt'], 'within_20pct': selected['within_20pct'],
-        'median_ape': selected['median_ape'], 'dual_score': selected['dual_score'],
-        'candidates': candidates, 'eligible_count': len(eligible),
-        'baseline_validation_metrics': baseline,
-        'selection': 'Strict validation MAE decrease and within-20% increase versus baseline; then lowest 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction). Baseline retained if none; exact score ties retain the first declared candidate.',
-        'declared_blend_weights': list(declared_weights),
-        'include_baseline_blends': bool(include_baseline_blends),
-        'test_data_used': False, 'test_data_policy': 'No test targets or predictions accepted.',
-        'checkpoint_selection_caveat': 'Validation has already selected pool checkpoints and now selects the mixture; results are selection-dependent. Historical-test reuse prevents an independent generalization claim.',
-    }

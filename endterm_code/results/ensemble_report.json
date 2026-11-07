@@ -1,81 +1,45 @@
 {
-  "selected_components": [
-    "ANN corrected",
+  "model": "ANN ensemble",
+  "recipe_status": "Frozen before this cleanup run; no new blend search",
+  "formula": "0.25 * usage_MAE_pool + 0.75 * (0.75 * corrected_dual_pool + 0.25 * RF)",
+  "reference_for_corrected_checkpoints": "0.75 * ANN corrected + 0.25 * Random forest tuned",
+  "reference_for_usage_checkpoints": "0.75 * corrected_dual_pool + 0.25 * Random forest tuned",
+  "pool_seeds": [
+    11,
+    23,
+    42,
+    71,
+    101
+  ],
+  "component_order": [
+    "usage_MAE_seed_11",
+    "usage_MAE_seed_23",
+    "usage_MAE_seed_42",
+    "usage_MAE_seed_71",
+    "usage_MAE_seed_101",
+    "corrected_dual_seed_11",
+    "corrected_dual_seed_23",
+    "corrected_dual_seed_42",
+    "corrected_dual_seed_71",
+    "corrected_dual_seed_101",
     "Random forest tuned"
   ],
-  "weights": [
-    0.75,
-    0.25
+  "component_weights": [
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.1125,
+    0.1125,
+    0.1125,
+    0.1125,
+    0.1125,
+    0.1875
   ],
-  "validation_mae_kzt": 2289371.696786993,
-  "candidates": [
-    {
-      "components": [
-        "ANN corrected",
-        "CatBoost"
-      ],
-      "weights": [
-        0.25,
-        0.75
-      ],
-      "validation_mae_kzt": 2492955.3443715726
-    },
-    {
-      "components": [
-        "ANN corrected",
-        "CatBoost"
-      ],
-      "weights": [
-        0.5,
-        0.5
-      ],
-      "validation_mae_kzt": 2363426.8750823704
-    },
-    {
-      "components": [
-        "ANN corrected",
-        "CatBoost"
-      ],
-      "weights": [
-        0.75,
-        0.25
-      ],
-      "validation_mae_kzt": 2319060.8838784453
-    },
-    {
-      "components": [
-        "ANN corrected",
-        "Random forest tuned"
-      ],
-      "weights": [
-        0.25,
-        0.75
-      ],
-      "validation_mae_kzt": 2478848.5158907394
-    },
-    {
-      "components": [
-        "ANN corrected",
-        "Random forest tuned"
-      ],
-      "weights": [
-        0.5,
-        0.5
-      ],
-      "validation_mae_kzt": 2315844.3382689264
-    },
-    {
-      "components": [
-        "ANN corrected",
-        "Random forest tuned"
-      ],
-      "weights": [
-        0.75,
-        0.25
-      ],
-      "validation_mae_kzt": 2289371.696786993
-    }
-  ],
-  "selection": "Lowest validation MAE among predeclared pairs and weights; no fitting on test",
-  "test_data_used": false
+  "checkpoint_selection": {
+    "corrected_pool": "dual_score",
+    "usage_pool": "mae_kzt"
+  },
+  "test_data_used_for_this_run_selection": false
 }

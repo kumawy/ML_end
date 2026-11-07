@@ -1,6 +1,10 @@
 import unittest
 import importlib
 import importlib.util
+from pathlib import Path
+import tempfile
+
+import joblib
 import numpy as np
 import pandas as pd
 from sklearn.dummy import DummyRegressor
@@ -12,12 +16,27 @@ class EnsembleTests(unittest.TestCase):
         self.assertIsNotNone(importlib.util.find_spec('ensemble'),'Serializable validation-selected blend is required')
         return importlib.import_module('ensemble')
 
-    def test_blend_search_minimizes_validation_mae_with_declared_weights(self):
-        module=self.module()
-        result=module.select_blend({'A':np.array([0.,200.]),'B':np.array([200.,0.])},np.array([100.,100.]),[('A','B')])
-        self.assertEqual(result['weights'],[.5,.5])
-        self.assertEqual(result['validation_mae_kzt'],0.)
-        self.assertEqual(len(result['candidates']),3)
+    def test_frozen_recipe_and_saved_inference_keep_all_ten_ann_members_and_forest(self):
+        # Dropping a member, swapping the two pools, changing weights, or losing
+        # fitted components on serialization changes the hand-computed 7500 KZT.
+        import run_project
+        module = self.module()
+        self.assertTrue(hasattr(run_project, 'build_selected_ensemble'),
+                        'Build the final frozen recipe without validation blend search')
+        x = pd.DataFrame({'x': [0., 1.]})
+        def component(value):
+            estimator = DummyRegressor(strategy='constant', constant=value).fit(x, [0., 0.])
+            return module.Component(estimator, 'enhanced')
+        usage = module.PredictionEnsemble([component(value) for value in [1000., 2000., 3000., 4000., 5000.]], [.2] * 5)
+        corrected = module.PredictionEnsemble([component(value) for value in [6000., 7000., 8000., 9000., 10000.]], [.2] * 5)
+        forest = component(12000.)
+        selected = run_project.build_selected_ensemble(corrected, usage, forest)
+        np.testing.assert_allclose(selected.weights, [.05] * 5 + [.1125] * 5 + [.1875], rtol=0, atol=1e-16)
+        np.testing.assert_allclose(selected.predict({'enhanced': x}), [7500., 7500.], rtol=0, atol=1e-10)
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'selected_model.joblib'
+            joblib.dump(selected, path)
+            np.testing.assert_array_equal(joblib.load(path).predict({'enhanced': x}), selected.predict({'enhanced': x}))
 
     def test_components_receive_their_correct_feature_representation(self):
         module=self.module()

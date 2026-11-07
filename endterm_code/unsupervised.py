@@ -90,7 +90,6 @@ def run_unsupervised(train_frame: pd.DataFrame, output_dir: Path, seed=42):
         "PC2": coordinates[:, 1],
         "PC3": coordinates[:, 2],
     })
-    assignments.to_csv(output_dir / "cluster_assignments.csv", index=False)
     assignments.to_csv(output_dir / "pca_projection.csv", index=False)
 
     scaled_centroids = pd.DataFrame(model.cluster_centers_, columns=FEATURE_COLUMNS)
@@ -231,7 +230,7 @@ def run_unsupervised(train_frame: pd.DataFrame, output_dir: Path, seed=42):
         "files": {name: name for name in [
             "cluster_selection.csv", "cluster_selection.png", "cluster_profiles.csv",
             "cluster_centroids_scaled.csv", "cluster_centroids_original.csv",
-            "cluster_assignments.csv", "pca_projection.csv", "pca_loadings.csv",
+            "pca_projection.csv", "pca_loadings.csv",
             "pca_variance.csv", "pca_variance.png", "pca_scatter.png", "unsupervised_report.json",
         ]},
     }

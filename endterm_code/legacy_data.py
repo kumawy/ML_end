@@ -8,7 +8,6 @@ import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
-from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
@@ -68,17 +67,6 @@ def load_data(root: Path):
         'snapshot': '2025; individual listing dates unavailable',
     }
     return used, audit
-
-
-def split_data(frame):
-    """Reproduce midterm split exactly, including original source row order."""
-    develop, test = train_test_split(frame.index, test_size=.15, random_state=SEED)
-    train, validation = train_test_split(develop, test_size=.15/.85, random_state=SEED)
-    result = {'train':train, 'validation':validation, 'test':test}
-    for a,b in [('train','validation'),('train','test'),('validation','test')]:
-        if set(frame.loc[result[a],'ad_id']) & set(frame.loc[result[b],'ad_id']):
-            raise ValueError('Listing leakage between splits')
-    return result
 
 
 def make_preprocessor():

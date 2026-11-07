@@ -121,7 +121,7 @@
       "brand_model",
       "trim"
     ],
-    "preprocessing": "Enhanced train-fitted numeric imputation/scaling and categorical unknown/OHE. OHE threshold selected on train CV or validation for ANN. CatBoost consumes native categories; legacy controls use unchanged legacy_data.py."
+    "preprocessing": "All learned preprocessing is fitted on training rows/folds. Four original baselines use unchanged legacy_data.py. Tuned models select OHE min_frequency inside 3-fold train CV; the corrected single ANN and both fixed pools use min_frequency=2."
   },
   "eda": {
     "training_mean_price_kzt": 9532173.623391159,
@@ -307,455 +307,17 @@
       "scale_log1p": 0.9198202842
     },
     "target_transform": "z = (log1p(price_KZT) - train_mean) / train_std; prediction = max(0, expm1(z_hat * train_std + train_mean)); log clipped only to avoid numerical overflow.",
-    "selection": "Lowest validation MAE across min_frequency [2, 5] and two fixed architectures, with checkpoint selection. Test not accepted.",
-    "history_loss": "Ordinary MSE of standardized log1p targets, without the optimizer's one-half factor or L2 term.",
-    "assessment": {
-      "stopping_reason": "validation_patience_exhausted",
-      "training_mse_first": 0.2258554672,
-      "training_mse_best_checkpoint": 0.0222064166,
-      "training_mse_final": 0.0191334196,
-      "relative_training_mse_improvement_last_up_to_20_epochs": 0.1595804644,
-      "validation_mae_deterioration_after_best_fraction": 0.0250289999,
-      "overfitting_signal": false,
-      "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
-      "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
-    },
-    "candidates": [
-      {
-        "candidate_id": "ann_64_32",
-        "hidden_layer_sizes": [
-          64,
-          32
-        ],
-        "best_epoch": 68,
-        "epochs_run": 108,
-        "best_validation_mae_kzt": 2426543.6115300613,
-        "checkpoint_train_mae_kzt": 851973.787415015,
-        "checkpoint_train_scaled_log_mse": 0.0272067765,
-        "checkpoint_validation_scaled_log_mse": 0.1945831541,
-        "assessment": {
-          "stopping_reason": "validation_patience_exhausted",
-          "training_mse_first": 0.2902465001,
-          "training_mse_best_checkpoint": 0.0272067765,
-          "training_mse_final": 0.0230116257,
-          "relative_training_mse_improvement_last_up_to_20_epochs": 0.1312481715,
-          "validation_mae_deterioration_after_best_fraction": 0.0368715316,
-          "overfitting_signal": false,
-          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
-          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
-        }
-      },
-      {
-        "candidate_id": "ann_128_64",
-        "hidden_layer_sizes": [
-          128,
-          64
-        ],
-        "best_epoch": 71,
-        "epochs_run": 111,
-        "best_validation_mae_kzt": 2371127.804370948,
-        "checkpoint_train_mae_kzt": 767821.888169888,
-        "checkpoint_train_scaled_log_mse": 0.0222064166,
-        "checkpoint_validation_scaled_log_mse": 0.1876903007,
-        "assessment": {
-          "stopping_reason": "validation_patience_exhausted",
-          "training_mse_first": 0.2258554672,
-          "training_mse_best_checkpoint": 0.0222064166,
-          "training_mse_final": 0.0191334196,
-          "relative_training_mse_improvement_last_up_to_20_epochs": 0.1595804644,
-          "validation_mae_deterioration_after_best_fraction": 0.0250289999,
-          "overfitting_signal": false,
-          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
-          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
-        }
-      }
-    ],
-    "artifacts": {
-      "history_csv": "ann_history.csv",
-      "history_plot": "ann_history.png"
-    },
-    "test_data_used": false,
-    "input_feature_count": 305,
-    "selected_min_frequency": 2,
-    "feature_set": "corrected",
-    "history_directory": "ann_corrected_minfreq_2",
-    "feature_frequency_candidates": [
-      {
-        "min_frequency": 2,
-        "input_feature_count": 305,
-        "validation_mae_kzt": 2371127.804370948,
-        "hidden_layer_sizes": [
-          128,
-          64
-        ],
-        "best_epoch": 71,
-        "epochs_run": 111
-      },
-      {
-        "min_frequency": 5,
-        "input_feature_count": 152,
-        "validation_mae_kzt": 2424869.9111136235,
-        "hidden_layer_sizes": [
-          64,
-          32
-        ],
-        "best_epoch": 42,
-        "epochs_run": 82
-      }
-    ],
-    "reported_model_name": "ANN corrected"
-  },
-  "ann_full": {
-    "model": "ANN",
-    "selected_candidate_id": "ann_128_64",
-    "hidden_layer_sizes": [
-      128,
-      64
-    ],
-    "best_epoch": 167,
-    "epochs_run": 207,
-    "best_validation_mae_kzt": 2445651.1517004175,
-    "configuration": {
-      "activation": "relu",
-      "output_activation": "identity (linear)",
-      "solver": "adam",
-      "loss": "squared_error (half squared error plus L2 penalty)",
-      "learning_rate_init": 0.001,
-      "alpha": 0.001,
-      "batch_size": 64,
-      "beta_1": 0.9,
-      "beta_2": 0.999,
-      "epsilon": 1e-08,
-      "shuffle": true,
-      "max_epochs": 400,
-      "patience": 40,
-      "minimum_validation_mae_improvement": 0.0,
-      "random_state": 42,
-      "early_stopping": "external validation MAE in KZT; sklearn internal early_stopping=False"
-    },
-    "candidate_architectures": [
-      [
-        64,
-        32
-      ],
-      [
-        128,
-        64
-      ]
-    ],
-    "target_scaler": {
-      "fit_split": "training only",
-      "n_samples_seen": 1787,
-      "mean_log1p": 15.6530337903,
-      "scale_log1p": 0.9198202842
-    },
-    "target_transform": "z = (log1p(price_KZT) - train_mean) / train_std; prediction = max(0, expm1(z_hat * train_std + train_mean)); log clipped only to avoid numerical overflow.",
-    "selection": "Lowest validation MAE across min_frequency [1, 2, 5] and two fixed architectures, with checkpoint selection. Test not accepted.",
-    "history_loss": "Ordinary MSE of standardized log1p targets, without the optimizer's one-half factor or L2 term.",
-    "assessment": {
-      "stopping_reason": "validation_patience_exhausted",
-      "training_mse_first": 0.2325673523,
-      "training_mse_best_checkpoint": 0.0151601367,
-      "training_mse_final": 0.0133671009,
-      "relative_training_mse_improvement_last_up_to_20_epochs": 0.017068516,
-      "validation_mae_deterioration_after_best_fraction": 0.0236325961,
-      "overfitting_signal": false,
-      "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
-      "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
-    },
-    "candidates": [
-      {
-        "candidate_id": "ann_64_32",
-        "hidden_layer_sizes": [
-          64,
-          32
-        ],
-        "best_epoch": 26,
-        "epochs_run": 66,
-        "best_validation_mae_kzt": 2586525.2552780025,
-        "checkpoint_train_mae_kzt": 1055441.9509611973,
-        "checkpoint_train_scaled_log_mse": 0.0372970146,
-        "checkpoint_validation_scaled_log_mse": 0.1896019634,
-        "assessment": {
-          "stopping_reason": "validation_patience_exhausted",
-          "training_mse_first": 0.5308923368,
-          "training_mse_best_checkpoint": 0.0372970146,
-          "training_mse_final": 0.0350940049,
-          "relative_training_mse_improvement_last_up_to_20_epochs": -0.2832687537,
-          "validation_mae_deterioration_after_best_fraction": 0.0610960052,
-          "overfitting_signal": true,
-          "assessment": "Training error continues to fall while validation MAE worsens by over 5% after its best epoch; the saved checkpoint avoids the later deterioration.",
-          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
-        }
-      },
-      {
-        "candidate_id": "ann_128_64",
-        "hidden_layer_sizes": [
-          128,
-          64
-        ],
-        "best_epoch": 167,
-        "epochs_run": 207,
-        "best_validation_mae_kzt": 2445651.1517004175,
-        "checkpoint_train_mae_kzt": 646915.1739226918,
-        "checkpoint_train_scaled_log_mse": 0.0151601367,
-        "checkpoint_validation_scaled_log_mse": 0.1993171644,
-        "assessment": {
-          "stopping_reason": "validation_patience_exhausted",
-          "training_mse_first": 0.2325673523,
-          "training_mse_best_checkpoint": 0.0151601367,
-          "training_mse_final": 0.0133671009,
-          "relative_training_mse_improvement_last_up_to_20_epochs": 0.017068516,
-          "validation_mae_deterioration_after_best_fraction": 0.0236325961,
-          "overfitting_signal": false,
-          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
-          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
-        }
-      }
-    ],
-    "artifacts": {
-      "history_csv": "ann_history.csv",
-      "history_plot": "ann_history.png"
-    },
-    "test_data_used": false,
-    "input_feature_count": 544,
-    "selected_min_frequency": 2,
-    "feature_set": "full",
-    "history_directory": "ann_full_minfreq_2",
-    "feature_frequency_candidates": [
-      {
-        "min_frequency": 1,
-        "input_feature_count": 982,
-        "validation_mae_kzt": 2518317.216084738,
-        "hidden_layer_sizes": [
-          128,
-          64
-        ],
-        "best_epoch": 23,
-        "epochs_run": 63
-      },
-      {
-        "min_frequency": 2,
-        "input_feature_count": 544,
-        "validation_mae_kzt": 2445651.1517004175,
-        "hidden_layer_sizes": [
-          128,
-          64
-        ],
-        "best_epoch": 167,
-        "epochs_run": 207
-      },
-      {
-        "min_frequency": 5,
-        "input_feature_count": 253,
-        "validation_mae_kzt": 2514918.583745452,
-        "hidden_layer_sizes": [
-          128,
-          64
-        ],
-        "best_epoch": 39,
-        "epochs_run": 79
-      }
-    ]
-  },
-  "corrected_ann": {
-    "model": "ANN",
-    "selected_candidate_id": "ann_128_64",
-    "hidden_layer_sizes": [
-      128,
-      64
-    ],
-    "best_epoch": 71,
-    "epochs_run": 111,
-    "best_validation_mae_kzt": 2371127.804370948,
-    "configuration": {
-      "activation": "relu",
-      "output_activation": "identity (linear)",
-      "solver": "adam",
-      "loss": "squared_error (half squared error plus L2 penalty)",
-      "learning_rate_init": 0.001,
-      "alpha": 0.001,
-      "batch_size": 64,
-      "beta_1": 0.9,
-      "beta_2": 0.999,
-      "epsilon": 1e-08,
-      "shuffle": true,
-      "max_epochs": 400,
-      "patience": 40,
-      "minimum_validation_mae_improvement": 0.0,
-      "random_state": 42,
-      "early_stopping": "external validation MAE in KZT; sklearn internal early_stopping=False"
-    },
-    "candidate_architectures": [
-      [
-        64,
-        32
-      ],
-      [
-        128,
-        64
-      ]
-    ],
-    "target_scaler": {
-      "fit_split": "training only",
-      "n_samples_seen": 1787,
-      "mean_log1p": 15.6530337903,
-      "scale_log1p": 0.9198202842
-    },
-    "target_transform": "z = (log1p(price_KZT) - train_mean) / train_std; prediction = max(0, expm1(z_hat * train_std + train_mean)); log clipped only to avoid numerical overflow.",
-    "selection": "Lowest validation MAE across min_frequency [2, 5] and two fixed architectures, with checkpoint selection. Test not accepted.",
-    "history_loss": "Ordinary MSE of standardized log1p targets, without the optimizer's one-half factor or L2 term.",
-    "assessment": {
-      "stopping_reason": "validation_patience_exhausted",
-      "training_mse_first": 0.2258554672,
-      "training_mse_best_checkpoint": 0.0222064166,
-      "training_mse_final": 0.0191334196,
-      "relative_training_mse_improvement_last_up_to_20_epochs": 0.1595804644,
-      "validation_mae_deterioration_after_best_fraction": 0.0250289999,
-      "overfitting_signal": false,
-      "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
-      "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
-    },
-    "candidates": [
-      {
-        "candidate_id": "ann_64_32",
-        "hidden_layer_sizes": [
-          64,
-          32
-        ],
-        "best_epoch": 68,
-        "epochs_run": 108,
-        "best_validation_mae_kzt": 2426543.6115300613,
-        "checkpoint_train_mae_kzt": 851973.787415015,
-        "checkpoint_train_scaled_log_mse": 0.0272067765,
-        "checkpoint_validation_scaled_log_mse": 0.1945831541,
-        "assessment": {
-          "stopping_reason": "validation_patience_exhausted",
-          "training_mse_first": 0.2902465001,
-          "training_mse_best_checkpoint": 0.0272067765,
-          "training_mse_final": 0.0230116257,
-          "relative_training_mse_improvement_last_up_to_20_epochs": 0.1312481715,
-          "validation_mae_deterioration_after_best_fraction": 0.0368715316,
-          "overfitting_signal": false,
-          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
-          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
-        }
-      },
-      {
-        "candidate_id": "ann_128_64",
-        "hidden_layer_sizes": [
-          128,
-          64
-        ],
-        "best_epoch": 71,
-        "epochs_run": 111,
-        "best_validation_mae_kzt": 2371127.804370948,
-        "checkpoint_train_mae_kzt": 767821.888169888,
-        "checkpoint_train_scaled_log_mse": 0.0222064166,
-        "checkpoint_validation_scaled_log_mse": 0.1876903007,
-        "assessment": {
-          "stopping_reason": "validation_patience_exhausted",
-          "training_mse_first": 0.2258554672,
-          "training_mse_best_checkpoint": 0.0222064166,
-          "training_mse_final": 0.0191334196,
-          "relative_training_mse_improvement_last_up_to_20_epochs": 0.1595804644,
-          "validation_mae_deterioration_after_best_fraction": 0.0250289999,
-          "overfitting_signal": false,
-          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
-          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
-        }
-      }
-    ],
-    "artifacts": {
-      "history_csv": "ann_history.csv",
-      "history_plot": "ann_history.png"
-    },
-    "test_data_used": false,
-    "input_feature_count": 305,
-    "selected_min_frequency": 2,
-    "feature_set": "corrected",
-    "history_directory": "ann_corrected_minfreq_2",
-    "feature_frequency_candidates": [
-      {
-        "min_frequency": 2,
-        "input_feature_count": 305,
-        "validation_mae_kzt": 2371127.804370948,
-        "hidden_layer_sizes": [
-          128,
-          64
-        ],
-        "best_epoch": 71,
-        "epochs_run": 111
-      },
-      {
-        "min_frequency": 5,
-        "input_feature_count": 152,
-        "validation_mae_kzt": 2424869.9111136235,
-        "hidden_layer_sizes": [
-          64,
-          32
-        ],
-        "best_epoch": 42,
-        "epochs_run": 82
-      }
-    ]
-  },
-  "previous_ann": {
-    "model": "ANN",
-    "selected_candidate_id": "ann_128_64",
-    "hidden_layer_sizes": [
-      128,
-      64
-    ],
-    "best_epoch": 18,
-    "epochs_run": 58,
-    "best_validation_mae_kzt": 2456897.177657078,
-    "configuration": {
-      "activation": "relu",
-      "output_activation": "identity (linear)",
-      "solver": "adam",
-      "loss": "squared_error (half squared error plus L2 penalty)",
-      "learning_rate_init": 0.001,
-      "alpha": 0.001,
-      "batch_size": 64,
-      "beta_1": 0.9,
-      "beta_2": 0.999,
-      "epsilon": 1e-08,
-      "shuffle": true,
-      "max_epochs": 400,
-      "patience": 40,
-      "minimum_validation_mae_improvement": 0.0,
-      "random_state": 42,
-      "early_stopping": "external validation MAE in KZT; sklearn internal early_stopping=False"
-    },
-    "candidate_architectures": [
-      [
-        64,
-        32
-      ],
-      [
-        128,
-        64
-      ]
-    ],
-    "target_scaler": {
-      "fit_split": "training only",
-      "n_samples_seen": 1787,
-      "mean_log1p": 15.6530337903,
-      "scale_log1p": 0.9198202842
-    },
-    "target_transform": "z = (log1p(price_KZT) - train_mean) / train_std; prediction = max(0, expm1(z_hat * train_std + train_mean)); log clipped only to avoid numerical overflow.",
     "selection": "Lowest validation MAE in KZT across all candidate epochs; exact ties retain the first checkpoint/candidate.",
     "history_loss": "Ordinary MSE of standardized log1p targets, without the optimizer's one-half factor or L2 term.",
     "assessment": {
       "stopping_reason": "validation_patience_exhausted",
-      "training_mse_first": 0.2341155417,
-      "training_mse_best_checkpoint": 0.0477856779,
-      "training_mse_final": 0.0291216797,
-      "relative_training_mse_improvement_last_up_to_20_epochs": 0.0814215383,
-      "validation_mae_deterioration_after_best_fraction": 0.0715425689,
-      "overfitting_signal": true,
-      "assessment": "Training error continues to fall while validation MAE worsens by over 5% after its best epoch; the saved checkpoint avoids the later deterioration.",
+      "training_mse_first": 0.2258554672,
+      "training_mse_best_checkpoint": 0.0222064166,
+      "training_mse_final": 0.0191334196,
+      "relative_training_mse_improvement_last_up_to_20_epochs": 0.1595804644,
+      "validation_mae_deterioration_after_best_fraction": 0.0250289999,
+      "overfitting_signal": false,
+      "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
       "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
     },
     "candidates": [
@@ -765,19 +327,19 @@
           64,
           32
         ],
-        "best_epoch": 42,
-        "epochs_run": 82,
-        "best_validation_mae_kzt": 2501333.349081391,
-        "checkpoint_train_mae_kzt": 1199539.226615344,
-        "checkpoint_train_scaled_log_mse": 0.0377625618,
-        "checkpoint_validation_scaled_log_mse": 0.1901722284,
+        "best_epoch": 68,
+        "epochs_run": 108,
+        "best_validation_mae_kzt": 2426543.6115300613,
+        "checkpoint_train_mae_kzt": 851973.787415015,
+        "checkpoint_train_scaled_log_mse": 0.0272067765,
+        "checkpoint_validation_scaled_log_mse": 0.1945831541,
         "assessment": {
           "stopping_reason": "validation_patience_exhausted",
-          "training_mse_first": 0.2526540038,
-          "training_mse_best_checkpoint": 0.0377625618,
-          "training_mse_final": 0.0293335301,
-          "relative_training_mse_improvement_last_up_to_20_epochs": 0.0682462415,
-          "validation_mae_deterioration_after_best_fraction": 0.0399198662,
+          "training_mse_first": 0.2902465001,
+          "training_mse_best_checkpoint": 0.0272067765,
+          "training_mse_final": 0.0230116257,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.1312481715,
+          "validation_mae_deterioration_after_best_fraction": 0.0368715316,
           "overfitting_signal": false,
           "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
           "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
@@ -789,21 +351,21 @@
           128,
           64
         ],
-        "best_epoch": 18,
-        "epochs_run": 58,
-        "best_validation_mae_kzt": 2456897.177657078,
-        "checkpoint_train_mae_kzt": 1323717.7019693227,
-        "checkpoint_train_scaled_log_mse": 0.0477856779,
-        "checkpoint_validation_scaled_log_mse": 0.1812310828,
+        "best_epoch": 71,
+        "epochs_run": 111,
+        "best_validation_mae_kzt": 2371127.804370948,
+        "checkpoint_train_mae_kzt": 767821.888169888,
+        "checkpoint_train_scaled_log_mse": 0.0222064166,
+        "checkpoint_validation_scaled_log_mse": 0.1876903007,
         "assessment": {
           "stopping_reason": "validation_patience_exhausted",
-          "training_mse_first": 0.2341155417,
-          "training_mse_best_checkpoint": 0.0477856779,
-          "training_mse_final": 0.0291216797,
-          "relative_training_mse_improvement_last_up_to_20_epochs": 0.0814215383,
-          "validation_mae_deterioration_after_best_fraction": 0.0715425689,
-          "overfitting_signal": true,
-          "assessment": "Training error continues to fall while validation MAE worsens by over 5% after its best epoch; the saved checkpoint avoids the later deterioration.",
+          "training_mse_first": 0.2258554672,
+          "training_mse_best_checkpoint": 0.0222064166,
+          "training_mse_final": 0.0191334196,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.1595804644,
+          "validation_mae_deterioration_after_best_fraction": 0.0250289999,
+          "overfitting_signal": false,
+          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
           "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
         }
       }
@@ -813,396 +375,79 @@
       "history_plot": "ann_history.png"
     },
     "test_data_used": false,
-    "input_feature_count": 147
-  },
-  "catboost": {
-    "model": "CatBoost",
-    "catboost_version": "1.2.10",
-    "selected_candidate_id": "catboost_log_rmse_depth8",
-    "best_validation_mae_kzt": 2689678.454849997,
-    "selected_cv_mae_kzt": 2093993.1485219037,
-    "selected_cv_std_mae_kzt": 65490.9808264078,
-    "best_iteration": 993,
-    "iterations_run": 1000,
-    "retained_tree_count": 993,
-    "configuration": {
-      "depth": 8,
-      "loss_function": "RMSE",
-      "target_transform": "log1p",
-      "iterations_max": 1000,
-      "learning_rate": 0.05,
-      "l2_leaf_reg": 5.0,
-      "thread_count": 2,
-      "random_seed": 42,
-      "patience": 60,
-      "task_type": "CPU",
-      "boosting_type": "Plain",
-      "grow_policy": "SymmetricTree",
-      "one_hot_max_size": 0,
-      "checkpoint_metric": "LogTargetMAE",
-      "use_best_model": true
-    },
-    "fitted_parameters": {
-      "nan_mode": "Min",
-      "eval_metric": "PythonUserDefinedPerObject",
-      "combinations_ctr": [
-        "Borders:CtrBorderCount=15:CtrBorderType=Uniform:TargetBorderCount=1:TargetBorderType=MinEntropy:Prior=0/1:Prior=0.5/1:Prior=1/1",
-        "Counter:CtrBorderCount=15:CtrBorderType=Uniform:Prior=0/1"
-      ],
-      "iterations": 1000,
-      "sampling_frequency": "PerTree",
-      "fold_permutation_block": 0,
-      "leaf_estimation_method": "Newton",
-      "od_pval": 0,
-      "random_score_type": "NormalWithModelSizeDecrease",
-      "counter_calc_method": "SkipTest",
-      "grow_policy": "SymmetricTree",
-      "penalties_coefficient": 1,
-      "boosting_type": "Plain",
-      "model_shrink_mode": "Constant",
-      "feature_border_type": "GreedyLogSum",
-      "ctr_leaf_count_limit": 18446744073709551615,
-      "bayesian_matrix_reg": 0.1000000015,
-      "one_hot_max_size": 0,
-      "eval_fraction": 0,
-      "force_unit_auto_pair_weights": false,
-      "l2_leaf_reg": 5,
-      "random_strength": 1,
-      "od_type": "Iter",
-      "rsm": 1,
-      "boost_from_average": true,
-      "max_ctr_complexity": 4,
-      "model_size_reg": 0.5,
-      "simple_ctr": [
-        "Borders:CtrBorderCount=15:CtrBorderType=Uniform:TargetBorderCount=1:TargetBorderType=MinEntropy:Prior=0/1:Prior=0.5/1:Prior=1/1",
-        "Counter:CtrBorderCount=15:CtrBorderType=Uniform:Prior=0/1"
-      ],
-      "pool_metainfo_options": {
-        "tags": {}
-      },
-      "subsample": 0.8000000119,
-      "use_best_model": true,
-      "od_wait": 60,
-      "random_seed": 42,
-      "depth": 8,
-      "ctr_target_border_count": 1,
-      "posterior_sampling": false,
-      "has_time": false,
-      "store_all_simple_ctr": false,
-      "border_count": 254,
-      "classes_count": 0,
-      "auto_class_weights": "None",
-      "sparse_features_conflict_fraction": 0,
-      "leaf_estimation_backtracking": "AnyImprovement",
-      "best_model_min_trees": 1,
-      "model_shrink_rate": 0,
-      "min_data_in_leaf": 1,
-      "loss_function": "RMSE",
-      "learning_rate": 0.0500000007,
-      "score_function": "Cosine",
-      "task_type": "CPU",
-      "leaf_estimation_iterations": 1,
-      "bootstrap_type": "MVS",
-      "max_leaves": 256,
-      "permutation_count": 4
-    },
-    "architecture": "Additive gradient boosting of symmetric decision trees; native categorical statistics, no one-hot preprocessing.",
-    "numeric_features": [
-      "year",
-      "log_km",
-      "mileage_missing",
-      "engine_liters_clean",
-      "engine_missing",
-      "engine_not_applicable",
-      "engine_source_conflict",
-      "dual_fuel_claim",
-      "fuel_text_conflict",
-      "restyling_claim",
-      "leather_claim",
-      "panorama_claim",
-      "warranty_claim",
-      "power_kw",
-      "power_missing"
-    ],
-    "categorical_features": [
-      "brand",
-      "model",
-      "body",
-      "fuel",
-      "transmission",
-      "brand_model",
-      "trim"
-    ],
-    "feature_columns": [
-      "year",
-      "log_km",
-      "mileage_missing",
-      "engine_liters_clean",
-      "engine_missing",
-      "engine_not_applicable",
-      "engine_source_conflict",
-      "dual_fuel_claim",
-      "fuel_text_conflict",
-      "restyling_claim",
-      "leather_claim",
-      "panorama_claim",
-      "warranty_claim",
-      "power_kw",
-      "power_missing",
-      "brand",
-      "model",
-      "body",
-      "fuel",
-      "transmission",
-      "brand_model",
-      "trim"
-    ],
+    "reported_model_name": "ANN corrected",
+    "input_feature_count": 305,
+    "selected_min_frequency": 2,
+    "feature_set": "corrected",
+    "history_directory": ".",
     "preprocessing": {
-      "numeric": "float64; genuine missing numeric values remain NaN and are handled by CatBoost",
-      "categorical": "missing values become __missing__; all categories cast to strings; saved training column order retained",
-      "learned_transform_fit_split": "each CV training fold; final fit uses training only"
-    },
-    "target_transform": "log1p(price_KZT); predict max(0, expm1(predicted_log_price)); no target scaler; log clipped only for numerical safety",
-    "cv": {
-      "n_splits": 3,
-      "shuffle": true,
-      "random_seed": 42,
-      "fit_split": "training only; fold validation controls each fit's early stopping",
-      "selection_metric": "mean fold MAE in original KZT; standard deviation uses ddof=0",
-      "tie_breaking": "first candidate in raw MAE then log RMSE, each depth 4/6/8",
-      "candidate_count": 6
-    },
-    "final_fit": "training observations only; external validation selects the best MAE-in-KZT checkpoint with patience 60 and at most 1000 iterations",
-    "history_metric_precision": "CatBoost evaluates its internally rounded target buffers; inverse-log history metrics can differ by a few KZT from exact original-label errors. Reported CV scores and final validation MAE are recomputed against original KZT targets.",
-    "global_model_selection": "Caller compares this final validation MAE with other model families before retrospective test evaluation.",
-    "candidates": [
-      {
-        "candidate_id": "catboost_raw_mae_depth4",
-        "depth": 4,
-        "loss_function": "MAE",
-        "target_transform": "identity",
-        "mean_cv_mae_kzt": 2346839.8196381084,
-        "std_cv_mae_kzt": 128552.9200420955,
-        "fold_mae_kzt": [
-          2447303.700313478,
-          2427829.2052606423,
-          2165386.553340205
-        ],
-        "fold_best_iterations": [
-          998,
-          676,
-          508
-        ],
-        "fold_iterations_run": [
-          1000,
-          736,
-          568
-        ]
-      },
-      {
-        "candidate_id": "catboost_raw_mae_depth6",
-        "depth": 6,
-        "loss_function": "MAE",
-        "target_transform": "identity",
-        "mean_cv_mae_kzt": 2342855.1932065524,
-        "std_cv_mae_kzt": 155545.2358912127,
-        "fold_mae_kzt": [
-          2471910.6277521,
-          2432599.9677246814,
-          2124054.984142875
-        ],
-        "fold_best_iterations": [
-          667,
-          467,
-          326
-        ],
-        "fold_iterations_run": [
-          727,
-          527,
-          386
-        ]
-      },
-      {
-        "candidate_id": "catboost_raw_mae_depth8",
-        "depth": 8,
-        "loss_function": "MAE",
-        "target_transform": "identity",
-        "mean_cv_mae_kzt": 2284512.461728532,
-        "std_cv_mae_kzt": 143864.1955378684,
-        "fold_mae_kzt": [
-          2464751.810784174,
-          2276128.2931062584,
-          2112657.281295163
-        ],
-        "fold_best_iterations": [
-          432,
-          576,
-          414
-        ],
-        "fold_iterations_run": [
-          492,
-          636,
-          474
-        ]
-      },
-      {
-        "candidate_id": "catboost_log_rmse_depth4",
-        "depth": 4,
-        "loss_function": "RMSE",
-        "target_transform": "log1p",
-        "mean_cv_mae_kzt": 2155142.989624835,
-        "std_cv_mae_kzt": 51922.595067729,
-        "fold_mae_kzt": [
-          2209850.6364328368,
-          2170206.6019448293,
-          2085371.7304968394
-        ],
-        "fold_best_iterations": [
-          998,
-          997,
-          998
-        ],
-        "fold_iterations_run": [
-          1000,
-          1000,
-          1000
-        ]
-      },
-      {
-        "candidate_id": "catboost_log_rmse_depth6",
-        "depth": 6,
-        "loss_function": "RMSE",
-        "target_transform": "log1p",
-        "mean_cv_mae_kzt": 2112288.391921991,
-        "std_cv_mae_kzt": 73894.2725637057,
-        "fold_mae_kzt": [
-          2201204.9008782315,
-          2020280.835631384,
-          2115379.4392563566
-        ],
-        "fold_best_iterations": [
-          999,
-          994,
-          996
-        ],
-        "fold_iterations_run": [
-          1000,
-          1000,
-          1000
-        ]
-      },
-      {
-        "candidate_id": "catboost_log_rmse_depth8",
-        "depth": 8,
-        "loss_function": "RMSE",
-        "target_transform": "log1p",
-        "mean_cv_mae_kzt": 2093993.1485219037,
-        "std_cv_mae_kzt": 65490.9808264078,
-        "fold_mae_kzt": [
-          2186098.179265175,
-          2039508.531499842,
-          2056372.7348006933
-        ],
-        "fold_best_iterations": [
-          662,
-          980,
-          744
-        ],
-        "fold_iterations_run": [
-          722,
-          1000,
-          804
-        ]
-      }
-    ],
-    "artifacts": {
-      "cv_csv": "catboost_cv.csv",
-      "history_csv": "catboost_history.csv",
-      "history_plot": "catboost_history.png",
-      "report_json": "catboost_report.json"
-    },
-    "test_data_used": false
+      "fit_split": "training only",
+      "training_rows": 1787,
+      "numeric_inputs": [
+        "year",
+        "log_km",
+        "mileage_missing",
+        "engine_liters_clean",
+        "engine_missing",
+        "engine_not_applicable",
+        "engine_source_conflict"
+      ],
+      "categorical_inputs": [
+        "brand",
+        "model",
+        "body",
+        "fuel",
+        "transmission"
+      ],
+      "categorical_min_frequency": 2,
+      "numeric_transform": "Training median imputation followed by StandardScaler",
+      "categorical_transform": "Constant unknown imputation; dense OHE with infrequent/unknown handling"
+    }
   },
   "ensemble": {
-    "selected_components": [
-      "ANN corrected",
+    "model": "ANN ensemble",
+    "recipe_status": "Frozen before this cleanup run; no new blend search",
+    "formula": "0.25 * usage_MAE_pool + 0.75 * (0.75 * corrected_dual_pool + 0.25 * RF)",
+    "reference_for_corrected_checkpoints": "0.75 * ANN corrected + 0.25 * Random forest tuned",
+    "reference_for_usage_checkpoints": "0.75 * corrected_dual_pool + 0.25 * Random forest tuned",
+    "pool_seeds": [
+      11,
+      23,
+      42,
+      71,
+      101
+    ],
+    "component_order": [
+      "usage_MAE_seed_11",
+      "usage_MAE_seed_23",
+      "usage_MAE_seed_42",
+      "usage_MAE_seed_71",
+      "usage_MAE_seed_101",
+      "corrected_dual_seed_11",
+      "corrected_dual_seed_23",
+      "corrected_dual_seed_42",
+      "corrected_dual_seed_71",
+      "corrected_dual_seed_101",
       "Random forest tuned"
     ],
-    "weights": [
-      0.75,
-      0.25
+    "component_weights": [
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.1125,
+      0.1125,
+      0.1125,
+      0.1125,
+      0.1125,
+      0.1875
     ],
-    "validation_mae_kzt": 2289371.696786993,
-    "candidates": [
-      {
-        "components": [
-          "ANN corrected",
-          "CatBoost"
-        ],
-        "weights": [
-          0.25,
-          0.75
-        ],
-        "validation_mae_kzt": 2492955.3443715726
-      },
-      {
-        "components": [
-          "ANN corrected",
-          "CatBoost"
-        ],
-        "weights": [
-          0.5,
-          0.5
-        ],
-        "validation_mae_kzt": 2363426.8750823704
-      },
-      {
-        "components": [
-          "ANN corrected",
-          "CatBoost"
-        ],
-        "weights": [
-          0.75,
-          0.25
-        ],
-        "validation_mae_kzt": 2319060.8838784453
-      },
-      {
-        "components": [
-          "ANN corrected",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.25,
-          0.75
-        ],
-        "validation_mae_kzt": 2478848.5158907394
-      },
-      {
-        "components": [
-          "ANN corrected",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.5,
-          0.5
-        ],
-        "validation_mae_kzt": 2315844.3382689264
-      },
-      {
-        "components": [
-          "ANN corrected",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.75,
-          0.25
-        ],
-        "validation_mae_kzt": 2289371.696786993
-      }
-    ],
-    "selection": "Lowest validation MAE among predeclared pairs and weights; no fitting on test",
-    "test_data_used": false
+    "checkpoint_selection": {
+      "corrected_pool": "dual_score",
+      "usage_pool": "mae_kzt"
+    },
+    "test_data_used_for_this_run_selection": false
   },
   "robust_ann": {
     "model": "Fixed five-seed ANN pools",
@@ -1301,8 +546,7 @@
             "val_scaled_log_mse": 0.1839966943,
             "generalization_gap_scaled_log_mse": 0.1634967539,
             "validation_log_mse_change_after_checkpoint": 0.0108562631,
-            "validation_mae_change_after_checkpoint_kzt": 137554.7267855848,
-            "artifact": "robust_ann_checkpoints/seed_11_mae_kzt.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 137554.7267855848
           },
           "dual_score": {
             "best_epoch": 30,
@@ -1314,8 +558,7 @@
             "val_scaled_log_mse": 0.1800760503,
             "generalization_gap_scaled_log_mse": 0.151448317,
             "validation_log_mse_change_after_checkpoint": 0.0147769071,
-            "validation_mae_change_after_checkpoint_kzt": 124044.8875095374,
-            "artifact": "robust_ann_checkpoints/seed_11_dual_score.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 124044.8875095374
           }
         },
         "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
@@ -1335,8 +578,7 @@
             "val_scaled_log_mse": 0.1869685169,
             "generalization_gap_scaled_log_mse": 0.167397886,
             "validation_log_mse_change_after_checkpoint": 0.0045131764,
-            "validation_mae_change_after_checkpoint_kzt": 83050.4434075034,
-            "artifact": "robust_ann_checkpoints/seed_23_mae_kzt.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 83050.4434075034
           },
           "dual_score": {
             "best_epoch": 61,
@@ -1348,8 +590,7 @@
             "val_scaled_log_mse": 0.1882881971,
             "generalization_gap_scaled_log_mse": 0.1709964976,
             "validation_log_mse_change_after_checkpoint": 0.0031934963,
-            "validation_mae_change_after_checkpoint_kzt": 69443.1605826863,
-            "artifact": "robust_ann_checkpoints/seed_23_dual_score.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 69443.1605826863
           }
         },
         "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
@@ -1369,8 +610,7 @@
             "val_scaled_log_mse": 0.1910240318,
             "generalization_gap_scaled_log_mse": 0.1707363687,
             "validation_log_mse_change_after_checkpoint": 0.0173252051,
-            "validation_mae_change_after_checkpoint_kzt": 197714.6659506024,
-            "artifact": "robust_ann_checkpoints/seed_42_mae_kzt.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 197714.6659506024
           },
           "dual_score": {
             "best_epoch": 69,
@@ -1382,8 +622,7 @@
             "val_scaled_log_mse": 0.1879406865,
             "generalization_gap_scaled_log_mse": 0.1612146089,
             "validation_log_mse_change_after_checkpoint": 0.0204085504,
-            "validation_mae_change_after_checkpoint_kzt": 187605.4801140828,
-            "artifact": "robust_ann_checkpoints/seed_42_dual_score.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 187605.4801140828
           }
         },
         "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
@@ -1403,8 +642,7 @@
             "val_scaled_log_mse": 0.1723754753,
             "generalization_gap_scaled_log_mse": 0.1376110265,
             "validation_log_mse_change_after_checkpoint": 0.0164901862,
-            "validation_mae_change_after_checkpoint_kzt": 107316.7569401534,
-            "artifact": "robust_ann_checkpoints/seed_71_mae_kzt.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 107316.7569401534
           },
           "dual_score": {
             "best_epoch": 63,
@@ -1416,8 +654,7 @@
             "val_scaled_log_mse": 0.1759537486,
             "generalization_gap_scaled_log_mse": 0.1553331029,
             "validation_log_mse_change_after_checkpoint": 0.012911913,
-            "validation_mae_change_after_checkpoint_kzt": 38717.5400100145,
-            "artifact": "robust_ann_checkpoints/seed_71_dual_score.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 38717.5400100145
           }
         },
         "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
@@ -1437,8 +674,7 @@
             "val_scaled_log_mse": 0.1864527037,
             "generalization_gap_scaled_log_mse": 0.1547943762,
             "validation_log_mse_change_after_checkpoint": 0.0097763634,
-            "validation_mae_change_after_checkpoint_kzt": 40548.3049476468,
-            "artifact": "robust_ann_checkpoints/seed_101_mae_kzt.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 40548.3049476468
           },
           "dual_score": {
             "best_epoch": 24,
@@ -1450,8 +686,7 @@
             "val_scaled_log_mse": 0.1882250586,
             "generalization_gap_scaled_log_mse": 0.1567532435,
             "validation_log_mse_change_after_checkpoint": 0.0080040085,
-            "validation_mae_change_after_checkpoint_kzt": 31477.7484373422,
-            "artifact": "robust_ann_checkpoints/seed_101_dual_score.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 31477.7484373422
           }
         },
         "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
@@ -1482,7 +717,7 @@
     ],
     "loss": "Ordinary MSE of training-standardized log1p targets, without optimizer one-half factor or L2 term.",
     "checkpoint_selection": "Strictly lower validation original-KZT MAE or 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction); ties keep the first checkpoint. Stop 45 epochs after both best epochs stop improving under the default protocol.",
-    "checkpoint_selection_caveat": "Validation is reused to select every checkpoint and the blend. Its reported gains and convergence are selection-dependent, not independent generalization evidence. The historical test was already known and any final evaluation is retrospective.",
+    "checkpoint_selection_caveat": "Validation selects checkpoints. The final mixture is frozen before this run, but validation performance remains selection-dependent. The historical test was already known and final evaluation is retrospective.",
     "source": {
       "csv": "kolesa_cars_2025.csv",
       "source_url": "https://www.kaggle.com/datasets/mutashevdarkhan/kolesa-cars-2025",
@@ -1491,215 +726,11 @@
     "artifacts": {
       "history_csv": "robust_ann_history.csv",
       "history_plot": "robust_ann_history.png",
-      "models": {
-        "ANN pool MAE": "robust_ann_pool_mae.joblib",
-        "ANN pool dual": "robust_ann_pool_dual.joblib"
-      },
       "report_json": "robust_ann_report.json"
     },
     "test_data_used": false,
     "test_data_policy": "Test data is not accepted or evaluated by this API.",
     "artifact_base_directory": "robust_ann"
-  },
-  "dual_selection": {
-    "selected_name": "ANN pool dual 0.75 + Random forest tuned 0.25",
-    "selected_components": [
-      "ANN pool dual",
-      "Random forest tuned"
-    ],
-    "weights": [
-      0.75,
-      0.25
-    ],
-    "validation_mae_kzt": 2248401.7333698105,
-    "validation_within_20pct": 0.6631853786,
-    "mae_kzt": 2248401.7333698105,
-    "within_20pct": 0.6631853786,
-    "median_ape": 0.1388566633,
-    "dual_score": 0.9618550578,
-    "candidates": [
-      {
-        "name": "Ensemble",
-        "candidate": "Ensemble",
-        "components": [
-          "Ensemble"
-        ],
-        "weights": [
-          1.0
-        ],
-        "mae_kzt": 2289371.696786993,
-        "within_20pct": 0.6422976501,
-        "median_ape": 0.1400908309,
-        "dual_score": 1.0,
-        "validation_mae_kzt": 2289371.696786993,
-        "validation_within_20pct": 0.6422976501,
-        "eligible": false
-      },
-      {
-        "name": "ANN pool MAE",
-        "candidate": "ANN pool MAE",
-        "components": [
-          "ANN pool MAE"
-        ],
-        "weights": [
-          1.0
-        ],
-        "mae_kzt": 2274288.461998604,
-        "within_20pct": 0.6527415144,
-        "median_ape": 0.135472532,
-        "dual_score": 0.9821072733,
-        "validation_mae_kzt": 2274288.461998604,
-        "validation_within_20pct": 0.6527415144,
-        "eligible": true
-      },
-      {
-        "name": "ANN pool dual",
-        "candidate": "ANN pool dual",
-        "components": [
-          "ANN pool dual"
-        ],
-        "weights": [
-          1.0
-        ],
-        "mae_kzt": 2298694.2301891106,
-        "within_20pct": 0.6475195822,
-        "median_ape": 0.134617198,
-        "dual_score": 0.9947367762,
-        "validation_mae_kzt": 2298694.2301891106,
-        "validation_within_20pct": 0.6475195822,
-        "eligible": false
-      },
-      {
-        "name": "ANN pool MAE 0.25 + Random forest tuned 0.75",
-        "candidate": "ANN pool MAE 0.25 + Random forest tuned 0.75",
-        "components": [
-          "ANN pool MAE",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.25,
-          0.75
-        ],
-        "mae_kzt": 2502176.585164845,
-        "within_20pct": 0.5953002611,
-        "median_ape": 0.1585725997,
-        "dual_score": 1.1121701318,
-        "validation_mae_kzt": 2502176.585164845,
-        "validation_within_20pct": 0.5953002611,
-        "eligible": false
-      },
-      {
-        "name": "ANN pool MAE 0.5 + Random forest tuned 0.5",
-        "candidate": "ANN pool MAE 0.5 + Random forest tuned 0.5",
-        "components": [
-          "ANN pool MAE",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.5,
-          0.5
-        ],
-        "mae_kzt": 2332837.0865136012,
-        "within_20pct": 0.6266318538,
-        "median_ape": 0.1432605521,
-        "dual_score": 1.0313906745,
-        "validation_mae_kzt": 2332837.0865136012,
-        "validation_within_20pct": 0.6266318538,
-        "eligible": false
-      },
-      {
-        "name": "ANN pool MAE 0.75 + Random forest tuned 0.25",
-        "candidate": "ANN pool MAE 0.75 + Random forest tuned 0.25",
-        "components": [
-          "ANN pool MAE",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.75,
-          0.25
-        ],
-        "mae_kzt": 2247103.274930505,
-        "within_20pct": 0.6579634465,
-        "median_ape": 0.1422848864,
-        "dual_score": 0.9688707439,
-        "validation_mae_kzt": 2247103.274930505,
-        "validation_within_20pct": 0.6579634465,
-        "eligible": true
-      },
-      {
-        "name": "ANN pool dual 0.25 + Random forest tuned 0.75",
-        "candidate": "ANN pool dual 0.25 + Random forest tuned 0.75",
-        "components": [
-          "ANN pool dual",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.25,
-          0.75
-        ],
-        "mae_kzt": 2490814.3848561496,
-        "within_20pct": 0.6005221932,
-        "median_ape": 0.1563431132,
-        "dual_score": 1.1023893511,
-        "validation_mae_kzt": 2490814.3848561496,
-        "validation_within_20pct": 0.6005221932,
-        "eligible": false
-      },
-      {
-        "name": "ANN pool dual 0.5 + Random forest tuned 0.5",
-        "candidate": "ANN pool dual 0.5 + Random forest tuned 0.5",
-        "components": [
-          "ANN pool dual",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.5,
-          0.5
-        ],
-        "mae_kzt": 2309559.3664376526,
-        "within_20pct": 0.6266318538,
-        "median_ape": 0.1408988846,
-        "dual_score": 1.026306808,
-        "validation_mae_kzt": 2309559.3664376526,
-        "validation_within_20pct": 0.6266318538,
-        "eligible": false
-      },
-      {
-        "name": "ANN pool dual 0.75 + Random forest tuned 0.25",
-        "candidate": "ANN pool dual 0.75 + Random forest tuned 0.25",
-        "components": [
-          "ANN pool dual",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.75,
-          0.25
-        ],
-        "mae_kzt": 2248401.7333698105,
-        "within_20pct": 0.6631853786,
-        "median_ape": 0.1388566633,
-        "dual_score": 0.9618550578,
-        "validation_mae_kzt": 2248401.7333698105,
-        "validation_within_20pct": 0.6631853786,
-        "eligible": true
-      }
-    ],
-    "eligible_count": 3,
-    "baseline_validation_metrics": {
-      "mae_kzt": 2289371.696786993,
-      "within_20pct": 0.6422976501,
-      "median_ape": 0.1400908309
-    },
-    "selection": "Strict validation MAE decrease and within-20% increase versus baseline; then lowest 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction). Baseline retained if none; exact score ties retain the first declared candidate.",
-    "declared_blend_weights": [
-      0.25,
-      0.5,
-      0.75
-    ],
-    "include_baseline_blends": false,
-    "test_data_used": false,
-    "test_data_policy": "No test targets or predictions accepted.",
-    "checkpoint_selection_caveat": "Validation has already selected pool checkpoints and now selects the mixture; results are selection-dependent. Historical-test reuse prevents an independent generalization claim."
   },
   "usage_ann": {
     "model": "Fixed five-seed ANN pools",
@@ -1803,8 +834,7 @@
             "val_scaled_log_mse": 0.1782756786,
             "generalization_gap_scaled_log_mse": 0.1536351823,
             "validation_log_mse_change_after_checkpoint": 0.0086742966,
-            "validation_mae_change_after_checkpoint_kzt": 82881.470063101,
-            "artifact": "robust_ann_checkpoints/seed_11_mae_kzt.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 82881.470063101
           },
           "dual_score": {
             "best_epoch": 29,
@@ -1816,8 +846,7 @@
             "val_scaled_log_mse": 0.1769059393,
             "generalization_gap_scaled_log_mse": 0.1518195751,
             "validation_log_mse_change_after_checkpoint": 0.010044036,
-            "validation_mae_change_after_checkpoint_kzt": 70031.3930623103,
-            "artifact": "robust_ann_checkpoints/seed_11_dual_score.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 70031.3930623103
           }
         },
         "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
@@ -1837,8 +866,7 @@
             "val_scaled_log_mse": 0.1702873515,
             "generalization_gap_scaled_log_mse": 0.1487117336,
             "validation_log_mse_change_after_checkpoint": 0.0041670222,
-            "validation_mae_change_after_checkpoint_kzt": 114473.6776686218,
-            "artifact": "robust_ann_checkpoints/seed_23_mae_kzt.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 114473.6776686218
           },
           "dual_score": {
             "best_epoch": 58,
@@ -1850,8 +878,7 @@
             "val_scaled_log_mse": 0.1710488244,
             "generalization_gap_scaled_log_mse": 0.1505443741,
             "validation_log_mse_change_after_checkpoint": 0.0034055493,
-            "validation_mae_change_after_checkpoint_kzt": 112942.1170380032,
-            "artifact": "robust_ann_checkpoints/seed_23_dual_score.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 112942.1170380032
           }
         },
         "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
@@ -1871,8 +898,7 @@
             "val_scaled_log_mse": 0.1765004357,
             "generalization_gap_scaled_log_mse": 0.1625052864,
             "validation_log_mse_change_after_checkpoint": 0.0064998374,
-            "validation_mae_change_after_checkpoint_kzt": 67233.6573419082,
-            "artifact": "robust_ann_checkpoints/seed_42_mae_kzt.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 67233.6573419082
           },
           "dual_score": {
             "best_epoch": 74,
@@ -1884,8 +910,7 @@
             "val_scaled_log_mse": 0.1783265369,
             "generalization_gap_scaled_log_mse": 0.1616189631,
             "validation_log_mse_change_after_checkpoint": 0.0046737362,
-            "validation_mae_change_after_checkpoint_kzt": 53908.6286309194,
-            "artifact": "robust_ann_checkpoints/seed_42_dual_score.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 53908.6286309194
           }
         },
         "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
@@ -1905,8 +930,7 @@
             "val_scaled_log_mse": 0.1672229934,
             "generalization_gap_scaled_log_mse": 0.1389614632,
             "validation_log_mse_change_after_checkpoint": 0.0088685538,
-            "validation_mae_change_after_checkpoint_kzt": 226558.6090596421,
-            "artifact": "robust_ann_checkpoints/seed_71_mae_kzt.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 226558.6090596421
           },
           "dual_score": {
             "best_epoch": 58,
@@ -1918,8 +942,7 @@
             "val_scaled_log_mse": 0.1681466918,
             "generalization_gap_scaled_log_mse": 0.1440198963,
             "validation_log_mse_change_after_checkpoint": 0.0079448555,
-            "validation_mae_change_after_checkpoint_kzt": 168747.0958032897,
-            "artifact": "robust_ann_checkpoints/seed_71_dual_score.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 168747.0958032897
           }
         },
         "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
@@ -1939,8 +962,7 @@
             "val_scaled_log_mse": 0.1771126047,
             "generalization_gap_scaled_log_mse": 0.1539348823,
             "validation_log_mse_change_after_checkpoint": 0.0054580759,
-            "validation_mae_change_after_checkpoint_kzt": 20593.9886757531,
-            "artifact": "robust_ann_checkpoints/seed_101_mae_kzt.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 20593.9886757531
           },
           "dual_score": {
             "best_epoch": 20,
@@ -1952,8 +974,7 @@
             "val_scaled_log_mse": 0.1734294815,
             "generalization_gap_scaled_log_mse": 0.1425044891,
             "validation_log_mse_change_after_checkpoint": 0.0091411992,
-            "validation_mae_change_after_checkpoint_kzt": 6642.0982366968,
-            "artifact": "robust_ann_checkpoints/seed_101_dual_score.joblib"
+            "validation_mae_change_after_checkpoint_kzt": 6642.0982366968
           }
         },
         "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
@@ -1984,7 +1005,7 @@
     ],
     "loss": "Ordinary MSE of training-standardized log1p targets, without optimizer one-half factor or L2 term.",
     "checkpoint_selection": "Strictly lower validation original-KZT MAE or 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction); ties keep the first checkpoint. Stop 45 epochs after both best epochs stop improving under the default protocol.",
-    "checkpoint_selection_caveat": "Validation is reused to select every checkpoint and the blend. Its reported gains and convergence are selection-dependent, not independent generalization evidence. The historical test was already known and any final evaluation is retrospective.",
+    "checkpoint_selection_caveat": "Validation selects checkpoints. The final mixture is frozen before this run, but validation performance remains selection-dependent. The historical test was already known and final evaluation is retrospective.",
     "source": {
       "csv": "kolesa_cars_2025.csv",
       "source_url": "https://www.kaggle.com/datasets/mutashevdarkhan/kolesa-cars-2025",
@@ -1993,337 +1014,19 @@
     "artifacts": {
       "history_csv": "robust_ann_history.csv",
       "history_plot": "robust_ann_history.png",
-      "models": {
-        "ANN pool MAE": "robust_ann_pool_mae.joblib",
-        "ANN pool dual": "robust_ann_pool_dual.joblib"
-      },
       "report_json": "robust_ann_report.json"
     },
     "test_data_used": false,
     "test_data_policy": "Test data is not accepted or evaluated by this API.",
     "artifact_base_directory": "usage_ann"
   },
-  "usage_selection": {
-    "selected_name": "Usage ANN pool MAE 0.25 + Robust ensemble 0.75",
-    "selected_components": [
-      "Usage ANN pool MAE",
-      "Robust ensemble"
-    ],
-    "weights": [
-      0.25,
-      0.75
-    ],
-    "validation_mae_kzt": 2238371.607965701,
-    "validation_within_20pct": 0.6762402089,
-    "mae_kzt": 2238371.607965701,
-    "within_20pct": 0.6762402089,
-    "median_ape": 0.1368460151,
-    "dual_score": 0.9783896539,
-    "candidates": [
-      {
-        "name": "Robust ensemble",
-        "candidate": "Robust ensemble",
-        "components": [
-          "Robust ensemble"
-        ],
-        "weights": [
-          1.0
-        ],
-        "mae_kzt": 2248401.7333698105,
-        "within_20pct": 0.6631853786,
-        "median_ape": 0.1388566633,
-        "dual_score": 1.0,
-        "validation_mae_kzt": 2248401.7333698105,
-        "validation_within_20pct": 0.6631853786,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool MAE",
-        "candidate": "Usage ANN pool MAE",
-        "components": [
-          "Usage ANN pool MAE"
-        ],
-        "weights": [
-          1.0
-        ],
-        "mae_kzt": 2257650.404213965,
-        "within_20pct": 0.6475195822,
-        "median_ape": 0.1348593578,
-        "dual_score": 1.0253125351,
-        "validation_mae_kzt": 2257650.404213965,
-        "validation_within_20pct": 0.6475195822,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool dual",
-        "candidate": "Usage ANN pool dual",
-        "components": [
-          "Usage ANN pool dual"
-        ],
-        "weights": [
-          1.0
-        ],
-        "mae_kzt": 2270380.088956957,
-        "within_20pct": 0.6553524804,
-        "median_ape": 0.1354401659,
-        "dual_score": 1.0165154578,
-        "validation_mae_kzt": 2270380.088956957,
-        "validation_within_20pct": 0.6553524804,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool MAE 0.25 + Random forest tuned 0.75",
-        "candidate": "Usage ANN pool MAE 0.25 + Random forest tuned 0.75",
-        "components": [
-          "Usage ANN pool MAE",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.25,
-          0.75
-        ],
-        "mae_kzt": 2506106.3694153116,
-        "within_20pct": 0.5953002611,
-        "median_ape": 0.1585395971,
-        "dual_score": 1.1580835992,
-        "validation_mae_kzt": 2506106.3694153116,
-        "validation_within_20pct": 0.5953002611,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool MAE 0.5 + Random forest tuned 0.5",
-        "candidate": "Usage ANN pool MAE 0.5 + Random forest tuned 0.5",
-        "components": [
-          "Usage ANN pool MAE",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.5,
-          0.5
-        ],
-        "mae_kzt": 2338514.8223478594,
-        "within_20pct": 0.6240208877,
-        "median_ape": 0.1420459515,
-        "dual_score": 1.0781789005,
-        "validation_mae_kzt": 2338514.8223478594,
-        "validation_within_20pct": 0.6240208877,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool MAE 0.75 + Random forest tuned 0.25",
-        "candidate": "Usage ANN pool MAE 0.75 + Random forest tuned 0.25",
-        "components": [
-          "Usage ANN pool MAE",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.75,
-          0.25
-        ],
-        "mae_kzt": 2258713.6369350264,
-        "within_20pct": 0.6553524804,
-        "median_ape": 0.1423452932,
-        "dual_score": 1.01392107,
-        "validation_mae_kzt": 2258713.6369350264,
-        "validation_within_20pct": 0.6553524804,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool MAE 0.25 + Robust ensemble 0.75",
-        "candidate": "Usage ANN pool MAE 0.25 + Robust ensemble 0.75",
-        "components": [
-          "Usage ANN pool MAE",
-          "Robust ensemble"
-        ],
-        "weights": [
-          0.25,
-          0.75
-        ],
-        "mae_kzt": 2238371.607965701,
-        "within_20pct": 0.6762402089,
-        "median_ape": 0.1368460151,
-        "dual_score": 0.9783896539,
-        "validation_mae_kzt": 2238371.607965701,
-        "validation_within_20pct": 0.6762402089,
-        "eligible": true
-      },
-      {
-        "name": "Usage ANN pool MAE 0.5 + Robust ensemble 0.5",
-        "candidate": "Usage ANN pool MAE 0.5 + Robust ensemble 0.5",
-        "components": [
-          "Usage ANN pool MAE",
-          "Robust ensemble"
-        ],
-        "weights": [
-          0.5,
-          0.5
-        ],
-        "mae_kzt": 2233223.135899448,
-        "within_20pct": 0.6631853786,
-        "median_ape": 0.1388161373,
-        "dual_score": 0.9966245806,
-        "validation_mae_kzt": 2233223.135899448,
-        "validation_within_20pct": 0.6631853786,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool MAE 0.75 + Robust ensemble 0.25",
-        "candidate": "Usage ANN pool MAE 0.75 + Robust ensemble 0.25",
-        "components": [
-          "Usage ANN pool MAE",
-          "Robust ensemble"
-        ],
-        "weights": [
-          0.75,
-          0.25
-        ],
-        "mae_kzt": 2239886.9664337942,
-        "within_20pct": 0.6657963446,
-        "median_ape": 0.1351923323,
-        "dual_score": 0.9942305155,
-        "validation_mae_kzt": 2239886.9664337942,
-        "validation_within_20pct": 0.6657963446,
-        "eligible": true
-      },
-      {
-        "name": "Usage ANN pool dual 0.25 + Random forest tuned 0.75",
-        "candidate": "Usage ANN pool dual 0.25 + Random forest tuned 0.75",
-        "components": [
-          "Usage ANN pool dual",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.25,
-          0.75
-        ],
-        "mae_kzt": 2506384.925586784,
-        "within_20pct": 0.5979112272,
-        "median_ape": 0.1604243226,
-        "dual_score": 1.1542695756,
-        "validation_mae_kzt": 2506384.925586784,
-        "validation_within_20pct": 0.5979112272,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool dual 0.5 + Random forest tuned 0.5",
-        "candidate": "Usage ANN pool dual 0.5 + Random forest tuned 0.5",
-        "components": [
-          "Usage ANN pool dual",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.5,
-          0.5
-        ],
-        "mae_kzt": 2342289.739207425,
-        "within_20pct": 0.6161879896,
-        "median_ape": 0.1413228456,
-        "dual_score": 1.0906462742,
-        "validation_mae_kzt": 2342289.739207425,
-        "validation_within_20pct": 0.6161879896,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool dual 0.75 + Random forest tuned 0.25",
-        "candidate": "Usage ANN pool dual 0.75 + Random forest tuned 0.25",
-        "components": [
-          "Usage ANN pool dual",
-          "Random forest tuned"
-        ],
-        "weights": [
-          0.75,
-          0.25
-        ],
-        "mae_kzt": 2261623.1782700275,
-        "within_20pct": 0.6501305483,
-        "median_ape": 0.1396386894,
-        "dual_score": 1.0223200324,
-        "validation_mae_kzt": 2261623.1782700275,
-        "validation_within_20pct": 0.6501305483,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool dual 0.25 + Robust ensemble 0.75",
-        "candidate": "Usage ANN pool dual 0.25 + Robust ensemble 0.75",
-        "components": [
-          "Usage ANN pool dual",
-          "Robust ensemble"
-        ],
-        "weights": [
-          0.25,
-          0.75
-        ],
-        "mae_kzt": 2239468.46579332,
-        "within_20pct": 0.6736292428,
-        "median_ape": 0.138268089,
-        "dual_score": 0.9825095423,
-        "validation_mae_kzt": 2239468.46579332,
-        "validation_within_20pct": 0.6736292428,
-        "eligible": true
-      },
-      {
-        "name": "Usage ANN pool dual 0.5 + Robust ensemble 0.5",
-        "candidate": "Usage ANN pool dual 0.5 + Robust ensemble 0.5",
-        "components": [
-          "Usage ANN pool dual",
-          "Robust ensemble"
-        ],
-        "weights": [
-          0.5,
-          0.5
-        ],
-        "mae_kzt": 2237521.8364445297,
-        "within_20pct": 0.6605744125,
-        "median_ape": 0.1387424894,
-        "dual_score": 1.0014564955,
-        "validation_mae_kzt": 2237521.8364445297,
-        "validation_within_20pct": 0.6605744125,
-        "eligible": false
-      },
-      {
-        "name": "Usage ANN pool dual 0.75 + Robust ensemble 0.25",
-        "candidate": "Usage ANN pool dual 0.75 + Robust ensemble 0.25",
-        "components": [
-          "Usage ANN pool dual",
-          "Robust ensemble"
-        ],
-        "weights": [
-          0.75,
-          0.25
-        ],
-        "mae_kzt": 2249009.7745731315,
-        "within_20pct": 0.6605744125,
-        "median_ape": 0.1371225485,
-        "dual_score": 1.0040111853,
-        "validation_mae_kzt": 2249009.7745731315,
-        "validation_within_20pct": 0.6605744125,
-        "eligible": false
-      }
-    ],
-    "eligible_count": 3,
-    "baseline_validation_metrics": {
-      "mae_kzt": 2248401.7333698105,
-      "within_20pct": 0.6631853786,
-      "median_ape": 0.1388566633
-    },
-    "selection": "Strict validation MAE decrease and within-20% increase versus baseline; then lowest 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction). Baseline retained if none; exact score ties retain the first declared candidate.",
-    "declared_blend_weights": [
-      0.25,
-      0.5,
-      0.75
-    ],
-    "include_baseline_blends": true,
-    "test_data_used": false,
-    "test_data_policy": "No test targets or predictions accepted.",
-    "checkpoint_selection_caveat": "Validation has already selected pool checkpoints and now selects the mixture; results are selection-dependent. Historical-test reuse prevents an independent generalization claim."
-  },
   "dataset_enrichment": {
     "directory": "dataset",
     "rows": 2553,
-    "columns": 47,
+    "columns": 38,
     "source_csv": "kolesa_cars_2025.csv",
     "source_raw_sha256": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
-    "enriched_csv_sha256": "90d62b41527f4f4ee5445894df3b63a097140062dab3bb6311ce02cea92b2f87",
+    "enriched_csv_sha256": "bc74eb9005ceb5aab616ca6066812f0875769288e29a4c9f469f377b44adb86e",
     "retained_ad_ids_sha256": "06abe4e212fbbec2a537d92752700228513eb6d2f3908bfaa21ba488bf96a614",
     "preserves_ids_targets": true,
     "source_row_order_preserved": true,
@@ -2333,7 +1036,7 @@
       "validation": 383,
       "test": 383
     },
-    "candidate_feature_columns": [
+    "fit_input_columns": [
       "year",
       "log_km",
       "mileage_missing",
@@ -2358,20 +1061,9 @@
       "trim",
       "steering",
       "log_vehicle_age",
-      "log_annual_mileage_proxy",
-      "alloy_wheels_claim",
-      "sunroof_claim",
-      "model_family_lexical",
-      "color_literal",
-      "upholstery_literal"
+      "log_annual_mileage_proxy"
     ],
-    "quality_only_columns": [
-      "description_truncation_signal",
-      "review_low_mileage_old_vehicle",
-      "review_repeated_digit_mileage",
-      "original_drive_requires_review"
-    ],
-    "excluded_identity_target_text_metadata": [
+    "excluded_from_fit": [
       "name",
       "price",
       "price_raw",
@@ -2383,197 +1075,26 @@
       "drive",
       "ad_id",
       "vehicle_age_proxy",
-      "description_truncation_signal",
-      "review_low_mileage_old_vehicle",
-      "review_repeated_digit_mileage",
-      "original_drive_requires_review",
       "source_row_index",
       "split"
     ],
-    "all_rows": {
-      "rows": 2553,
-      "mileage_missing": 497,
-      "quality_flag_counts": {
-        "description_truncation_signal": 2193,
-        "review_low_mileage_old_vehicle": 18,
-        "review_repeated_digit_mileage": 70,
-        "original_drive_requires_review": 30
-      },
-      "literal_counts": {
-        "color_literal": {
-          "not_stated": 711,
-          "белый": 573,
-          "черный": 415,
-          "серебристый": 256,
-          "серый": 245,
-          "синий": 111,
-          "зеленый": 61,
-          "красный": 31,
-          "золотистый": 25,
-          "бордовый": 24,
-          "коричневый": 20,
-          "бежевый": 18,
-          "голубой": 14,
-          "вишня": 13,
-          "хамелеон": 10,
-          "жёлтый": 7,
-          "бирюзовый": 7,
-          "бронза": 6,
-          "фиолетовый": 3,
-          "оранжевый": 3
-        },
-        "upholstery_literal": {
-          "not_stated": 2110,
-          "велюр": 209,
-          "кожа": 192,
-          "комбинированный": 18,
-          "multiple_literals": 17,
-          "алькантара": 7
-        }
-      },
-      "positive_claim_counts": {
-        "alloy_wheels_claim": 901,
-        "sunroof_claim": 284
-      }
+    "missing_counts": {
+      "mileage_km": 497,
+      "engine_liters": 695,
+      "drive": 2523,
+      "engine_liters_clean": 2,
+      "power_kw": 2550,
+      "log_km": 497,
+      "log_annual_mileage_proxy": 497
     },
-    "by_split": {
-      "train": {
-        "rows": 1787,
-        "mileage_missing": 349,
-        "quality_flag_counts": {
-          "description_truncation_signal": 1545,
-          "review_low_mileage_old_vehicle": 11,
-          "review_repeated_digit_mileage": 43,
-          "original_drive_requires_review": 23
-        },
-        "literal_counts": {
-          "color_literal": {
-            "not_stated": 506,
-            "белый": 407,
-            "черный": 295,
-            "серебристый": 176,
-            "серый": 169,
-            "синий": 71,
-            "зеленый": 42,
-            "красный": 19,
-            "бордовый": 18,
-            "золотистый": 17,
-            "бежевый": 13,
-            "голубой": 12,
-            "коричневый": 11,
-            "вишня": 6,
-            "жёлтый": 6,
-            "хамелеон": 6,
-            "бронза": 4,
-            "бирюзовый": 4,
-            "фиолетовый": 3,
-            "оранжевый": 2
-          },
-          "upholstery_literal": {
-            "not_stated": 1466,
-            "велюр": 158,
-            "кожа": 130,
-            "multiple_literals": 15,
-            "комбинированный": 14,
-            "алькантара": 4
-          }
-        },
-        "positive_claim_counts": {
-          "alloy_wheels_claim": 642,
-          "sunroof_claim": 194
-        }
-      },
-      "validation": {
-        "rows": 383,
-        "mileage_missing": 78,
-        "quality_flag_counts": {
-          "description_truncation_signal": 330,
-          "review_low_mileage_old_vehicle": 5,
-          "review_repeated_digit_mileage": 13,
-          "original_drive_requires_review": 3
-        },
-        "literal_counts": {
-          "color_literal": {
-            "not_stated": 108,
-            "белый": 78,
-            "черный": 62,
-            "серебристый": 44,
-            "серый": 32,
-            "синий": 23,
-            "зеленый": 9,
-            "коричневый": 4,
-            "красный": 4,
-            "золотистый": 4,
-            "бордовый": 4,
-            "вишня": 3,
-            "бирюзовый": 2,
-            "бронза": 2,
-            "голубой": 1,
-            "бежевый": 1,
-            "хамелеон": 1,
-            "жёлтый": 1
-          },
-          "upholstery_literal": {
-            "not_stated": 321,
-            "кожа": 37,
-            "велюр": 23,
-            "комбинированный": 1,
-            "алькантара": 1
-          }
-        },
-        "positive_claim_counts": {
-          "alloy_wheels_claim": 137,
-          "sunroof_claim": 48
-        }
-      },
-      "test": {
-        "rows": 383,
-        "mileage_missing": 70,
-        "quality_flag_counts": {
-          "description_truncation_signal": 318,
-          "review_low_mileage_old_vehicle": 2,
-          "review_repeated_digit_mileage": 14,
-          "original_drive_requires_review": 4
-        },
-        "literal_counts": {
-          "color_literal": {
-            "not_stated": 97,
-            "белый": 88,
-            "черный": 58,
-            "серый": 44,
-            "серебристый": 36,
-            "синий": 17,
-            "зеленый": 10,
-            "красный": 8,
-            "коричневый": 5,
-            "вишня": 4,
-            "золотистый": 4,
-            "бежевый": 4,
-            "хамелеон": 3,
-            "бордовый": 2,
-            "голубой": 1,
-            "оранжевый": 1,
-            "бирюзовый": 1
-          },
-          "upholstery_literal": {
-            "not_stated": 323,
-            "велюр": 28,
-            "кожа": 25,
-            "комбинированный": 3,
-            "multiple_literals": 2,
-            "алькантара": 2
-          }
-        },
-        "positive_claim_counts": {
-          "alloy_wheels_claim": 122,
-          "sunroof_claim": 42
-        }
-      }
+    "proxy_semantics": {
+      "vehicle_age_proxy": "2025 minus a valid positive integral model year; unavailable, nonintegral or future years stay missing. Audit only.",
+      "log_vehicle_age": "log1p(vehicle_age_proxy); unavailable or invalid model year stays missing.",
+      "log_annual_mileage_proxy": "log1p(reported km / max(vehicle_age_proxy, 1)); invalid year or missing, negative or nonfinite mileage stays missing. Not measured annual usage.",
+      "steering": "Exact pre-КПП steering clause; not_stated is unknown, never assumed left-hand steering."
     },
-    "manual_review_rows": 598,
-    "fitted_transforms": "None in this export. Model imputers, indicators, scalers and encoders must be fitted within the training fold.",
-    "model_status": "This export does not fit or select a model. Actual field usage and model metrics are recorded in the project README and results/report.json; candidate status does not mean every extra field is enabled.",
-    "source_limits": "Capped seller descriptions; unmentioned fields are unknown. Literal claims are not verified vehicle facts. No external specs, new ads, synthetic rows, price changes or target-based exclusions."
+    "fitted_transforms": "None in this export. Model imputers, indicators, scalers and encoders are fitted within the training fold.",
+    "source_limits": "Historical seller wording and asking prices, not verified vehicle facts or transaction prices. No external specifications, added rows, price changes or target-based exclusions."
   },
   "unsupervised": {
     "fit_rows": 1775,
@@ -2827,7 +1348,6 @@
       "cluster_profiles.csv": "cluster_profiles.csv",
       "cluster_centroids_scaled.csv": "cluster_centroids_scaled.csv",
       "cluster_centroids_original.csv": "cluster_centroids_original.csv",
-      "cluster_assignments.csv": "cluster_assignments.csv",
       "pca_projection.csv": "pca_projection.csv",
       "pca_loadings.csv": "pca_loadings.csv",
       "pca_variance.csv": "pca_variance.csv",
@@ -2839,8 +1359,8 @@
     "excluded_electric_rows": 12
   },
   "evaluation": {
-    "selected_model": "Usage ensemble",
-    "selection_metric": "Each follow-up requires strictly lower validation MAE and higher within ±20% than its preceding retained ensemble; then minimize equal-weight normalized MAE and miss fraction.",
+    "selected_model": "ANN ensemble",
+    "selection_metric": "Previously selected frozen recipe; no new model or blend search",
     "seed": 42,
     "validation": {
       "Median baseline": {
@@ -2913,26 +1433,6 @@
         "within_20pct": 0.5509138381,
         "within_30pct": 0.6919060052
       },
-      "ANN previous": {
-        "mae_kzt": 2456897.177657078,
-        "rmse_kzt": 11624205.57475083,
-        "r2": 0.3680299362,
-        "median_absolute_error_kzt": 921157.3528773263,
-        "median_ape": 0.1563305307,
-        "within_10pct": 0.3577023499,
-        "within_20pct": 0.6005221932,
-        "within_30pct": 0.7597911227
-      },
-      "ANN": {
-        "mae_kzt": 2445651.1517004175,
-        "rmse_kzt": 11671094.816400923,
-        "r2": 0.3629212237,
-        "median_absolute_error_kzt": 1047888.7987336675,
-        "median_ape": 0.1396409076,
-        "within_10pct": 0.3577023499,
-        "within_20pct": 0.6161879896,
-        "within_30pct": 0.7310704961
-      },
       "ANN corrected": {
         "mae_kzt": 2371127.804370948,
         "rmse_kzt": 11550097.078341128,
@@ -2943,57 +1443,7 @@
         "within_20pct": 0.6161879896,
         "within_30pct": 0.7362924282
       },
-      "CatBoost": {
-        "mae_kzt": 2689678.454849997,
-        "rmse_kzt": 11801401.223060824,
-        "r2": 0.348615989,
-        "median_absolute_error_kzt": 946019.3011453543,
-        "median_ape": 0.1647355321,
-        "within_10pct": 0.3054830287,
-        "within_20pct": 0.5796344648,
-        "within_30pct": 0.725848564
-      },
-      "Ensemble": {
-        "mae_kzt": 2289371.696786993,
-        "rmse_kzt": 11421405.911381075,
-        "r2": 0.3898886905,
-        "median_absolute_error_kzt": 928907.7797644585,
-        "median_ape": 0.1400908309,
-        "within_10pct": 0.362924282,
-        "within_20pct": 0.6422976501,
-        "within_30pct": 0.7441253264
-      },
-      "ANN pool MAE": {
-        "mae_kzt": 2274288.461998604,
-        "rmse_kzt": 11526954.396664537,
-        "r2": 0.3785601593,
-        "median_absolute_error_kzt": 865434.5410399241,
-        "median_ape": 0.135472532,
-        "within_10pct": 0.3707571802,
-        "within_20pct": 0.6527415144,
-        "within_30pct": 0.772845953
-      },
-      "ANN pool dual": {
-        "mae_kzt": 2298694.2301891106,
-        "rmse_kzt": 11515039.144431226,
-        "r2": 0.3798442427,
-        "median_absolute_error_kzt": 875011.7871362632,
-        "median_ape": 0.134617198,
-        "within_10pct": 0.3890339426,
-        "within_20pct": 0.6475195822,
-        "within_30pct": 0.7676240209
-      },
-      "Robust ensemble": {
-        "mae_kzt": 2248401.7333698105,
-        "rmse_kzt": 11404110.23229094,
-        "r2": 0.3917351006,
-        "median_absolute_error_kzt": 829536.6780317724,
-        "median_ape": 0.1388566633,
-        "within_10pct": 0.3759791123,
-        "within_20pct": 0.6631853786,
-        "within_30pct": 0.7676240209
-      },
-      "Usage ensemble": {
+      "ANN ensemble": {
         "mae_kzt": 2238371.607965701,
         "rmse_kzt": 11412167.748605328,
         "r2": 0.390875264,
@@ -3004,8 +1454,52 @@
         "within_30pct": 0.7650130548
       }
     },
-    "test_policy": "Historical test errors motivated feature-engineering hypotheses. Parameters/checkpoints are selected using train CV/validation only. This reused test is retrospective and cannot establish independent generalization of the improvements.",
-    "follow_up": "First preserve the frozen steering pool control; then test only the TRAIN-OOF-supported age/usage pair with two checkpoints and 12 fixed pool/reference mixtures. No further test-guided tuning.",
+    "test_policy": "Historical test errors motivated earlier feature-engineering hypotheses. This cleanup preserves the previously selected recipe. Training CV and validation control fitting/checkpoints; there is no new blend search or test-based acceptance. This reused test is retrospective and cannot establish independent generalization.",
+    "frozen_recipe": {
+      "model": "ANN ensemble",
+      "recipe_status": "Frozen before this cleanup run; no new blend search",
+      "formula": "0.25 * usage_MAE_pool + 0.75 * (0.75 * corrected_dual_pool + 0.25 * RF)",
+      "reference_for_corrected_checkpoints": "0.75 * ANN corrected + 0.25 * Random forest tuned",
+      "reference_for_usage_checkpoints": "0.75 * corrected_dual_pool + 0.25 * Random forest tuned",
+      "pool_seeds": [
+        11,
+        23,
+        42,
+        71,
+        101
+      ],
+      "component_order": [
+        "usage_MAE_seed_11",
+        "usage_MAE_seed_23",
+        "usage_MAE_seed_42",
+        "usage_MAE_seed_71",
+        "usage_MAE_seed_101",
+        "corrected_dual_seed_11",
+        "corrected_dual_seed_23",
+        "corrected_dual_seed_42",
+        "corrected_dual_seed_71",
+        "corrected_dual_seed_101",
+        "Random forest tuned"
+      ],
+      "component_weights": [
+        0.05,
+        0.05,
+        0.05,
+        0.05,
+        0.05,
+        0.1125,
+        0.1125,
+        0.1125,
+        0.1125,
+        0.1125,
+        0.1875
+      ],
+      "checkpoint_selection": {
+        "corrected_pool": "dual_score",
+        "usage_pool": "mae_kzt"
+      },
+      "test_data_used_for_this_run_selection": false
+    },
     "model_rows": [
       {
         "model": "Median baseline",
@@ -3155,48 +1649,6 @@
         "representation": "enhanced"
       },
       {
-        "model": "ANN previous",
-        "validation_mae_kzt": 2456897.177657078,
-        "validation_rmse_kzt": 11624205.57475083,
-        "validation_r2": 0.3680299362,
-        "validation_median_absolute_error_kzt": 921157.3528773263,
-        "validation_median_ape": 0.1563305307,
-        "validation_within_10pct": 0.3577023499,
-        "validation_within_20pct": 0.6005221932,
-        "validation_within_30pct": 0.7597911227,
-        "test_mae_kzt": 1754992.977301133,
-        "test_rmse_kzt": 3483032.1545427386,
-        "test_r2": 0.9004396058,
-        "test_median_absolute_error_kzt": 832250.4403513977,
-        "test_median_ape": 0.1687021472,
-        "test_within_10pct": 0.3211488251,
-        "test_within_20pct": 0.5691906005,
-        "test_within_30pct": 0.7441253264,
-        "selected": false,
-        "representation": "legacy"
-      },
-      {
-        "model": "ANN",
-        "validation_mae_kzt": 2445651.1517004175,
-        "validation_rmse_kzt": 11671094.816400923,
-        "validation_r2": 0.3629212237,
-        "validation_median_absolute_error_kzt": 1047888.7987336675,
-        "validation_median_ape": 0.1396409076,
-        "validation_within_10pct": 0.3577023499,
-        "validation_within_20pct": 0.6161879896,
-        "validation_within_30pct": 0.7310704961,
-        "test_mae_kzt": 1849056.7837414495,
-        "test_rmse_kzt": 3877893.110391007,
-        "test_r2": 0.8765863184,
-        "test_median_absolute_error_kzt": 888761.0801444408,
-        "test_median_ape": 0.1662037722,
-        "test_within_10pct": 0.3211488251,
-        "test_within_20pct": 0.5561357702,
-        "test_within_30pct": 0.72845953,
-        "selected": false,
-        "representation": "enhanced"
-      },
-      {
         "model": "ANN corrected",
         "validation_mae_kzt": 2371127.804370948,
         "validation_rmse_kzt": 11550097.078341128,
@@ -3215,115 +1667,10 @@
         "test_within_20pct": 0.5091383812,
         "test_within_30pct": 0.7206266319,
         "selected": false,
-        "representation": "enhanced"
+        "representation": "corrected"
       },
       {
-        "model": "CatBoost",
-        "validation_mae_kzt": 2689678.454849997,
-        "validation_rmse_kzt": 11801401.223060824,
-        "validation_r2": 0.348615989,
-        "validation_median_absolute_error_kzt": 946019.3011453543,
-        "validation_median_ape": 0.1647355321,
-        "validation_within_10pct": 0.3054830287,
-        "validation_within_20pct": 0.5796344648,
-        "validation_within_30pct": 0.725848564,
-        "test_mae_kzt": 1962442.3141935207,
-        "test_rmse_kzt": 5173311.546841036,
-        "test_r2": 0.7803612788,
-        "test_median_absolute_error_kzt": 802434.0182656143,
-        "test_median_ape": 0.1572127446,
-        "test_within_10pct": 0.3315926893,
-        "test_within_20pct": 0.5822454308,
-        "test_within_30pct": 0.7389033943,
-        "selected": false,
-        "representation": "enhanced"
-      },
-      {
-        "model": "Ensemble",
-        "validation_mae_kzt": 2289371.696786993,
-        "validation_rmse_kzt": 11421405.911381075,
-        "validation_r2": 0.3898886905,
-        "validation_median_absolute_error_kzt": 928907.7797644585,
-        "validation_median_ape": 0.1400908309,
-        "validation_within_10pct": 0.362924282,
-        "validation_within_20pct": 0.6422976501,
-        "validation_within_30pct": 0.7441253264,
-        "test_mae_kzt": 1667212.1367344395,
-        "test_rmse_kzt": 3167634.1132058366,
-        "test_r2": 0.9176541603,
-        "test_median_absolute_error_kzt": 871076.4425499099,
-        "test_median_ape": 0.1724891951,
-        "test_within_10pct": 0.318537859,
-        "test_within_20pct": 0.5613577023,
-        "test_within_30pct": 0.7467362924,
-        "selected": false,
-        "representation": "mixed"
-      },
-      {
-        "model": "ANN pool MAE",
-        "validation_mae_kzt": 2274288.461998604,
-        "validation_rmse_kzt": 11526954.396664537,
-        "validation_r2": 0.3785601593,
-        "validation_median_absolute_error_kzt": 865434.5410399241,
-        "validation_median_ape": 0.135472532,
-        "validation_within_10pct": 0.3707571802,
-        "validation_within_20pct": 0.6527415144,
-        "validation_within_30pct": 0.772845953,
-        "test_mae_kzt": 1653341.8936318685,
-        "test_rmse_kzt": 3132823.4211184317,
-        "test_r2": 0.9194540935,
-        "test_median_absolute_error_kzt": 848168.5884110387,
-        "test_median_ape": 0.1636940703,
-        "test_within_10pct": 0.3524804178,
-        "test_within_20pct": 0.5587467363,
-        "test_within_30pct": 0.7493472585,
-        "selected": false,
-        "representation": "corrected+steering"
-      },
-      {
-        "model": "ANN pool dual",
-        "validation_mae_kzt": 2298694.2301891106,
-        "validation_rmse_kzt": 11515039.144431226,
-        "validation_r2": 0.3798442427,
-        "validation_median_absolute_error_kzt": 875011.7871362632,
-        "validation_median_ape": 0.134617198,
-        "validation_within_10pct": 0.3890339426,
-        "validation_within_20pct": 0.6475195822,
-        "validation_within_30pct": 0.7676240209,
-        "test_mae_kzt": 1639761.8153043883,
-        "test_rmse_kzt": 3060329.2757494226,
-        "test_r2": 0.9231386597,
-        "test_median_absolute_error_kzt": 862536.4109929018,
-        "test_median_ape": 0.1692283002,
-        "test_within_10pct": 0.3577023499,
-        "test_within_20pct": 0.5665796345,
-        "test_within_30pct": 0.7336814621,
-        "selected": false,
-        "representation": "corrected+steering"
-      },
-      {
-        "model": "Robust ensemble",
-        "validation_mae_kzt": 2248401.7333698105,
-        "validation_rmse_kzt": 11404110.23229094,
-        "validation_r2": 0.3917351006,
-        "validation_median_absolute_error_kzt": 829536.6780317724,
-        "validation_median_ape": 0.1388566633,
-        "validation_within_10pct": 0.3759791123,
-        "validation_within_20pct": 0.6631853786,
-        "validation_within_30pct": 0.7676240209,
-        "test_mae_kzt": 1646174.8054945795,
-        "test_rmse_kzt": 3246982.8581770137,
-        "test_r2": 0.9134769876,
-        "test_median_absolute_error_kzt": 795924.5400783457,
-        "test_median_ape": 0.1662828038,
-        "test_within_10pct": 0.3446475196,
-        "test_within_20pct": 0.5770234987,
-        "test_within_30pct": 0.7493472585,
-        "selected": false,
-        "representation": "mixed"
-      },
-      {
-        "model": "Usage ensemble",
+        "model": "ANN ensemble",
         "validation_mae_kzt": 2238371.607965701,
         "validation_rmse_kzt": 11412167.748605328,
         "validation_r2": 0.390875264,
@@ -3341,66 +1688,15 @@
         "test_within_20pct": 0.5848563969,
         "test_within_30pct": 0.7467362924,
         "selected": true,
-        "representation": "mixed"
+        "representation": "mixed ANN/RF"
       }
     ],
     "test_rows": 383,
     "baseline_improvement_fraction": 0.7253230232,
     "improvement_over_midterm_knn_fraction": 0.3309123237,
-    "improvement_over_previous_ann_fraction": 0.0686210232,
-    "improvement_over_delivered_ensemble_fraction": 0.0195827349,
-    "within20_gain_over_delivered_ensemble_fraction": 0.0234986945,
-    "improvement_over_prior_robust_fraction": 0.0070534685,
-    "within20_gain_over_prior_robust_fraction": 0.0078328982,
-    "before_after": [
-      {
-        "version": "Previous ANN control",
-        "mae_kzt": 1754992.977301133,
-        "rmse_kzt": 3483032.1545427386,
-        "r2": 0.9004396058,
-        "median_absolute_error_kzt": 832250.4403513977,
-        "median_ape": 0.1687021472,
-        "within_10pct": 0.3211488251,
-        "within_20pct": 0.5691906005,
-        "within_30pct": 0.7441253264
-      },
-      {
-        "version": "Delivered ensemble before this round",
-        "mae_kzt": 1667212.1367344395,
-        "rmse_kzt": 3167634.1132058366,
-        "r2": 0.9176541603,
-        "median_absolute_error_kzt": 871076.4425499099,
-        "median_ape": 0.1724891951,
-        "within_10pct": 0.318537859,
-        "within_20pct": 0.5613577023,
-        "within_30pct": 0.7467362924
-      },
-      {
-        "version": "Robust ensemble before dataset enrichment",
-        "mae_kzt": 1646174.8054945795,
-        "rmse_kzt": 3246982.8581770137,
-        "r2": 0.9134769876,
-        "median_absolute_error_kzt": 795924.5400783457,
-        "median_ape": 0.1662828038,
-        "within_10pct": 0.3446475196,
-        "within_20pct": 0.5770234987,
-        "within_30pct": 0.7493472585
-      },
-      {
-        "version": "Selected improved model: Usage ensemble",
-        "mae_kzt": 1634563.563433875,
-        "rmse_kzt": 3189732.2920589773,
-        "r2": 0.9165012238,
-        "median_absolute_error_kzt": 801611.0973327365,
-        "median_ape": 0.1660875802,
-        "within_10pct": 0.3420365535,
-        "within_20pct": 0.5848563969,
-        "within_30pct": 0.7467362924
-      }
-    ],
     "success_criterion_met": true,
     "error_analysis": {
-      "selected_model": "Usage ensemble",
+      "selected_model": "ANN ensemble",
       "quartile_cutoffs_kzt": [
         3600000.0,
         6700000.0,
@@ -3614,8 +1910,8 @@
       "mean_residual_kzt": 291649.2711539843,
       "residual_sign": "actual minus prediction; positive means underestimation"
     },
-    "historical_test_disclosure": "Historical test errors motivated feature-engineering hypotheses. Parameters/checkpoints are selected using train CV/validation only. This reused test is retrospective and cannot establish independent generalization of the improvements.",
-    "uncertainty": "Engineering was motivated by known benchmark errors; all reported benchmark gains need independent later-data confirmation. One split and sparse high-price/rare-model segments limit conclusions."
+    "historical_test_disclosure": "Historical test errors motivated earlier feature-engineering hypotheses. This cleanup preserves the previously selected recipe. Training CV and validation control fitting/checkpoints; there is no new blend search or test-based acceptance. This reused test is retrospective and cannot establish independent generalization.",
+    "uncertainty": "Earlier engineering used known benchmark errors; independent later data is needed to confirm gains. One split and sparse high-price/rare-model segments limit conclusions."
   },
   "environment": {
     "python": "3.12.14",
@@ -3628,9 +1924,8 @@
       "scikit-learn": "1.9.1",
       "scipy": "1.18.1",
       "joblib": "1.6.0",
-      "threadpoolctl": "3.8.0",
-      "catboost": "1.2.10"
+      "threadpoolctl": "3.8.0"
     }
   },
-  "elapsed_seconds": 122.940805333
+  "elapsed_seconds": 84.291544625
 }

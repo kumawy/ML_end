@@ -250,7 +250,6 @@
     "cluster_profiles.csv": "cluster_profiles.csv",
     "cluster_centroids_scaled.csv": "cluster_centroids_scaled.csv",
     "cluster_centroids_original.csv": "cluster_centroids_original.csv",
-    "cluster_assignments.csv": "cluster_assignments.csv",
     "pca_projection.csv": "pca_projection.csv",
     "pca_loadings.csv": "pca_loadings.csv",
     "pca_variance.csv": "pca_variance.csv",

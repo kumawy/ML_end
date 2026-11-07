@@ -1,7 +1,0 @@
-# Dataset enrichment development evidence
-
-The original CSV, all retained source fields/targets and the original split are preserved. Source-pattern discovery used TRAIN only. The descriptive utility study compares five groups with15 nested TRAIN-only fits. Only age/usage advanced to a separately declared15-candidate validation study; its winner was frozen before one retrospective historical-test evaluation. This later adaptive step is distinct from the original utility-study scope. Negative groups are retained, and bootstrap intervals do not correct adaptive selection bias.
-
-The utility verifier uses `utility_source_snapshot/`, a byte-identical snapshot of the seven hashed inputs at the time of that study. The prior robust ANN implementation preceded the explicit optional usage API extension; its default preprocessing remains unchanged. Only the packaged provenance directory pointer is relocated; `provenance_original.json` and `verification_original.json` retain the original records. Algorithm, protocol, source hashes and numerical evidence are unchanged. The snapshot is audit evidence, not a second full project.
-
-Historical JSON model artifact paths are provenance and may refer to private research folders; unselected research binaries are not packaged. `run_project.py` reproduces the final models and both staged validation searches. Model artifacts for its declared fits/checkpoints are in `results/robust_ann/` and `results/usage_ann/`. Selected inference is documented in the main README.

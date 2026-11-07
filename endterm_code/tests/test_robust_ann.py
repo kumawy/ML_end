@@ -1,4 +1,4 @@
-"""Real boundary checks for the fixed ANN pools and dual-metric selector."""
+"""Real boundary checks for train-only ANN pools and retained histories."""
 import importlib
 import importlib.util
 from inspect import signature
@@ -39,76 +39,6 @@ class RobustANNTests(unittest.TestCase):
         self.assertIsNotNone(importlib.util.find_spec('robust_ann'),
                              'The fixed robust ANN training and selection module is required')
         return importlib.import_module('robust_ann')
-
-    def test_selector_rejects_each_one_sided_gain_and_retains_baseline(self):
-        # Removing either strict improvement gate would select one of these.
-        module = self.module()
-        target = np.full(5, 100.)
-        baseline = np.array([125., 125., 125., 100., 100.])
-        result = module.select_dual_blend({
-            'baseline': baseline, 'mae_only': [121., 121., 121., 100., 100.],
-            'hit_only': [200., 100., 100., 100., 100.], 'forest': baseline,
-        }, target, 'baseline', ('mae_only', 'hit_only'), 'forest')
-        self.assertEqual(result['selected_name'], 'baseline')
-        self.assertEqual(result['selected_components'], ['baseline'])
-        self.assertEqual(result['weights'], [1.])
-        self.assertFalse(any(row['eligible'] for row in result['candidates']))
-        self.assertEqual(len(result['candidates']), 9)
-
-    def test_selector_ranks_eligible_candidates_by_normalized_mae_and_miss(self):
-        # MAE-only ranking prefers mae_pool (8.4); the prescribed dual score
-        # prefers hit_pool (11.4, all five prices within 20 percent).
-        module = self.module()
-        baseline = np.array([125., 125., 125., 100., 100.])
-        result = module.select_dual_blend({
-            'baseline': baseline, 'mae_pool': [121., 121., 100., 100., 100.],
-            'hit_pool': [119., 119., 119., 100., 100.], 'forest': baseline,
-        }, np.full(5, 100.), 'baseline', ('mae_pool', 'hit_pool'), 'forest')
-        self.assertEqual(result['selected_components'], ['hit_pool'])
-        self.assertEqual(result['weights'], [1.])
-        self.assertAlmostEqual(result['validation_mae_kzt'], 11.4)
-        self.assertEqual(result['validation_within_20pct'], 1.)
-        self.assertAlmostEqual(result['dual_score'], .38)
-        self.assertFalse(result['test_data_used'])
-        json.dumps(result, allow_nan=False)
-
-    def test_selector_rejects_invalid_targets_predictions_and_blend_weights(self):
-        module = self.module()
-        predictions = {'base': [125., 100.], 'a': [121., 100.], 'b': [119., 100.], 'rf': [125., 100.]}
-        for targets in ([0., 100.], [100., np.nan], []):
-            with self.subTest(targets=targets), self.assertRaises(ValueError):
-                module.select_dual_blend(predictions, targets, 'base', ('a', 'b'), 'rf')
-        with self.assertRaises(ValueError):
-            module.select_dual_blend({**predictions, 'a': [1.]}, [100., 100.], 'base', ('a', 'b'), 'rf')
-        with self.assertRaises(ValueError):
-            module.select_dual_blend(predictions, [100., 100.], 'base', ('a', 'b'), 'rf', weights=(0.,))
-
-    def test_optional_baseline_blends_can_win_the_same_strict_dual_selection(self):
-        # The best expanded candidate is unavailable in the original grid;
-        # reference normalization must still use the original baseline.
-        module = self.module()
-        self.assertIn('include_baseline_blends', signature(module.select_dual_blend).parameters)
-        predictions = {
-            'baseline': [140., 70., 115., 115.],
-            'pool_a': [115., 150., 55., 85.],
-            'pool_b': [105., 140., 95., 150.],
-            'forest': [70., 45., 55., 75.],
-        }
-        arguments = (predictions, [100.] * 4, 'baseline', ('pool_a', 'pool_b'), 'forest')
-        original = module.select_dual_blend(*arguments)
-        expanded = module.select_dual_blend(*arguments, include_baseline_blends=True)
-        self.assertEqual(len(original['candidates']), 9)
-        self.assertEqual(original['selected_components'], ['pool_b', 'forest'])
-        self.assertEqual(original['weights'], [.5, .5])
-        self.assertAlmostEqual(original['dual_score'], .5375)
-        self.assertEqual(len(expanded['candidates']), 15)
-        self.assertEqual(expanded['selected_components'], ['pool_a', 'baseline'])
-        self.assertEqual(expanded['weights'], [.25, .75])
-        self.assertAlmostEqual(expanded['validation_mae_kzt'], 12.8125)
-        self.assertEqual(expanded['validation_within_20pct'], .75)
-        self.assertAlmostEqual(expanded['dual_score'], .50625)
-        self.assertEqual(expanded['baseline_validation_metrics']['mae_kzt'], 25.)
-        self.assertEqual(expanded['baseline_validation_metrics']['within_20pct'], .5)
 
     def test_usage_preprocessing_combines_declared_inputs_with_training_only_statistics(self):
         # Using validation values to impute/scale, ignoring an opted-in input,
@@ -184,6 +114,8 @@ class RobustANNTests(unittest.TestCase):
                 train, train.price, validation, np.tile([9999., 99.], 4),
                 np.full(8, 2000.), temporary, additional_numeric=extras, _config=config)
             self.assertEqual(set(models), {'ANN pool MAE', 'ANN pool dual'})
+            self.assertEqual(list(Path(temporary).rglob('*.joblib')), [],
+                             'Pool checkpoints stay in memory; only the final selected model is saved')
             self.assertEqual(report['additional_numeric_inputs'], list(extras))
             self.assertEqual(report['numeric_inputs'], [*module.ROBUST_NUMERIC, *extras])
             self.assertEqual(report['feature_set'], 'corrected_steering_plus_age_usage')
@@ -193,8 +125,6 @@ class RobustANNTests(unittest.TestCase):
             for name, pool in models.items():
                 prediction = pool.predict({'enhanced': enhanced})
                 self.assertTrue(np.isfinite(prediction).all())
-                saved = joblib.load(Path(temporary) / report['artifacts']['models'][name])
-                np.testing.assert_array_equal(prediction, saved.predict({'enhanced': enhanced}))
                 prep = pool.components[0].preprocessor
                 np.testing.assert_array_equal(
                     prep.named_transformers_['num'].named_steps['impute'].statistics_[-2:], [3., 20.])

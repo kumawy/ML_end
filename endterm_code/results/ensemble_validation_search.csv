@@ -1,7 +1,0 @@
-components,weights,validation_mae_kzt
-"['ANN corrected', 'CatBoost']","[0.25, 0.75]",2492955.3443715726
-"['ANN corrected', 'CatBoost']","[0.5, 0.5]",2363426.8750823704
-"['ANN corrected', 'CatBoost']","[0.75, 0.25]",2319060.8838784453
-"['ANN corrected', 'Random forest tuned']","[0.25, 0.75]",2478848.5158907394
-"['ANN corrected', 'Random forest tuned']","[0.5, 0.5]",2315844.3382689264
-"['ANN corrected', 'Random forest tuned']","[0.75, 0.25]",2289371.696786993

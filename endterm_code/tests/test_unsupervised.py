@@ -34,8 +34,8 @@ class UnsupervisedTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as first, tempfile.TemporaryDirectory() as second:
             report = run_unsupervised(self.real_frame, Path(first))
             altered_report = run_unsupervised(changed, Path(second))
-            original = pd.read_csv(Path(first) / "cluster_assignments.csv")
-            altered = pd.read_csv(Path(second) / "cluster_assignments.csv")
+            original = pd.read_csv(Path(first) / "pca_projection.csv")
+            altered = pd.read_csv(Path(second) / "pca_projection.csv")
             np.testing.assert_array_equal(original["cluster"], altered["cluster"])
             np.testing.assert_allclose(original[["PC1", "PC2", "PC3"]], altered[["PC1", "PC2", "PC3"]])
             self.assertEqual(report["selected_k"], altered_report["selected_k"])
@@ -51,7 +51,7 @@ class UnsupervisedTests(unittest.TestCase):
             frame.loc[frame.index[offset::7], feature] = np.nan
         with tempfile.TemporaryDirectory() as directory:
             report = run_unsupervised(frame, Path(directory))
-            assignments = pd.read_csv(Path(directory) / "cluster_assignments.csv")
+            assignments = pd.read_csv(Path(directory) / "pca_projection.csv")
             centroids = pd.read_csv(Path(directory) / "cluster_centroids_scaled.csv")
             self.assertEqual(len(assignments), len(frame))
             self.assertTrue(np.isfinite(assignments[["PC1", "PC2", "PC3"]]).all().all())

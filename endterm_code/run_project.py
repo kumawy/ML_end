@@ -9,9 +9,7 @@ os.environ.setdefault('OMP_NUM_THREADS','1')
 os.environ.setdefault('OPENBLAS_NUM_THREADS','1')
 os.environ.setdefault('MKL_NUM_THREADS','1')
 import json
-import shutil
 import platform
-import sys
 import time
 from pathlib import Path
 from importlib.metadata import version
@@ -33,10 +31,11 @@ from sklearn.pipeline import Pipeline
 from sklearn.tree import DecisionTreeRegressor
 from threadpoolctl import threadpool_limits
 
-from data import SEED, FEATURES, NUMERIC, CATEGORICAL, load_data, split_data, make_preprocessor
+from data import (SEED, FEATURES, NUMERIC, CATEGORICAL, CORRECTED_NUMERIC,
+                  CORRECTED_CATEGORICAL, load_data, split_data, make_preprocessor)
 from ann import train_ann
 from unsupervised import run_unsupervised
-from ensemble import Component, PredictionEnsemble, select_blend
+from ensemble import Component, PredictionEnsemble
 import legacy_data
 
 ROOT = Path(__file__).resolve().parent
@@ -44,6 +43,9 @@ OUT = ROOT / 'results'
 GREEN = '#174B40'
 ACCENT = '#73B99C'
 LEGACY_NAMES = {'Median baseline','Linear regression','KNN midterm','Tree midterm'}
+SELECTED_MODEL = 'ANN ensemble'
+MODEL_ORDER = ('Median baseline', 'Linear regression', 'KNN midterm', 'Tree midterm',
+               'KNN tuned', 'Tree tuned', 'Random forest tuned', 'ANN corrected', SELECTED_MODEL)
 
 
 def metrics(y, prediction):
@@ -172,27 +174,37 @@ def supervised_experiments(X_train,y_train,X_val,y_val,legacy_train,legacy_val):
                               'representation':'Four original baselines use unchanged legacy_data.py. Tuned models use corrected/enriched inputs; OHE min_frequency 1/2/5 is selected inside CV.'}
 
 
-def ann_experiments(X_train,y_train,X_val,y_val,feature_set='full',frequencies=(1,2,5)):
-    """Compare fixed feature-frequency choices on validation, never historical test."""
-    candidates=[];best=None
-    for frequency in frequencies:
-        print('ANN feature set',feature_set,'OHE min_frequency',frequency,flush=True)
-        prep=make_preprocessor(min_frequency=frequency,feature_set=feature_set)
-        train=prep.fit_transform(X_train);val=prep.transform(X_val)
-        directory=OUT/f'ann_{feature_set}_minfreq_{frequency}'
-        model,report=train_ann(train,y_train.to_numpy(),val,y_val.to_numpy(),directory,seed=SEED)
-        report.update({'input_feature_count':int(train.shape[1]),'selected_min_frequency':frequency,'feature_set':feature_set,'history_directory':directory.name})
-        candidates.append(report)
-        if best is None or report['best_validation_mae_kzt'] < best[2]['best_validation_mae_kzt']:
-            best=(model,prep,report,directory)
-    model,prep,report,directory=best
-    for name in ['ann_history.csv','ann_history.png']:
-        shutil.copy2(directory/name,OUT/name)
-    report['feature_frequency_candidates']=[{'min_frequency':r['selected_min_frequency'],'input_feature_count':r['input_feature_count'],
-                                           'validation_mae_kzt':r['best_validation_mae_kzt'],'hidden_layer_sizes':r['hidden_layer_sizes'],
-                                           'best_epoch':r['best_epoch'],'epochs_run':r['epochs_run']} for r in candidates]
-    report['selection']=f'Lowest validation MAE across min_frequency {list(frequencies)} and two fixed architectures, with checkpoint selection. Test not accepted.'
-    return model,prep,report
+def ann_experiments(X_train, y_train, X_val, y_val):
+    """Train only the corrected-view ANN at the frozen OHE threshold of two."""
+    prep = make_preprocessor(min_frequency=2, feature_set='corrected')
+    training = prep.fit_transform(X_train)
+    validation = prep.transform(X_val)
+    model, report = train_ann(training, y_train.to_numpy(), validation, y_val.to_numpy(), OUT, seed=SEED)
+    report.update({
+        'reported_model_name': 'ANN corrected', 'input_feature_count': int(training.shape[1]),
+        'selected_min_frequency': 2, 'feature_set': 'corrected', 'history_directory': '.',
+        'preprocessing': {'fit_split': 'training only', 'training_rows': len(X_train),
+                          'numeric_inputs': CORRECTED_NUMERIC,
+                          'categorical_inputs': CORRECTED_CATEGORICAL,
+                          'categorical_min_frequency': 2,
+                          'numeric_transform': 'Training median imputation followed by StandardScaler',
+                          'categorical_transform': 'Constant unknown imputation; dense OHE with infrequent/unknown handling'},
+    })
+    return model, prep, report
+
+
+def build_selected_ensemble(corrected_pool, usage_pool, forest_component):
+    """Reconstruct the previously selected recipe without another blend search.
+
+    The multiplication order preserves the original flattened ensemble's
+    arithmetic: five usage-MAE members, five corrected-dual members, then RF.
+    """
+    robust_weights = [.75 * float(weight) for weight in corrected_pool.weights] + [.25]
+    return PredictionEnsemble(
+        [*usage_pool.components, *corrected_pool.components, forest_component],
+        [.25 * float(weight) for weight in usage_pool.weights]
+        + [.75 * float(weight) for weight in robust_weights],
+    )
 
 
 def error_analysis(frame,split,y_train,predictions,selected):
@@ -239,228 +251,192 @@ def error_analysis(frame,split,y_train,predictions,selected):
 
 
 def main():
-    from catboost_model import train_catboost
-    from robust_ann import fit_robust_pool, select_dual_blend
+    from robust_ann import fit_robust_pool
     from structured_features import add_structured_features
     from dataset_features import add_dataset_features
     from dataset_export import export_dataset
-    start=time.perf_counter();OUT.mkdir(exist_ok=True)
+    start = time.perf_counter()
+    OUT.mkdir(exist_ok=True)
     np.random.seed(SEED)
-    plt.rcParams.update({'font.family':'DejaVu Sans','font.size':11,'axes.spines.top':False,'axes.spines.right':False})
-    frame,audit=load_data(ROOT);split=split_data(frame)
-    dataset_report=export_dataset(frame,split,ROOT/'dataset',ROOT/'kolesa_cars_2025.csv')
-    legacy_frame,_=legacy_data.load_data(ROOT)
+    plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 11,
+                         'axes.spines.top': False, 'axes.spines.right': False})
+    frame, audit = load_data(ROOT)
+    split = split_data(frame)
+    dataset_report = export_dataset(frame, split, ROOT / 'dataset', ROOT / 'kolesa_cars_2025.csv')
+    legacy_frame, _ = legacy_data.load_data(ROOT)
     assert frame.index.equals(legacy_frame.index)
     assert frame.ad_id.equals(legacy_frame.ad_id)
     assert frame.price.equals(legacy_frame.price)
-    print('Source data:',len(frame),'unique used listings; original IDs/targets retained',flush=True)
-    split_manifest=[]
-    for name,indices in split.items():
-        split_manifest.extend({'ad_id':str(frame.loc[i,'ad_id']),'source_row':int(i),'split':name} for i in indices)
-    pd.DataFrame(split_manifest).to_csv(OUT/'split_manifest.csv',index=False)
-    frame[['ad_id',*FEATURES]].to_csv(OUT/'feature_audit.csv',index=False)
-    X_train=frame.loc[split['train'],FEATURES];y_train=frame.loc[split['train'],'price']
-    X_val=frame.loc[split['validation'],FEATURES];y_val=frame.loc[split['validation'],'price']
-    legacy_train=legacy_frame.loc[split['train'],legacy_data.FEATURES]
-    legacy_val=legacy_frame.loc[split['validation'],legacy_data.FEATURES]
-    train=frame.loc[split['train']]
-    eda=explore(train)
-    # Displacement-based geometry is meaningful for combustion cars. Explicit
-    # electric source listings stay in prediction, but not this numeric analysis.
-    cluster_train=train.loc[~train.fuel.eq('electric')]
-    print('Clustering/PCA:',len(cluster_train),'non-electric training listings',flush=True)
-    unsupervised=run_unsupervised(cluster_train,OUT,seed=SEED)
-    unsupervised['analysis_subset']='Non-electric training listings only; engine displacement is not applicable to explicit electric listings.'
-    unsupervised['excluded_electric_rows']=int(len(train)-len(cluster_train))
-    write_json(OUT/'unsupervised_report.json',unsupervised)
-    models,validation,supervised=supervised_experiments(X_train,y_train,X_val,y_val,legacy_train,legacy_val)
-    print('Control: previous ANN on unchanged legacy representation',flush=True)
-    previous_prep=legacy_data.make_preprocessor()
-    previous_train=previous_prep.fit_transform(legacy_train);previous_val=previous_prep.transform(legacy_val)
-    previous_ann,previous_ann_report=train_ann(previous_train,y_train.to_numpy(),previous_val,y_val.to_numpy(),OUT/'previous_ann',seed=SEED)
-    previous_ann_report['input_feature_count']=int(previous_train.shape[1])
-    validation['ANN previous']=metrics(y_val,previous_ann.predict(previous_val))
-    ann_model,ann_prep,ann_report=ann_experiments(X_train,y_train,X_val,y_val)
-    validation['ANN']=metrics(y_val,ann_model.predict(ann_prep.transform(X_val)))
-    corrected_ann,corrected_prep,corrected_report=ann_experiments(X_train,y_train,X_val,y_val,feature_set='corrected',frequencies=(2,5))
-    validation['ANN corrected']=metrics(y_val,corrected_ann.predict(corrected_prep.transform(X_val)))
-    print('Native categorical CatBoost: training CV and validation checkpoint',flush=True)
-    catboost_model,catboost_report=train_catboost(X_train,y_train.to_numpy(),X_val,y_val.to_numpy(),OUT,seed=SEED)
-    models['CatBoost']=catboost_model
-    validation['CatBoost']=metrics(y_val,catboost_model.predict(X_val))
-    ann_options={'ANN previous':(previous_ann,previous_prep,previous_ann_report,'legacy'),
-                 'ANN':(ann_model,ann_prep,ann_report,'enhanced'),
-                 'ANN corrected':(corrected_ann,corrected_prep,corrected_report,'enhanced')}
-    validation_predictions={name:model.predict(legacy_val if name in LEGACY_NAMES else X_val) for name,model in models.items()}
-    for name,(model,prep,_,representation) in ann_options.items():
-        validation_predictions[name]=model.predict(prep.transform(legacy_val if representation=='legacy' else X_val))
-    best_ann_name=min(ann_options,key=lambda name:validation[name]['mae_kzt'])
-    blend_report=select_blend(validation_predictions,y_val,[(best_ann_name,'CatBoost'),(best_ann_name,'Random forest tuned')])
-    components=[]
-    for name in blend_report['selected_components']:
-        if name in ann_options:
-            model,prep,_,representation=ann_options[name]
-            components.append(Component(model,representation,prep))
-        else:
-            components.append(Component(models[name],'enhanced'))
-    blend=PredictionEnsemble(components,blend_report['weights'])
-    validation_predictions['Ensemble']=blend.predict({'legacy':legacy_val,'enhanced':X_val})
-    validation['Ensemble']=metrics(y_val,validation_predictions['Ensemble'])
-    write_json(OUT/'ensemble_report.json',blend_report)
-    pd.DataFrame(blend_report['candidates']).to_csv(OUT/'ensemble_validation_search.csv',index=False)
-    # Frozen follow-up: average every member of a fixed five-seed ANN pool.
-    # Literal steering comes only from the existing structured description.
-    print('Fixed five-seed ANN pool with literal structured steering',flush=True)
-    robust_models,robust_report=fit_robust_pool(
-        frame.loc[split['train']],y_train.to_numpy(),frame.loc[split['validation']],y_val.to_numpy(),
-        validation_predictions['Ensemble'],OUT/'robust_ann',seed=SEED)
-    robust_report['artifact_base_directory']='robust_ann'
-    structured_val=add_structured_features(frame.loc[split['validation']])
-    for name,model in robust_models.items():
-        validation_predictions[name]=model.predict({'enhanced':structured_val})
-        validation[name]=metrics(y_val,validation_predictions[name])
-    robust_choice=select_dual_blend(validation_predictions,y_val.to_numpy(),'Ensemble',
-                                    list(robust_models),'Random forest tuned')
-    robust_components=[];robust_weights=[]
-    for name,weight in zip(robust_choice['selected_components'],robust_choice['weights']):
-        if name in robust_models or name=='Ensemble':
-            candidate=robust_models[name] if name in robust_models else blend
-            robust_components.extend(candidate.components)
-            robust_weights.extend(float(weight)*float(value) for value in candidate.weights)
-        else:
-            robust_components.append(Component(models[name],'enhanced'))
-            robust_weights.append(float(weight))
-    robust_blend=PredictionEnsemble(robust_components,robust_weights)
-    validation_predictions['Robust ensemble']=robust_blend.predict({'enhanced':structured_val,'legacy':legacy_val})
-    validation['Robust ensemble']=metrics(y_val,validation_predictions['Robust ensemble'])
-    write_json(OUT/'robust_ann_report.json',robust_report)
-    write_json(OUT/'dual_selection_report.json',robust_choice)
-    # Only the age/usage pair advanced after the separate TRAIN-only ablation.
-    # Literal color/equipment and quality flags remain exported audit fields.
-    print('Fixed age/usage ANN follow-up; no quality flags used as predictors',flush=True)
-    enriched_frame=add_dataset_features(frame)
-    usage_raw,usage_report=fit_robust_pool(
-        enriched_frame.loc[split['train']],y_train.to_numpy(),
-        enriched_frame.loc[split['validation']],y_val.to_numpy(),
-        validation_predictions['Robust ensemble'],OUT/'usage_ann',seed=SEED,
-        additional_numeric=('log_vehicle_age','log_annual_mileage_proxy'))
-    usage_models={'Usage '+name:model for name,model in usage_raw.items()}
-    enriched_val=add_structured_features(enriched_frame.loc[split['validation']])
-    usage_predictions={name:model.predict({'enhanced':enriched_val}) for name,model in usage_models.items()}
-    usage_predictions.update({name:validation_predictions[name] for name in ['Robust ensemble','Random forest tuned']})
-    usage_choice=select_dual_blend(usage_predictions,y_val.to_numpy(),'Robust ensemble',
-                                  list(usage_models),'Random forest tuned',include_baseline_blends=True)
-    usage_components=[];usage_weights=[]
-    for name,weight in zip(usage_choice['selected_components'],usage_choice['weights']):
-        if name in usage_models or name=='Robust ensemble':
-            candidate=usage_models[name] if name in usage_models else robust_blend
-            usage_components.extend(candidate.components)
-            usage_weights.extend(float(weight)*float(value) for value in candidate.weights)
-        else:
-            usage_components.append(Component(models[name],'enhanced'));usage_weights.append(float(weight))
-    usage_blend=PredictionEnsemble(usage_components,usage_weights)
-    validation_predictions['Usage ensemble']=usage_blend.predict({'enhanced':enriched_val,'legacy':legacy_val})
-    validation['Usage ensemble']=metrics(y_val,validation_predictions['Usage ensemble'])
-    usage_report['artifact_base_directory']='usage_ann'
-    write_json(OUT/'usage_ann_report.json',usage_report)
-    write_json(OUT/'usage_selection_report.json',usage_choice)
-    pd.DataFrame({'ad_id':frame.loc[split['validation'],'ad_id'].to_numpy(),'actual_price_kzt':y_val.to_numpy(),**usage_predictions}).to_csv(OUT/'usage_validation_predictions.csv',index=False)
-    pd.DataFrame({'ad_id':frame.loc[split['validation'],'ad_id'].to_numpy(),'actual_price_kzt':y_val.to_numpy(),**validation_predictions}).to_csv(OUT/'all_validation_predictions.csv',index=False)
-    # Plot/report the strongest ANN by the declared validation criterion.
-    displayed_ann_report=dict(ann_options[best_ann_name][2])
-    displayed_ann_report['reported_model_name']=best_ann_name
-    directory=OUT/('previous_ann' if best_ann_name=='ANN previous' else displayed_ann_report['history_directory'])
-    for name in ['ann_history.csv','ann_history.png']:
-        shutil.copy2(directory/name,OUT/name)
-    dual_gain=(validation['Robust ensemble']['mae_kzt']<validation['Ensemble']['mae_kzt']
-               and validation['Robust ensemble']['within_20pct']>validation['Ensemble']['within_20pct'])
-    winner='Robust ensemble' if dual_gain else 'Ensemble'
-    usage_gain=(validation['Usage ensemble']['mae_kzt']<validation[winner]['mae_kzt']
-                and validation['Usage ensemble']['within_20pct']>validation[winner]['within_20pct'])
-    if usage_gain:winner='Usage ensemble'
-    # Freeze configurations and selection. This is a known retrospective test,
-    # including earlier inspected error cases that motivated engineering rules.
-    policy=('Historical test errors motivated feature-engineering hypotheses. Parameters/checkpoints are selected using train CV/validation only. '
-            'This reused test is retrospective and cannot establish independent generalization of the improvements.')
-    selection={'selected_model':winner,'selection_metric':'Each follow-up requires strictly lower validation MAE and higher within ±20% than its preceding retained ensemble; then minimize equal-weight normalized MAE and miss fraction.',
-               'seed':SEED,'validation':validation,'test_policy':policy,
-               'follow_up':'First preserve the frozen steering pool control; then test only the TRAIN-OOF-supported age/usage pair with two checkpoints and 12 fixed pool/reference mixtures. No further test-guided tuning.'}
-    write_json(OUT/'selection_before_test.json',selection)
-    print('Frozen validation winner:',winner,'; evaluating retrospective benchmark once',flush=True)
-    X_test=frame.loc[split['test'],FEATURES];y_test=frame.loc[split['test'],'price']
-    legacy_test=legacy_frame.loc[split['test'],legacy_data.FEATURES]
-    test_predictions={name:model.predict(legacy_test if name in LEGACY_NAMES else X_test) for name,model in models.items()}
-    for name,(model,prep,_,representation) in ann_options.items():
-        test_predictions[name]=model.predict(prep.transform(legacy_test if representation=='legacy' else X_test))
-    test_predictions['Ensemble']=blend.predict({'legacy':legacy_test,'enhanced':X_test})
-    structured_test=add_structured_features(frame.loc[split['test']])
-    for name,model in robust_models.items():
-        test_predictions[name]=model.predict({'enhanced':structured_test})
-    test_predictions['Robust ensemble']=robust_blend.predict({'enhanced':structured_test,'legacy':legacy_test})
-    enriched_test=add_structured_features(enriched_frame.loc[split['test']])
-    test_predictions['Usage ensemble']=usage_blend.predict({'enhanced':enriched_test,'legacy':legacy_test})
-    order=['Median baseline','Linear regression','KNN midterm','Tree midterm','KNN tuned','Tree tuned','Random forest tuned','ANN previous','ANN','ANN corrected','CatBoost','Ensemble','ANN pool MAE','ANN pool dual','Robust ensemble','Usage ensemble']
-    test_predictions={name:test_predictions[name] for name in order}
-    rows=[]
-    for name,prediction in test_predictions.items():
-        rows.append({'model':name,**{'validation_'+k:v for k,v in validation[name].items()},
-                     **{'test_'+k:v for k,v in metrics(y_test,prediction).items()},'selected':name==winner,
-                     'representation':'mixed' if name in {'Ensemble','Robust ensemble','Usage ensemble'} else ('corrected+steering' if name in robust_models else ('legacy' if name in LEGACY_NAMES or name=='ANN previous' else 'enhanced'))})
-    comparison=pd.DataFrame(rows)
-    comparison.to_csv(OUT/'model_comparison.csv',index=False)
-    pd.DataFrame({'ad_id':frame.loc[split['test'],'ad_id'].to_numpy(),'actual_price_kzt':y_test.to_numpy(),**test_predictions}).to_csv(OUT/'all_test_predictions.csv',index=False)
-    errors=error_analysis(frame,split,y_train,test_predictions[winner],winner)
-    best=next(row for row in rows if row['model']==winner)
-    baseline=next(row for row in rows if row['model']=='Median baseline')
-    midterm=next(row for row in rows if row['model']=='KNN midterm')
-    previous=next(row for row in rows if row['model']=='ANN previous')
-    delivered=next(row for row in rows if row['model']=='Ensemble')
-    prior_robust=next(row for row in rows if row['model']=='Robust ensemble')
-    improvement=1-best['test_mae_kzt']/baseline['test_mae_kzt']
-    improvement_midterm=1-best['test_mae_kzt']/midterm['test_mae_kzt']
-    improvement_previous=1-best['test_mae_kzt']/previous['test_mae_kzt']
-    before_after=pd.DataFrame([{'version':'Previous ANN control',**metrics(y_test,test_predictions['ANN previous'])},
-                               {'version':'Delivered ensemble before this round',**metrics(y_test,test_predictions['Ensemble'])},
-                               {'version':'Robust ensemble before dataset enrichment',**metrics(y_test,test_predictions['Robust ensemble'])},
-                               {'version':'Selected improved model: '+winner,**metrics(y_test,test_predictions[winner])}])
-    before_after.to_csv(OUT/'before_after.csv',index=False)
-    environment={'python':platform.python_version(),'platform':platform.platform(),'seed':SEED,
-                 'packages':{name:version(name) for name in ['numpy','pandas','matplotlib','scikit-learn','scipy','joblib','threadpoolctl','catboost']}}
-    split_summary={name:{'count':len(indices),'median_price_kzt':float(frame.loc[indices,'price'].median()),'max_price_kzt':float(frame.loc[indices,'price'].max()),'above_100m_count':int((frame.loc[indices,'price']>100e6).sum())} for name,indices in split.items()}
-    report={'data':{**audit,'splits':{k:len(v) for k,v in split.items()},'split_price_summary':split_summary,'numeric_features':NUMERIC,'categorical_features':CATEGORICAL,
-                    'preprocessing':'Enhanced train-fitted numeric imputation/scaling and categorical unknown/OHE. OHE threshold selected on train CV or validation for ANN. CatBoost consumes native categories; legacy controls use unchanged legacy_data.py.'},
-            'eda':eda,'supervised':supervised,'ann':displayed_ann_report,'ann_full':ann_report,'corrected_ann':corrected_report,
-            'previous_ann':previous_ann_report,'catboost':catboost_report,'ensemble':blend_report,
-            'robust_ann':robust_report,'dual_selection':robust_choice,
-            'usage_ann':usage_report,'usage_selection':usage_choice,'dataset_enrichment':{'directory':'dataset',**dataset_report},'unsupervised':unsupervised,
-            'evaluation':{**selection,'model_rows':rows,'test_rows':len(y_test),'baseline_improvement_fraction':improvement,
-                          'improvement_over_midterm_knn_fraction':improvement_midterm,'improvement_over_previous_ann_fraction':improvement_previous,
-                          'improvement_over_delivered_ensemble_fraction':1-best['test_mae_kzt']/delivered['test_mae_kzt'],
-                          'within20_gain_over_delivered_ensemble_fraction':best['test_within_20pct']-delivered['test_within_20pct'],
-                          'improvement_over_prior_robust_fraction':1-best['test_mae_kzt']/prior_robust['test_mae_kzt'],
-                          'within20_gain_over_prior_robust_fraction':best['test_within_20pct']-prior_robust['test_within_20pct'],
-                          'before_after':before_after.to_dict('records'),'success_criterion_met':bool(improvement>=.20),
-                          'error_analysis':errors,'historical_test_disclosure':policy,
-                          'uncertainty':'Engineering was motivated by known benchmark errors; all reported benchmark gains need independent later-data confirmation. One split and sparse high-price/rare-model segments limit conclusions.'},
-            'environment':environment,'elapsed_seconds':time.perf_counter()-start}
-    write_json(OUT/'report.json',report);write_json(OUT/'environment.json',environment)
-    if winner in ann_options: estimator,prep=ann_options[winner][:2]
-    elif winner in {'Ensemble','Robust ensemble','Usage ensemble'}:
-        estimator,prep=({'Ensemble':blend,'Robust ensemble':robust_blend,'Usage ensemble':usage_blend}[winner]),None
-    else: estimator,prep=models[winner],None
-    legacy_winner=winner in LEGACY_NAMES or winner=='ANN previous'
-    joblib.dump({'selected_model':winner,'estimator':estimator,'preprocessor':prep,
-                 'features':{'legacy':legacy_data.FEATURES,'enhanced':FEATURES+(['steering'] if winner in {'Robust ensemble','Usage ensemble'} else [])+(['log_vehicle_age','log_annual_mileage_proxy'] if winner=='Usage ensemble' else [])} if winner in {'Ensemble','Robust ensemble','Usage ensemble'} else (legacy_data.FEATURES if legacy_winner else FEATURES),
-                 'representation':'mixed' if winner in {'Ensemble','Robust ensemble','Usage ensemble'} else ('legacy' if legacy_winner else 'enhanced'),
-                 'currency':'KZT','seed':SEED},OUT/'selected_model.joblib')
-    fig,ax=plt.subplots(figsize=(11,5));x=np.arange(len(rows));w=.38
-    ax.bar(x-w/2,comparison.validation_mae_kzt/1e6,w,label='Validation',color=ACCENT)
-    ax.bar(x+w/2,comparison.test_mae_kzt/1e6,w,label='Historical test',color=GREEN)
-    ax.set_xticks(x,comparison.model,rotation=25,ha='right');ax.set(ylabel='MAE (million KZT)',title='Same-data model comparison');ax.legend()
-    savefig(fig,'model_comparison.png')
-    print(comparison[['model','validation_mae_kzt','test_mae_kzt','test_rmse_kzt','test_r2','test_median_ape','test_within_20pct','selected']].round(4).to_string(index=False),flush=True)
-    print('Selected:',winner,'test MAE:',round(best['test_mae_kzt']),'baseline improvement:',f'{improvement:.1%}','vs previous ANN:',f'{improvement_previous:.1%}',flush=True)
-    print('Saved',OUT,'elapsed seconds',round(report['elapsed_seconds'],1),flush=True)
+    print('Source data:', len(frame), 'unique used listings; original IDs/targets retained', flush=True)
+    split_manifest = [
+        {'ad_id': str(frame.loc[i, 'ad_id']), 'source_row': int(i), 'split': name}
+        for name, indices in split.items() for i in indices
+    ]
+    pd.DataFrame(split_manifest).to_csv(OUT / 'split_manifest.csv', index=False)
+    X_train = frame.loc[split['train'], FEATURES]
+    y_train = frame.loc[split['train'], 'price']
+    X_val = frame.loc[split['validation'], FEATURES]
+    y_val = frame.loc[split['validation'], 'price']
+    legacy_train = legacy_frame.loc[split['train'], legacy_data.FEATURES]
+    legacy_val = legacy_frame.loc[split['validation'], legacy_data.FEATURES]
+    train = frame.loc[split['train']]
+    eda = explore(train)
+    # Displacement geometry is meaningful for combustion cars. Electric rows
+    # remain in supervised prediction, but are excluded from this numeric view.
+    cluster_train = train.loc[~train.fuel.eq('electric')]
+    print('Clustering/PCA:', len(cluster_train), 'non-electric training listings', flush=True)
+    unsupervised = run_unsupervised(cluster_train, OUT, seed=SEED)
+    unsupervised['analysis_subset'] = 'Non-electric training listings only; engine displacement is not applicable to explicit electric listings.'
+    unsupervised['excluded_electric_rows'] = int(len(train) - len(cluster_train))
+    write_json(OUT / 'unsupervised_report.json', unsupervised)
+
+    models, validation, supervised = supervised_experiments(
+        X_train, y_train, X_val, y_val, legacy_train, legacy_val)
+    corrected_ann, corrected_prep, ann_report = ann_experiments(X_train, y_train, X_val, y_val)
+    validation_predictions = {
+        name: model.predict(legacy_val if name in LEGACY_NAMES else X_val)
+        for name, model in models.items()
+    }
+    validation_predictions['ANN corrected'] = corrected_ann.predict(corrected_prep.transform(X_val))
+    validation['ANN corrected'] = metrics(y_val, validation_predictions['ANN corrected'])
+    forest = Component(models['Random forest tuned'], 'enhanced')
+    # These two references are required by the original checkpoint scores;
+    # neither is a new comparison candidate or a newly searched mixture.
+    reference = PredictionEnsemble([Component(corrected_ann, 'enhanced', corrected_prep), forest], [.75, .25])
+    reference_prediction = reference.predict({'enhanced': X_val})
+    print('Fixed five-seed corrected/steering ANN pool', flush=True)
+    corrected_pools, robust_report = fit_robust_pool(
+        frame.loc[split['train']], y_train.to_numpy(),
+        frame.loc[split['validation']], y_val.to_numpy(),
+        reference_prediction, OUT / 'robust_ann', seed=SEED)
+    corrected_pool = corrected_pools['ANN pool dual']
+    robust_reference = PredictionEnsemble(
+        [*corrected_pool.components, forest],
+        [.75 * float(weight) for weight in corrected_pool.weights] + [.25])
+    structured_val = add_structured_features(frame.loc[split['validation']])
+    robust_prediction = robust_reference.predict({'enhanced': structured_val})
+    print('Fixed five-seed age/usage ANN pool', flush=True)
+    enriched_frame = add_dataset_features(frame)
+    usage_pools, usage_report = fit_robust_pool(
+        enriched_frame.loc[split['train']], y_train.to_numpy(),
+        enriched_frame.loc[split['validation']], y_val.to_numpy(),
+        robust_prediction, OUT / 'usage_ann', seed=SEED,
+        additional_numeric=('log_vehicle_age', 'log_annual_mileage_proxy'))
+    selected = build_selected_ensemble(corrected_pool, usage_pools['ANN pool MAE'], forest)
+    enriched_val = add_structured_features(enriched_frame.loc[split['validation']])
+    validation_predictions[SELECTED_MODEL] = selected.predict({'enhanced': enriched_val})
+    validation[SELECTED_MODEL] = metrics(y_val, validation_predictions[SELECTED_MODEL])
+    robust_report['artifact_base_directory'] = 'robust_ann'
+    usage_report['artifact_base_directory'] = 'usage_ann'
+    ensemble_report = {
+        'model': SELECTED_MODEL, 'recipe_status': 'Frozen before this cleanup run; no new blend search',
+        'formula': '0.25 * usage_MAE_pool + 0.75 * (0.75 * corrected_dual_pool + 0.25 * RF)',
+        'reference_for_corrected_checkpoints': '0.75 * ANN corrected + 0.25 * Random forest tuned',
+        'reference_for_usage_checkpoints': '0.75 * corrected_dual_pool + 0.25 * Random forest tuned',
+        'pool_seeds': [11, 23, 42, 71, 101],
+        'component_order': ['usage_MAE_seed_' + str(seed) for seed in [11, 23, 42, 71, 101]]
+                           + ['corrected_dual_seed_' + str(seed) for seed in [11, 23, 42, 71, 101]]
+                           + ['Random forest tuned'],
+        'component_weights': selected.weights,
+        'checkpoint_selection': {'corrected_pool': 'dual_score', 'usage_pool': 'mae_kzt'},
+        'test_data_used_for_this_run_selection': False,
+    }
+    write_json(OUT / 'ensemble_report.json', ensemble_report)
+    validation_predictions = {name: validation_predictions[name] for name in MODEL_ORDER}
+    pd.DataFrame({'ad_id': frame.loc[split['validation'], 'ad_id'].to_numpy(),
+                  'actual_price_kzt': y_val.to_numpy(), **validation_predictions}).to_csv(
+                      OUT / 'all_validation_predictions.csv', index=False)
+    policy = ('Historical test errors motivated earlier feature-engineering hypotheses. '
+              'This cleanup preserves the previously selected recipe. Training CV and validation control '
+              'fitting/checkpoints; there is no new blend search or test-based acceptance. '
+              'This reused test is retrospective and cannot establish independent generalization.')
+    selection = {
+        'selected_model': SELECTED_MODEL, 'selection_metric': 'Previously selected frozen recipe; no new model or blend search',
+        'seed': SEED, 'validation': validation, 'test_policy': policy,
+        'frozen_recipe': ensemble_report,
+    }
+    # Write the recipe and all validation evidence before accessing test inputs.
+    write_json(OUT / 'selection_before_test.json', selection)
+    print('Frozen selected recipe:', SELECTED_MODEL, '; evaluating retrospective benchmark once', flush=True)
+    X_test = frame.loc[split['test'], FEATURES]
+    y_test = frame.loc[split['test'], 'price']
+    legacy_test = legacy_frame.loc[split['test'], legacy_data.FEATURES]
+    test_predictions = {
+        name: model.predict(legacy_test if name in LEGACY_NAMES else X_test)
+        for name, model in models.items()
+    }
+    test_predictions['ANN corrected'] = corrected_ann.predict(corrected_prep.transform(X_test))
+    enriched_test = add_structured_features(enriched_frame.loc[split['test']])
+    test_predictions[SELECTED_MODEL] = selected.predict({'enhanced': enriched_test})
+    test_predictions = {name: test_predictions[name] for name in MODEL_ORDER}
+    rows = [
+        {'model': name, **{'validation_' + key: value for key, value in validation[name].items()},
+         **{'test_' + key: value for key, value in metrics(y_test, prediction).items()},
+         'selected': name == SELECTED_MODEL,
+         'representation': ('mixed ANN/RF' if name == SELECTED_MODEL else
+                            ('legacy' if name in LEGACY_NAMES else
+                             ('corrected' if name == 'ANN corrected' else 'enhanced')))}
+        for name, prediction in test_predictions.items()
+    ]
+    comparison = pd.DataFrame(rows)
+    comparison.to_csv(OUT / 'model_comparison.csv', index=False)
+    pd.DataFrame({'ad_id': frame.loc[split['test'], 'ad_id'].to_numpy(),
+                  'actual_price_kzt': y_test.to_numpy(), **test_predictions}).to_csv(
+                      OUT / 'all_test_predictions.csv', index=False)
+    errors = error_analysis(frame, split, y_train, test_predictions[SELECTED_MODEL], SELECTED_MODEL)
+    best = next(row for row in rows if row['selected'])
+    baseline = next(row for row in rows if row['model'] == 'Median baseline')
+    midterm = next(row for row in rows if row['model'] == 'KNN midterm')
+    improvement = 1 - best['test_mae_kzt'] / baseline['test_mae_kzt']
+    environment = {
+        'python': platform.python_version(), 'platform': platform.platform(), 'seed': SEED,
+        'packages': {name: version(name) for name in
+                     ['numpy', 'pandas', 'matplotlib', 'scikit-learn', 'scipy', 'joblib', 'threadpoolctl']},
+    }
+    split_summary = {
+        name: {'count': len(indices), 'median_price_kzt': float(frame.loc[indices, 'price'].median()),
+               'max_price_kzt': float(frame.loc[indices, 'price'].max()),
+               'above_100m_count': int((frame.loc[indices, 'price'] > 100e6).sum())}
+        for name, indices in split.items()
+    }
+    report = {
+        'data': {**audit, 'splits': {key: len(value) for key, value in split.items()},
+                 'split_price_summary': split_summary, 'numeric_features': NUMERIC, 'categorical_features': CATEGORICAL,
+                 'preprocessing': 'All learned preprocessing is fitted on training rows/folds. Four original baselines use unchanged legacy_data.py. Tuned models select OHE min_frequency inside 3-fold train CV; the corrected single ANN and both fixed pools use min_frequency=2.'},
+        'eda': eda, 'supervised': supervised, 'ann': ann_report, 'ensemble': ensemble_report,
+        'robust_ann': robust_report, 'usage_ann': usage_report,
+        'dataset_enrichment': {'directory': 'dataset', **dataset_report}, 'unsupervised': unsupervised,
+        'evaluation': {**selection, 'model_rows': rows, 'test_rows': len(y_test),
+                       'baseline_improvement_fraction': improvement,
+                       'improvement_over_midterm_knn_fraction': 1 - best['test_mae_kzt'] / midterm['test_mae_kzt'],
+                       'success_criterion_met': bool(improvement >= .20), 'error_analysis': errors,
+                       'historical_test_disclosure': policy,
+                       'uncertainty': 'Earlier engineering used known benchmark errors; independent later data is needed to confirm gains. One split and sparse high-price/rare-model segments limit conclusions.'},
+        'environment': environment, 'elapsed_seconds': time.perf_counter() - start,
+    }
+    write_json(OUT / 'report.json', report)
+    write_json(OUT / 'environment.json', environment)
+    # The only persisted fitted estimator contains all ten ANN checkpoints and RF.
+    joblib.dump({
+        'selected_model': SELECTED_MODEL, 'estimator': selected, 'preprocessor': None,
+        'features': {'enhanced': FEATURES + ['steering', 'log_vehicle_age', 'log_annual_mileage_proxy']},
+        'representation': 'mixed', 'currency': 'KZT', 'seed': SEED,
+        'feature_derivation': 'Use dataset_features.add_dataset_features then structured_features.add_structured_features before estimator.predict({"enhanced": frame}).',
+    }, OUT / 'selected_model.joblib', compress=3)
+    fig, ax = plt.subplots(figsize=(11, 5))
+    x = np.arange(len(rows))
+    width = .38
+    ax.bar(x - width / 2, comparison.validation_mae_kzt / 1e6, width, label='Validation', color=ACCENT)
+    ax.bar(x + width / 2, comparison.test_mae_kzt / 1e6, width, label='Historical test', color=GREEN)
+    ax.set_xticks(x, comparison.model, rotation=25, ha='right')
+    ax.set(ylabel='MAE (million KZT)', title='Same-data model comparison')
+    ax.legend()
+    savefig(fig, 'model_comparison.png')
+    print(comparison[['model', 'validation_mae_kzt', 'test_mae_kzt', 'test_rmse_kzt', 'test_r2',
+                      'test_median_ape', 'test_within_20pct', 'selected']].round(4).to_string(index=False), flush=True)
+    print('Selected:', SELECTED_MODEL, 'test MAE:', round(best['test_mae_kzt']),
+          'baseline improvement:', f'{improvement:.1%}', flush=True)
+    print('Saved', OUT, 'elapsed seconds', round(report['elapsed_seconds'], 1), flush=True)
 
 
 if __name__=='__main__':
