@@ -1,0 +1,42 @@
+{
+  "selection_sha256": "1317510ee5d446f2db396fc2799d744b8659fae06bd5eb76e5e925e429e1ae79",
+  "before": {
+    "mae_kzt": 1646174.8054945795,
+    "rmse_kzt": 3246982.8581770137,
+    "r2": 0.9134769875811917,
+    "median_absolute_error_kzt": 795924.5400783457,
+    "median_ape": 0.16628280378792468,
+    "within_10pct": 0.34464751958224543,
+    "within_20pct": 0.577023498694517,
+    "within_30pct": 0.7493472584856397
+  },
+  "after": {
+    "mae_kzt": 1634563.563433875,
+    "rmse_kzt": 3189732.2920589773,
+    "r2": 0.9165012238379535,
+    "median_absolute_error_kzt": 801611.0973327365,
+    "median_ape": 0.16608758020438757,
+    "within_10pct": 0.34203655352480417,
+    "within_20pct": 0.5848563968668408,
+    "within_30pct": 0.7467362924281984
+  },
+  "improves_both": true,
+  "mae_reduction_fraction": 0.00705346845423005,
+  "within20_gain_pp": 0.7832898172323799,
+  "paired_mae_gain_ci95_kzt": [
+    -15173.169213397076,
+    41639.709250695094
+  ],
+  "paired_within20_gain_ci95_pp": [
+    -0.7832898172323759,
+    2.610966057441253
+  ],
+  "test_policy": "One frozen validation-winner retrospective evaluation; no further search. Known historical test, adaptive selection not covered by bootstrap.",
+  "paired_bootstrap": {
+    "draws": 10000,
+    "seed": 20261107,
+    "rng": "numpy.random.default_rng",
+    "method": "Paired resampling with replacement of the 383 listing indices; percentile 2.5/97.5 of the mean paired absolute-error reduction and within20 hit gain.",
+    "conditioning": "Fixed fitted models on the reused historical split; training and adaptive-selection uncertainty are not included."
+  }
+}

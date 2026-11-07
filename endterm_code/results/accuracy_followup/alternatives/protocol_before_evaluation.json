@@ -1,0 +1,104 @@
+{
+  "configs": [
+    {
+      "name": "extra_raw_full_mf1_leaf1",
+      "family": "extra",
+      "log_target": false,
+      "max_features": 1.0,
+      "min_samples_leaf": 1
+    },
+    {
+      "name": "extra_raw_full_mf065_leaf1",
+      "family": "extra",
+      "log_target": false,
+      "max_features": 0.65,
+      "min_samples_leaf": 1
+    },
+    {
+      "name": "extra_log_full_mf08_leaf1",
+      "family": "extra",
+      "log_target": true,
+      "max_features": 0.8,
+      "min_samples_leaf": 1
+    },
+    {
+      "name": "extra_log_full_mf08_leaf3",
+      "family": "extra",
+      "log_target": true,
+      "max_features": 0.8,
+      "min_samples_leaf": 3
+    },
+    {
+      "name": "hist_log_te_leaves15",
+      "family": "hist",
+      "log_target": true,
+      "loss": "squared_error",
+      "max_leaf_nodes": 15
+    },
+    {
+      "name": "hist_log_te_leaves31",
+      "family": "hist",
+      "log_target": true,
+      "loss": "squared_error",
+      "max_leaf_nodes": 31
+    },
+    {
+      "name": "hist_raw_abs_te_leaves15",
+      "family": "hist",
+      "log_target": false,
+      "loss": "absolute_error",
+      "max_leaf_nodes": 15
+    },
+    {
+      "name": "hist_raw_abs_te_leaves31",
+      "family": "hist",
+      "log_target": false,
+      "loss": "absolute_error",
+      "max_leaf_nodes": 31
+    },
+    {
+      "name": "hist_raw_poisson_te_leaves15",
+      "family": "hist",
+      "log_target": false,
+      "loss": "poisson",
+      "max_leaf_nodes": 15
+    },
+    {
+      "name": "gradient_log_huber_te_depth3",
+      "family": "gradient",
+      "log_target": true,
+      "loss": "huber",
+      "max_depth": 3
+    },
+    {
+      "name": "gradient_log_squared_te_depth3",
+      "family": "gradient",
+      "log_target": true,
+      "loss": "squared_error",
+      "max_depth": 3
+    },
+    {
+      "name": "local_comparable_log_k8",
+      "family": "local",
+      "k": 8,
+      "global_weight": 0.15
+    }
+  ],
+  "training_cv": {
+    "folds": 3,
+    "shuffle": true,
+    "seed": 42
+  },
+  "split_sizes": {
+    "train": 1787,
+    "validation": 383,
+    "test": 383
+  },
+  "finalist_rule": "Best CV MAE from each of four families, then remaining highest CV within20; maximum five validation candidates. Tie breaks by MAE then name.",
+  "target_encoding": "smooth=10; 3-fold cross-fit inside every CV training fold and full training fit; never label-encode validation or test.",
+  "selection": "Pool for parent validation-only ensemble comparisons; MAE and within20 both reported; no selected-test evaluation.",
+  "invariants": "Exact data.load_data/split_data, no altered data or dependency files, no synthetic rows or exclusions; no access to test labels or predict on test.",
+  "source_sha256": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+  "threads": 1,
+  "command": "/Users/muratovaslan/Documents/Codex/2026-11-07/z/work/endterm_improvement/venv/bin/python /Users/muratovaslan/Documents/Codex/2026-11-07/z/work/accuracy_round2/alternatives/run_alternatives.py"
+}

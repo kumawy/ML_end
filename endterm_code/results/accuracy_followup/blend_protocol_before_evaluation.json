@@ -1,0 +1,16 @@
+{
+  "selection": "Eligible only if validation MAE strictly decreases and validation within20 strictly increases versus delivered ensemble. Among eligible, minimize 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction). Baseline retained if none.",
+  "source_shortlists": "Best two validation-dual-score candidates separately from ANN pool, CatBoost training-CV finalists, alternative training-CV finalists. Preserve all source results.",
+  "new_weights": [0.25, 0.5, 0.75],
+  "pairs": [
+    "Each of six shortlisted candidates plus delivered ensemble",
+    "Each of two shortlisted ANN candidates plus delivered random forest",
+    "Best ANN plus best CatBoost",
+    "Best ANN plus best alternative"
+  ],
+  "maximum_new_blends": 30,
+  "aggregation": "Convex arithmetic mean in original KZT. Weight belongs to first named component.",
+  "ANN_extension": "May add two corrected+literal-steering five-seed pool candidates using the same predeclared MAE/dual checkpoints; extractor derived from TRAIN only. No other ANN architectures or seed subsets will be searched.",
+  "test_access": "None during candidate search. Freeze one final selection first; one retrospective evaluation then stops this round. Do not iterate further after test.",
+  "independence": "Historical reused split; no independent generalization claim. No target-dependent gating or actual-price input. No trim/delete evaluation rows."
+}

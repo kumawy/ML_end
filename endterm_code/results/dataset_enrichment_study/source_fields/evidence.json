@@ -1,0 +1,1629 @@
+{
+  "scope": {
+    "source": "/Users/muratovaslan/Documents/ассиктар/ML/endterm/endterm_code/kolesa_cars_2025.csv",
+    "source_sha256": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+    "source_git_blob_sha": "01e57295927f91ffd7996745ce6a867b6d41b0f7",
+    "clean_rows": 2553,
+    "split": "data.split_data: seed 42, original row order",
+    "train_rows": 1787,
+    "train_listing_ids_sha256": "67cbb14ef1935dc50214ebe84d2b6ba822b362dfdf974fcd20204f795ed81df7",
+    "inspected_columns": [
+      "ad_id",
+      "desc",
+      "brand",
+      "model"
+    ],
+    "labels_inspected": false,
+    "validation_or_test_inspected": false,
+    "model_fit": false,
+    "product_edits": false
+  },
+  "color": {
+    "coverage": 1281,
+    "coverage_fraction": 0.7168438724118634,
+    "conventional_sixteen_label_coverage": 1265,
+    "bare_mileage_layout_rows": 67,
+    "counts": {
+      "not_stated": 506,
+      "белый": 407,
+      "черный": 295,
+      "серебристый": 176,
+      "серый": 169,
+      "синий": 71,
+      "зеленый": 42,
+      "красный": 19,
+      "бордовый": 18,
+      "золотистый": 17,
+      "бежевый": 13,
+      "голубой": 12,
+      "коричневый": 11,
+      "вишня": 6,
+      "жёлтый": 6,
+      "хамелеон": 6,
+      "бронза": 4,
+      "бирюзовый": 4,
+      "фиолетовый": 3,
+      "оранжевый": 2
+    },
+    "raw_exact_label_counts": {
+      "бежевый": 13,
+      "белый": 407,
+      "бирюзовый": 4,
+      "бордовый": 18,
+      "бронза": 4,
+      "вишня": 6,
+      "голубой": 12,
+      "жёлтый": 6,
+      "зеленый": 42,
+      "золотистый": 17,
+      "коричневый": 11,
+      "красный": 19,
+      "оранжевый": 2,
+      "серебристый": 176,
+      "серый": 169,
+      "синий": 71,
+      "фиолетовый": 3,
+      "хамелеон": 6,
+      "черный": 295
+    },
+    "literal_labels": [
+      "бежевый",
+      "белый",
+      "бирюзовый",
+      "бордовый",
+      "бронза",
+      "вишня",
+      "голубой",
+      "жёлтый",
+      "зеленый",
+      "золотистый",
+      "коричневый",
+      "красный",
+      "оранжевый",
+      "серебристый",
+      "серый",
+      "синий",
+      "фиолетовый",
+      "хамелеон",
+      "черный"
+    ]
+  },
+  "equipment": {
+    "rows_with_any_explicit_clause": 1237,
+    "strict_contiguous_counts": {
+      "металлик": 675,
+      "литые диски": 642,
+      "тонировка": 602,
+      "люк": 194,
+      "велюр": 170,
+      "кожа": 139,
+      "ветровики": 124,
+      "ксенон": 90,
+      "гур": 84,
+      "аудиосистема": 72,
+      "кондиционер": 71,
+      "abs": 61,
+      "линзованная оптика": 49,
+      "противотуманки": 48,
+      "багажник": 46,
+      "климат-контроль": 41,
+      "дневные ходовые огни": 41,
+      "bluetooth": 41,
+      "спойлер": 39,
+      "биксенон": 38,
+      "хрустальная оптика": 38,
+      "панорамная крыша": 36,
+      "usb": 29,
+      "srs": 27,
+      "обвес": 25,
+      "дерево": 22,
+      "комбинированный": 18,
+      "mp3": 17,
+      "фаркоп": 16,
+      "автозапуск": 16,
+      "сигнализация": 16,
+      "обогрев зеркал": 16,
+      "корректор фар": 16,
+      "зимний режим": 15,
+      "cd": 14,
+      "рейлинги": 13,
+      "алькантара": 10,
+      "спортивный режим": 9,
+      "встроенный телефон": 8,
+      "шторки": 8,
+      "кенгурятник": 7,
+      "подогрев сидений": 6,
+      "полный электропакет": 5,
+      "dvd": 4,
+      "круиз-контроль": 4,
+      "омыватель фар": 4,
+      "сабвуфер": 3,
+      "турбонаддув": 3,
+      "центрозамок": 3,
+      "иммобилайзер": 2,
+      "бесключевой доступ": 2,
+      "мультируль": 2,
+      "турботаймер": 2,
+      "cd-чейнджер": 1
+    },
+    "raw_anywhere_exact_clause_counts": {
+      "abs": 61,
+      "bluetooth": 41,
+      "cd": 14,
+      "cd-чейнджер": 1,
+      "dvd": 4,
+      "mp3": 17,
+      "srs": 27,
+      "usb": 29,
+      "автозапуск": 16,
+      "алькантара": 10,
+      "аудиосистема": 72,
+      "багажник": 46,
+      "бесключевой доступ": 2,
+      "биксенон": 38,
+      "велюр": 170,
+      "ветровики": 124,
+      "встроенный телефон": 8,
+      "гур": 85,
+      "датчик слепых зон": 1,
+      "дерево": 22,
+      "дневные ходовые огни": 41,
+      "зимний режим": 15,
+      "иммобилайзер": 2,
+      "кенгурятник": 7,
+      "климат-контроль": 41,
+      "кожа": 140,
+      "комбинированный": 18,
+      "кондиционер": 72,
+      "корректор фар": 16,
+      "круиз-контроль": 4,
+      "ксенон": 90,
+      "линзованная оптика": 49,
+      "литые диски": 642,
+      "люк": 194,
+      "металлик": 675,
+      "мультируль": 2,
+      "обвес": 25,
+      "обогрев зеркал": 16,
+      "омыватель фар": 4,
+      "панорамная крыша": 36,
+      "подогрев сидений": 6,
+      "полный электропакет": 5,
+      "противотуманки": 48,
+      "рейлинги": 13,
+      "сабвуфер": 3,
+      "сигнализация": 16,
+      "спойлер": 39,
+      "спортивный режим": 9,
+      "тонировка": 602,
+      "турбонаддув": 3,
+      "турботаймер": 2,
+      "фаркоп": 16,
+      "хрустальная оптика": 38,
+      "центрозамок": 3,
+      "шторки": 8
+    },
+    "whitelist": [
+      "abs",
+      "bluetooth",
+      "cd",
+      "cd-чейнджер",
+      "dvd",
+      "mp3",
+      "srs",
+      "usb",
+      "автозапуск",
+      "алькантара",
+      "аудиосистема",
+      "багажник",
+      "бесключевой доступ",
+      "биксенон",
+      "велюр",
+      "ветровики",
+      "встроенный телефон",
+      "гур",
+      "датчик слепых зон",
+      "дерево",
+      "дневные ходовые огни",
+      "зимний режим",
+      "иммобилайзер",
+      "кенгурятник",
+      "климат-контроль",
+      "кожа",
+      "комбинированный",
+      "кондиционер",
+      "корректор фар",
+      "круиз-контроль",
+      "ксенон",
+      "линзованная оптика",
+      "литые диски",
+      "люк",
+      "металлик",
+      "мультируль",
+      "обвес",
+      "обогрев зеркал",
+      "омыватель фар",
+      "панорамная крыша",
+      "подогрев сидений",
+      "полный электропакет",
+      "противотуманки",
+      "рейлинги",
+      "сабвуфер",
+      "сигнализация",
+      "спойлер",
+      "спортивный режим",
+      "тонировка",
+      "турбонаддув",
+      "турботаймер",
+      "фаркоп",
+      "хрустальная оптика",
+      "центрозамок",
+      "шторки"
+    ],
+    "upholstery_literal_sets": [
+      {
+        "labels": [],
+        "rows": 1466
+      },
+      {
+        "labels": [
+          "велюр"
+        ],
+        "rows": 158
+      },
+      {
+        "labels": [
+          "алькантара"
+        ],
+        "rows": 4
+      },
+      {
+        "labels": [
+          "кожа"
+        ],
+        "rows": 130
+      },
+      {
+        "labels": [
+          "велюр",
+          "комбинированный"
+        ],
+        "rows": 2
+      },
+      {
+        "labels": [
+          "комбинированный"
+        ],
+        "rows": 14
+      },
+      {
+        "labels": [
+          "велюр",
+          "кожа"
+        ],
+        "rows": 7
+      },
+      {
+        "labels": [
+          "алькантара",
+          "кожа"
+        ],
+        "rows": 1
+      },
+      {
+        "labels": [
+          "алькантара",
+          "велюр"
+        ],
+        "rows": 3
+      },
+      {
+        "labels": [
+          "алькантара",
+          "кожа",
+          "комбинированный"
+        ],
+        "rows": 1
+      },
+      {
+        "labels": [
+          "алькантара",
+          "комбинированный"
+        ],
+        "rows": 1
+      }
+    ],
+    "multiple_upholstery_literal_rows": 15
+  },
+  "lexical_model_families": [
+    {
+      "brand": "BMW",
+      "rows": 110,
+      "distinct_models": 29,
+      "matched_rows": 65,
+      "matched_distinct_models": 19,
+      "family_counts": {
+        "BMW | numeric_prefix_5": 47,
+        "BMW | original_model:X5": 29,
+        "BMW | numeric_prefix_3": 10,
+        "BMW | original_model:X7": 5,
+        "BMW | numeric_prefix_7": 4,
+        "BMW | original_model:X6": 3,
+        "BMW | numeric_prefix_6": 2,
+        "BMW | original_model:M5": 2,
+        "BMW | numeric_prefix_4": 2,
+        "BMW | original_model:X3": 1,
+        "BMW | original_model:X5 M": 1,
+        "BMW | original_model:X6 M": 1,
+        "BMW | original_model:X1": 1,
+        "BMW | original_model:i7": 1,
+        "BMW | original_model:M3": 1
+      },
+      "mapping": [
+        {
+          "model": "316",
+          "rows": 1,
+          "family": "BMW | numeric_prefix_3"
+        },
+        {
+          "model": "318",
+          "rows": 1,
+          "family": "BMW | numeric_prefix_3"
+        },
+        {
+          "model": "320",
+          "rows": 1,
+          "family": "BMW | numeric_prefix_3"
+        },
+        {
+          "model": "325",
+          "rows": 1,
+          "family": "BMW | numeric_prefix_3"
+        },
+        {
+          "model": "328",
+          "rows": 3,
+          "family": "BMW | numeric_prefix_3"
+        },
+        {
+          "model": "330",
+          "rows": 2,
+          "family": "BMW | numeric_prefix_3"
+        },
+        {
+          "model": "340",
+          "rows": 1,
+          "family": "BMW | numeric_prefix_3"
+        },
+        {
+          "model": "428",
+          "rows": 1,
+          "family": "BMW | numeric_prefix_4"
+        },
+        {
+          "model": "435",
+          "rows": 1,
+          "family": "BMW | numeric_prefix_4"
+        },
+        {
+          "model": "520",
+          "rows": 7,
+          "family": "BMW | numeric_prefix_5"
+        },
+        {
+          "model": "525",
+          "rows": 13,
+          "family": "BMW | numeric_prefix_5"
+        },
+        {
+          "model": "528",
+          "rows": 9,
+          "family": "BMW | numeric_prefix_5"
+        },
+        {
+          "model": "530",
+          "rows": 10,
+          "family": "BMW | numeric_prefix_5"
+        },
+        {
+          "model": "535",
+          "rows": 4,
+          "family": "BMW | numeric_prefix_5"
+        },
+        {
+          "model": "540",
+          "rows": 4,
+          "family": "BMW | numeric_prefix_5"
+        },
+        {
+          "model": "630",
+          "rows": 1,
+          "family": "BMW | numeric_prefix_6"
+        },
+        {
+          "model": "640",
+          "rows": 1,
+          "family": "BMW | numeric_prefix_6"
+        },
+        {
+          "model": "740",
+          "rows": 2,
+          "family": "BMW | numeric_prefix_7"
+        },
+        {
+          "model": "750",
+          "rows": 2,
+          "family": "BMW | numeric_prefix_7"
+        },
+        {
+          "model": "M3",
+          "rows": 1,
+          "family": "BMW | original_model:M3"
+        },
+        {
+          "model": "M5",
+          "rows": 2,
+          "family": "BMW | original_model:M5"
+        },
+        {
+          "model": "X1",
+          "rows": 1,
+          "family": "BMW | original_model:X1"
+        },
+        {
+          "model": "X3",
+          "rows": 1,
+          "family": "BMW | original_model:X3"
+        },
+        {
+          "model": "X5",
+          "rows": 29,
+          "family": "BMW | original_model:X5"
+        },
+        {
+          "model": "X5 M",
+          "rows": 1,
+          "family": "BMW | original_model:X5 M"
+        },
+        {
+          "model": "X6",
+          "rows": 3,
+          "family": "BMW | original_model:X6"
+        },
+        {
+          "model": "X6 M",
+          "rows": 1,
+          "family": "BMW | original_model:X6 M"
+        },
+        {
+          "model": "X7",
+          "rows": 5,
+          "family": "BMW | original_model:X7"
+        },
+        {
+          "model": "i7",
+          "rows": 1,
+          "family": "BMW | original_model:i7"
+        }
+      ]
+    },
+    {
+      "brand": "Mercedes-Benz",
+      "rows": 127,
+      "distinct_models": 48,
+      "matched_rows": 116,
+      "matched_distinct_models": 42,
+      "family_counts": {
+        "Mercedes-Benz | literal_prefix_E": 54,
+        "Mercedes-Benz | literal_prefix_S": 27,
+        "Mercedes-Benz | literal_prefix_C": 14,
+        "Mercedes-Benz | literal_prefix_G": 9,
+        "Mercedes-Benz | literal_prefix_CLS": 4,
+        "Mercedes-Benz | original_model:Sprinter": 4,
+        "Mercedes-Benz | original_model:Vito": 3,
+        "Mercedes-Benz | literal_prefix_CL": 2,
+        "Mercedes-Benz | literal_prefix_GL": 2,
+        "Mercedes-Benz | literal_prefix_ML": 2,
+        "Mercedes-Benz | original_model:GLE Coupe 53 AMG": 1,
+        "Mercedes-Benz | original_model:AMG GT": 1,
+        "Mercedes-Benz | original_model:190": 1,
+        "Mercedes-Benz | original_model:SLS AMG": 1,
+        "Mercedes-Benz | literal_prefix_GLK": 1,
+        "Mercedes-Benz | literal_prefix_GLE": 1
+      },
+      "mapping": [
+        {
+          "model": "190",
+          "rows": 1,
+          "family": "Mercedes-Benz | original_model:190"
+        },
+        {
+          "model": "AMG GT",
+          "rows": 1,
+          "family": "Mercedes-Benz | original_model:AMG GT"
+        },
+        {
+          "model": "C 180",
+          "rows": 5,
+          "family": "Mercedes-Benz | literal_prefix_C"
+        },
+        {
+          "model": "C 200",
+          "rows": 3,
+          "family": "Mercedes-Benz | literal_prefix_C"
+        },
+        {
+          "model": "C 220",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_C"
+        },
+        {
+          "model": "C 230",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_C"
+        },
+        {
+          "model": "C 240",
+          "rows": 2,
+          "family": "Mercedes-Benz | literal_prefix_C"
+        },
+        {
+          "model": "C 250",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_C"
+        },
+        {
+          "model": "C 350",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_C"
+        },
+        {
+          "model": "CL 550",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_CL"
+        },
+        {
+          "model": "CL 600",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_CL"
+        },
+        {
+          "model": "CLS 350",
+          "rows": 2,
+          "family": "Mercedes-Benz | literal_prefix_CLS"
+        },
+        {
+          "model": "CLS 400",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_CLS"
+        },
+        {
+          "model": "CLS 63 AMG",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_CLS"
+        },
+        {
+          "model": "E 200",
+          "rows": 8,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 220",
+          "rows": 2,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 230",
+          "rows": 7,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 240",
+          "rows": 2,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 250",
+          "rows": 2,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 260",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 280",
+          "rows": 14,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 300",
+          "rows": 5,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 320",
+          "rows": 5,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 350",
+          "rows": 3,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 43 AMG",
+          "rows": 2,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 450",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 500",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "E 55 AMG",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_E"
+        },
+        {
+          "model": "G 300",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_G"
+        },
+        {
+          "model": "G 500",
+          "rows": 2,
+          "family": "Mercedes-Benz | literal_prefix_G"
+        },
+        {
+          "model": "G 55 AMG",
+          "rows": 2,
+          "family": "Mercedes-Benz | literal_prefix_G"
+        },
+        {
+          "model": "G 63 AMG",
+          "rows": 4,
+          "family": "Mercedes-Benz | literal_prefix_G"
+        },
+        {
+          "model": "GL 500",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_GL"
+        },
+        {
+          "model": "GL 550",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_GL"
+        },
+        {
+          "model": "GLE 450",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_GLE"
+        },
+        {
+          "model": "GLE Coupe 53 AMG",
+          "rows": 1,
+          "family": "Mercedes-Benz | original_model:GLE Coupe 53 AMG"
+        },
+        {
+          "model": "GLK 300",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_GLK"
+        },
+        {
+          "model": "ML 320",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_ML"
+        },
+        {
+          "model": "ML 350",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_ML"
+        },
+        {
+          "model": "S 320",
+          "rows": 7,
+          "family": "Mercedes-Benz | literal_prefix_S"
+        },
+        {
+          "model": "S 350",
+          "rows": 4,
+          "family": "Mercedes-Benz | literal_prefix_S"
+        },
+        {
+          "model": "S 500",
+          "rows": 11,
+          "family": "Mercedes-Benz | literal_prefix_S"
+        },
+        {
+          "model": "S 550",
+          "rows": 3,
+          "family": "Mercedes-Benz | literal_prefix_S"
+        },
+        {
+          "model": "S 600",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_S"
+        },
+        {
+          "model": "S 63 AMG",
+          "rows": 1,
+          "family": "Mercedes-Benz | literal_prefix_S"
+        },
+        {
+          "model": "SLS AMG",
+          "rows": 1,
+          "family": "Mercedes-Benz | original_model:SLS AMG"
+        },
+        {
+          "model": "Sprinter",
+          "rows": 4,
+          "family": "Mercedes-Benz | original_model:Sprinter"
+        },
+        {
+          "model": "Vito",
+          "rows": 3,
+          "family": "Mercedes-Benz | original_model:Vito"
+        }
+      ]
+    },
+    {
+      "brand": "Lexus",
+      "rows": 73,
+      "distinct_models": 19,
+      "matched_rows": 73,
+      "matched_distinct_models": 19,
+      "family_counts": {
+        "Lexus | literal_prefix_RX": 28,
+        "Lexus | literal_prefix_ES": 16,
+        "Lexus | literal_prefix_LX": 11,
+        "Lexus | literal_prefix_GS": 8,
+        "Lexus | literal_prefix_GX": 4,
+        "Lexus | literal_prefix_LS": 3,
+        "Lexus | literal_prefix_NX": 2,
+        "Lexus | literal_prefix_IS": 1
+      },
+      "mapping": [
+        {
+          "model": "ES 250",
+          "rows": 3,
+          "family": "Lexus | literal_prefix_ES"
+        },
+        {
+          "model": "ES 250 Progressive",
+          "rows": 1,
+          "family": "Lexus | literal_prefix_ES"
+        },
+        {
+          "model": "ES 300",
+          "rows": 2,
+          "family": "Lexus | literal_prefix_ES"
+        },
+        {
+          "model": "ES 350",
+          "rows": 10,
+          "family": "Lexus | literal_prefix_ES"
+        },
+        {
+          "model": "GS 300",
+          "rows": 6,
+          "family": "Lexus | literal_prefix_GS"
+        },
+        {
+          "model": "GS 350",
+          "rows": 2,
+          "family": "Lexus | literal_prefix_GS"
+        },
+        {
+          "model": "GX 460",
+          "rows": 3,
+          "family": "Lexus | literal_prefix_GX"
+        },
+        {
+          "model": "GX 470",
+          "rows": 1,
+          "family": "Lexus | literal_prefix_GX"
+        },
+        {
+          "model": "IS 250",
+          "rows": 1,
+          "family": "Lexus | literal_prefix_IS"
+        },
+        {
+          "model": "LS 460",
+          "rows": 3,
+          "family": "Lexus | literal_prefix_LS"
+        },
+        {
+          "model": "LX 470",
+          "rows": 4,
+          "family": "Lexus | literal_prefix_LX"
+        },
+        {
+          "model": "LX 570",
+          "rows": 6,
+          "family": "Lexus | literal_prefix_LX"
+        },
+        {
+          "model": "LX 600 Luxury 7S",
+          "rows": 1,
+          "family": "Lexus | literal_prefix_LX"
+        },
+        {
+          "model": "NX 200",
+          "rows": 2,
+          "family": "Lexus | literal_prefix_NX"
+        },
+        {
+          "model": "RX 300",
+          "rows": 16,
+          "family": "Lexus | literal_prefix_RX"
+        },
+        {
+          "model": "RX 300 F Sport Design",
+          "rows": 1,
+          "family": "Lexus | literal_prefix_RX"
+        },
+        {
+          "model": "RX 330",
+          "rows": 2,
+          "family": "Lexus | literal_prefix_RX"
+        },
+        {
+          "model": "RX 350",
+          "rows": 8,
+          "family": "Lexus | literal_prefix_RX"
+        },
+        {
+          "model": "RX 400h",
+          "rows": 1,
+          "family": "Lexus | literal_prefix_RX"
+        }
+      ]
+    }
+  ],
+  "all_models": {
+    "distinct": 436,
+    "singletons": 210,
+    "categories_below_five": 348,
+    "rows_in_categories_below_five": 571,
+    "distinct_brand_model": 441,
+    "distinct_brand_scoped_family": 384
+  },
+  "observed_examples": [
+    {
+      "reason": "literal exterior slot: бежевый",
+      "source_row_index": 3868,
+      "ad_id": "206444092",
+      "brand": "Hyundai",
+      "model": "Grandeur",
+      "desc": "2012 г., Б/у седан, 3 л, бензин, КПП автомат, с пробегом 115 000 км, бежевый, Hyundai Grandeur HG300 * Авто с Кореи бе...",
+      "extraction": {
+        "exterior_color_literal": "бежевый",
+        "equipment_literals": []
+      },
+      "family": "Hyundai | original_model:Grandeur"
+    },
+    {
+      "reason": "literal exterior slot: белый",
+      "source_row_index": 219,
+      "ad_id": "136559144",
+      "brand": "Geely",
+      "model": "Emgrand EC7",
+      "desc": "2013 г., Б/у хэтчбек, 1.5 л, бензин, КПП механика, с пробегом 250 000 км, белый, линзованная оптика, дневные ходовые о...",
+      "extraction": {
+        "exterior_color_literal": "белый",
+        "equipment_literals": [
+          "линзованная оптика"
+        ]
+      },
+      "family": "Geely | original_model:Emgrand EC7"
+    },
+    {
+      "reason": "literal exterior slot: бирюзовый",
+      "source_row_index": 455,
+      "ad_id": "206328448",
+      "brand": "Chevrolet",
+      "model": "Lacetti",
+      "desc": "2008 г., Б/у универсал, 1.6 л, газ, КПП механика, с пробегом 320 000 км, бирюзовый, металлик, дерево, bluetooth, CD, C...",
+      "extraction": {
+        "exterior_color_literal": "бирюзовый",
+        "equipment_literals": [
+          "bluetooth",
+          "cd",
+          "дерево",
+          "металлик"
+        ]
+      },
+      "family": "Chevrolet | original_model:Lacetti"
+    },
+    {
+      "reason": "literal exterior slot: бордовый",
+      "source_row_index": 2982,
+      "ad_id": "206841831",
+      "brand": "Opel",
+      "model": "Omega",
+      "desc": "1994 г., Б/у седан, 2 л, бензин, КПП механика, с пробегом 170 000 км, бордовый, тонировка, люк, фаркоп, биксенон, велю...",
+      "extraction": {
+        "exterior_color_literal": "бордовый",
+        "equipment_literals": [
+          "биксенон",
+          "люк",
+          "тонировка",
+          "фаркоп"
+        ]
+      },
+      "family": "Opel | original_model:Omega"
+    },
+    {
+      "reason": "literal exterior slot: бронза",
+      "source_row_index": 446,
+      "ad_id": "206364302",
+      "brand": "Mercedes-Benz",
+      "model": "E 230",
+      "desc": "1992 г., Б/у седан, 2.3 л, бензин, КПП механика, с пробегом 123 456 км, бронза, металлик, тонировка, алькантара, bluet...",
+      "extraction": {
+        "exterior_color_literal": "бронза",
+        "equipment_literals": [
+          "алькантара",
+          "металлик",
+          "тонировка"
+        ]
+      },
+      "family": "Mercedes-Benz | literal_prefix_E"
+    },
+    {
+      "reason": "literal exterior slot: вишня",
+      "source_row_index": 3857,
+      "ad_id": "206513894",
+      "brand": "Nissan",
+      "model": "Qashqai",
+      "desc": "2020 г., Б/у кроссовер, 2 л, бензин, КПП вариатор, с пробегом 98 000 км, вишня, металлик, литые диски, ветровики, рейл...",
+      "extraction": {
+        "exterior_color_literal": "вишня",
+        "equipment_literals": [
+          "ветровики",
+          "литые диски",
+          "металлик"
+        ]
+      },
+      "family": "Nissan | original_model:Qashqai"
+    },
+    {
+      "reason": "literal exterior slot: голубой",
+      "source_row_index": 3598,
+      "ad_id": "206800238",
+      "brand": "ВАЗ",
+      "model": "(Lada) 2115",
+      "desc": "2007 г., Б/у седан, 1.5 л, бензин, КПП механика, с пробегом 150 000 км, голубой, велюр",
+      "extraction": {
+        "exterior_color_literal": "голубой",
+        "equipment_literals": [
+          "велюр"
+        ]
+      },
+      "family": "ВАЗ | original_model:(Lada) 2115"
+    },
+    {
+      "reason": "literal exterior slot: жёлтый",
+      "source_row_index": 1526,
+      "ad_id": "204834430",
+      "brand": "Ford",
+      "model": "Transit",
+      "desc": "2011 г., Б/у фургон, 2.2 л, дизель, КПП механика, жёлтый, Хорошем сост на активном ходу СрочныйТорг После кап ремонта...",
+      "extraction": {
+        "exterior_color_literal": "жёлтый",
+        "equipment_literals": []
+      },
+      "family": "Ford | original_model:Transit"
+    },
+    {
+      "reason": "literal exterior slot: зеленый",
+      "source_row_index": 1715,
+      "ad_id": "205778740",
+      "brand": "Ford",
+      "model": "Kuga",
+      "desc": "2014 г., Б/у кроссовер, 1.6 л, бензин, КПП автомат, с пробегом 102 000 км, зеленый, литые диски, тонировка, дневные хо...",
+      "extraction": {
+        "exterior_color_literal": "зеленый",
+        "equipment_literals": [
+          "литые диски",
+          "тонировка"
+        ]
+      },
+      "family": "Ford | original_model:Kuga"
+    },
+    {
+      "reason": "literal exterior slot: золотистый",
+      "source_row_index": 3098,
+      "ad_id": "204458665",
+      "brand": "Toyota",
+      "model": "Camry",
+      "desc": "2001 г., Б/у седан, 3 л, бензин, КПП автомат, золотистый, тонировка, люк, ветровики, дневные ходовые огни, алькантара,...",
+      "extraction": {
+        "exterior_color_literal": "золотистый",
+        "equipment_literals": [
+          "алькантара",
+          "ветровики",
+          "дневные ходовые огни",
+          "люк",
+          "тонировка"
+        ]
+      },
+      "family": "Toyota | original_model:Camry"
+    },
+    {
+      "reason": "literal exterior slot: коричневый",
+      "source_row_index": 1234,
+      "ad_id": "190022002",
+      "brand": "Subaru",
+      "model": "Forester",
+      "desc": "2014 г., Б/у кроссовер, 2.5 л, бензин, КПП вариатор, с пробегом 265 320 км, коричневый, металлик, литые диски, тониров...",
+      "extraction": {
+        "exterior_color_literal": "коричневый",
+        "equipment_literals": [
+          "литые диски",
+          "металлик"
+        ]
+      },
+      "family": "Subaru | original_model:Forester"
+    },
+    {
+      "reason": "literal exterior slot: красный",
+      "source_row_index": 3161,
+      "ad_id": "205303114",
+      "brand": "Toyota",
+      "model": "Land Cruiser",
+      "desc": "2008 г., Б/у внедорожник, 5.7 л, бензин, КПП автомат, с пробегом 317 000 км, красный, В Идеальном состоянии от и до! О...",
+      "extraction": {
+        "exterior_color_literal": "красный",
+        "equipment_literals": []
+      },
+      "family": "Toyota | original_model:Land Cruiser"
+    },
+    {
+      "reason": "literal exterior slot: оранжевый",
+      "source_row_index": 1306,
+      "ad_id": "204566846",
+      "brand": "Honda",
+      "model": "CR-V",
+      "desc": "1998 г., Б/у кроссовер, 2 л, бензин, КПП механика, с пробегом 200 000 км, оранжевый, литые диски, тонировка, люк, пано...",
+      "extraction": {
+        "exterior_color_literal": "оранжевый",
+        "equipment_literals": [
+          "литые диски",
+          "люк",
+          "тонировка"
+        ]
+      },
+      "family": "Honda | original_model:CR-V"
+    },
+    {
+      "reason": "literal exterior slot: серебристый",
+      "source_row_index": 214,
+      "ad_id": "172717127",
+      "brand": "Mercedes-Benz",
+      "model": "S 320",
+      "desc": "1997 г., Б/у седан, 3.2 л, бензин, КПП автомат, с пробегом 430 000 км, серебристый, металлик, литые диски, тонировка,...",
+      "extraction": {
+        "exterior_color_literal": "серебристый",
+        "equipment_literals": [
+          "литые диски",
+          "металлик",
+          "тонировка"
+        ]
+      },
+      "family": "Mercedes-Benz | literal_prefix_S"
+    },
+    {
+      "reason": "literal exterior slot: серый",
+      "source_row_index": 291,
+      "ad_id": "206475003",
+      "brand": "Toyota",
+      "model": "Highlander",
+      "desc": "2021 г., Б/у кроссовер, 3.5 л, бензин, КПП автомат, с пробегом 25 500 км, серый, металлик, литые диски, тонировка, ксе...",
+      "extraction": {
+        "exterior_color_literal": "серый",
+        "equipment_literals": [
+          "литые диски",
+          "металлик",
+          "тонировка"
+        ]
+      },
+      "family": "Toyota | original_model:Highlander"
+    },
+    {
+      "reason": "literal exterior slot: синий",
+      "source_row_index": 205,
+      "ad_id": "206802458",
+      "brand": "Mercedes-Benz",
+      "model": "E 320",
+      "desc": "1997 г., Б/у седан, 3.2 л, бензин, КПП автомат, с пробегом 170 000 км, синий, тонировка, ксенон, противотуманки, омыва...",
+      "extraction": {
+        "exterior_color_literal": "синий",
+        "equipment_literals": [
+          "ксенон",
+          "противотуманки",
+          "тонировка"
+        ]
+      },
+      "family": "Mercedes-Benz | literal_prefix_E"
+    },
+    {
+      "reason": "literal exterior slot: фиолетовый",
+      "source_row_index": 2187,
+      "ad_id": "206850230",
+      "brand": "Toyota",
+      "model": "Camry",
+      "desc": "1995 г., Б/у седан, 3 л, бензин, КПП автомат, с пробегом 479 482 км, фиолетовый, велюр, кондиционер",
+      "extraction": {
+        "exterior_color_literal": "фиолетовый",
+        "equipment_literals": [
+          "велюр",
+          "кондиционер"
+        ]
+      },
+      "family": "Toyota | original_model:Camry"
+    },
+    {
+      "reason": "literal exterior slot: хамелеон",
+      "source_row_index": 3462,
+      "ad_id": "206669901",
+      "brand": "Honda",
+      "model": "Odyssey",
+      "desc": "2008 г., Б/у минивэн, 3.5 л, бензин, КПП автомат, с пробегом 190 000 км, хамелеон, металлик, кожа, шторки, Ассалаумага...",
+      "extraction": {
+        "exterior_color_literal": "хамелеон",
+        "equipment_literals": [
+          "кожа",
+          "металлик",
+          "шторки"
+        ]
+      },
+      "family": "Honda | original_model:Odyssey"
+    },
+    {
+      "reason": "literal exterior slot: черный",
+      "source_row_index": 3241,
+      "ad_id": "204446392",
+      "brand": "Mercedes-Benz",
+      "model": "S 500",
+      "desc": "2004 г., Б/у седан, 5 л, бензин, КПП автомат, с пробегом 216 000 км, черный, металлик, литые диски, тонировка, люк, об...",
+      "extraction": {
+        "exterior_color_literal": "черный",
+        "equipment_literals": [
+          "литые диски",
+          "люк",
+          "металлик",
+          "тонировка"
+        ]
+      },
+      "family": "Mercedes-Benz | literal_prefix_S"
+    },
+    {
+      "reason": "interior color narrative must not become exterior",
+      "source_row_index": 1319,
+      "ad_id": "206703737",
+      "brand": "Toyota",
+      "model": "Camry",
+      "desc": "2006 г., Б/у седан, 2.4 л, бензин, КПП автомат, кожа, кондиционер, Европеец кожа салон черный. Летний дөңгелек бар Мат...",
+      "extraction": {
+        "exterior_color_literal": "not_stated",
+        "equipment_literals": [
+          "кожа",
+          "кондиционер"
+        ]
+      },
+      "family": "Toyota | original_model:Camry"
+    },
+    {
+      "reason": "negated narrative equipment is not an exact source clause",
+      "source_row_index": 3512,
+      "ad_id": "204463985",
+      "brand": "Toyota",
+      "model": "Land Cruiser Prado",
+      "desc": "2023 г., Б/у внедорожник, 2.4 л, бензин, КПП автомат, с пробегом 38 000 км, Отс. Комплектация полная без панорамы ЛЮКС...",
+      "extraction": {
+        "exterior_color_literal": "not_stated",
+        "equipment_literals": []
+      },
+      "family": "Toyota | original_model:Land Cruiser Prado"
+    },
+    {
+      "reason": "narrative compound is not an exact exterior clause",
+      "source_row_index": 125,
+      "ad_id": "206528817",
+      "brand": "Volkswagen",
+      "model": "Golf",
+      "desc": "1990 г., Б/у хэтчбек, 1.8 л, бензин, КПП механика, с пробегом 444 444 км, Голубой металлик",
+      "extraction": {
+        "exterior_color_literal": "not_stated",
+        "equipment_literals": []
+      },
+      "family": "Volkswagen | original_model:Golf"
+    },
+    {
+      "reason": "malformed/narrative clause before leather terminates the block",
+      "source_row_index": 1585,
+      "ad_id": "204480554",
+      "brand": "Kia",
+      "model": "Seltos",
+      "desc": "2022 г., Б/у кроссовер, 1.6 л, бензин, КПП автомат, с пробегом 33 000 км, 1, 6 акпп, кожа, датчик слепых зон, автопило...",
+      "extraction": {
+        "exterior_color_literal": "not_stated",
+        "equipment_literals": []
+      },
+      "family": "Kia | original_model:Seltos"
+    },
+    {
+      "reason": "narrative clause before air conditioning terminates the block",
+      "source_row_index": 221,
+      "ad_id": "206781256",
+      "brand": "Renault",
+      "model": "Master",
+      "desc": "2011 г., Б/у фургон, 2.8 л, дизель, КПП механика, 2.8 турбо дизель 6 ступ коробка механика, кондиционер, экономайзер,...",
+      "extraction": {
+        "exterior_color_literal": "not_stated",
+        "equipment_literals": []
+      },
+      "family": "Renault | original_model:Master"
+    },
+    {
+      "reason": "equipment present with exterior omitted",
+      "source_row_index": 3503,
+      "ad_id": "201969203",
+      "brand": "Toyota",
+      "model": "Camry",
+      "desc": "2012 г., Б/у седан, 2.5 л, бензин, КПП автомат, с пробегом 369 840 км, велюр, кондиционер, Оканчательно!",
+      "extraction": {
+        "exterior_color_literal": "not_stated",
+        "equipment_literals": [
+          "велюр",
+          "кондиционер"
+        ]
+      },
+      "family": "Toyota | original_model:Camry"
+    },
+    {
+      "reason": "source block omitted or narrative starts immediately",
+      "source_row_index": 3726,
+      "ad_id": "206600005",
+      "brand": "Lexus",
+      "model": "RX 300",
+      "desc": "2001 г., Б/у кроссовер, 3 л, бензин, КПП автомат, с пробегом 270 000 км, Американец в отличном состоянии! Торг небольш...",
+      "extraction": {
+        "exterior_color_literal": "not_stated",
+        "equipment_literals": []
+      },
+      "family": "Lexus | literal_prefix_RX"
+    },
+    {
+      "reason": "bare source mileage layout",
+      "source_row_index": 2170,
+      "ad_id": "205435673",
+      "brand": "Kia",
+      "model": "Rio",
+      "desc": "2020 г., Б/у седан, 1.6 л, бензин, КПП автомат, 81 362 км, белый",
+      "extraction": {
+        "exterior_color_literal": "белый",
+        "equipment_literals": []
+      },
+      "family": "Kia | original_model:Rio"
+    },
+    {
+      "reason": "multiple exact upholstery material labels need an ambiguous/multiple-literals value",
+      "source_row_index": 3937,
+      "ad_id": "200231961",
+      "brand": "Hyundai",
+      "model": "Santa Fe",
+      "desc": "2020 г., Б/у кроссовер, 2.4 л, бензин, КПП автомат, с пробегом 82 000 км, белый, металлик, велюр, комбинированный, ауд...",
+      "extraction": {
+        "exterior_color_literal": "белый",
+        "equipment_literals": [
+          "велюр",
+          "комбинированный",
+          "металлик"
+        ]
+      },
+      "family": "Hyundai | original_model:Santa Fe"
+    }
+  ],
+  "semantic_fixtures": {
+    "provenance": "Synthetic only; do not claim these wording types occur in TRAIN.",
+    "results": [
+      {
+        "name": "normal",
+        "description": "2020 г., Б/у седан, КПП автомат, с пробегом 100 000 км, черный, литые диски, люк, Продам",
+        "expected": {
+          "exterior_color_literal": "черный",
+          "equipment_literals": [
+            "литые диски",
+            "люк"
+          ]
+        },
+        "actual": {
+          "exterior_color_literal": "черный",
+          "equipment_literals": [
+            "литые диски",
+            "люк"
+          ]
+        },
+        "passed": true
+      },
+      {
+        "name": "bare_mileage",
+        "description": "2020 г., Б/у седан, КПП автомат, 100 000 км, белый, велюр",
+        "expected": {
+          "exterior_color_literal": "белый",
+          "equipment_literals": [
+            "велюр"
+          ]
+        },
+        "actual": {
+          "exterior_color_literal": "белый",
+          "equipment_literals": [
+            "велюр"
+          ]
+        },
+        "passed": true
+      },
+      {
+        "name": "interior",
+        "description": "КПП автомат, кожа, кондиционер, Европеец кожа салон черный",
+        "expected": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": [
+            "кожа",
+            "кондиционер"
+          ]
+        },
+        "actual": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": [
+            "кожа",
+            "кондиционер"
+          ]
+        },
+        "passed": true
+      },
+      {
+        "name": "narrative_color",
+        "description": "КПП автомат, Продам машину, черный, люк",
+        "expected": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "actual": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "passed": true
+      },
+      {
+        "name": "negated_color",
+        "description": "КПП автомат, не черный, литые диски",
+        "expected": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "actual": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "passed": true
+      },
+      {
+        "name": "negated_equipment",
+        "description": "КПП автомат, белый, без люка, кожа",
+        "expected": {
+          "exterior_color_literal": "белый",
+          "equipment_literals": []
+        },
+        "actual": {
+          "exterior_color_literal": "белый",
+          "equipment_literals": []
+        },
+        "passed": true
+      },
+      {
+        "name": "equipment_absence",
+        "description": "КПП автомат, белый, люка нет, кожа",
+        "expected": {
+          "exterior_color_literal": "белый",
+          "equipment_literals": []
+        },
+        "actual": {
+          "exterior_color_literal": "белый",
+          "equipment_literals": []
+        },
+        "passed": true
+      },
+      {
+        "name": "conflicting_colors",
+        "description": "КПП автомат, черный, металлик, белый, кожа",
+        "expected": {
+          "exterior_color_literal": "conflict",
+          "equipment_literals": [
+            "кожа",
+            "металлик"
+          ]
+        },
+        "actual": {
+          "exterior_color_literal": "conflict",
+          "equipment_literals": [
+            "кожа",
+            "металлик"
+          ]
+        },
+        "passed": true
+      },
+      {
+        "name": "color_after_equipment",
+        "description": "КПП автомат, кожа, черный",
+        "expected": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": [
+            "кожа"
+          ]
+        },
+        "actual": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": [
+            "кожа"
+          ]
+        },
+        "passed": true
+      },
+      {
+        "name": "truncated_color",
+        "description": "КПП автомат, черн...",
+        "expected": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "actual": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "passed": true
+      },
+      {
+        "name": "truncated_equipment",
+        "description": "КПП автомат, белый, литые дис...",
+        "expected": {
+          "exterior_color_literal": "белый",
+          "equipment_literals": []
+        },
+        "actual": {
+          "exterior_color_literal": "белый",
+          "equipment_literals": []
+        },
+        "passed": true
+      },
+      {
+        "name": "unknown_transmission",
+        "description": "КПП не указана, белый, кожа",
+        "expected": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "actual": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "passed": true
+      },
+      {
+        "name": "two_kpp_clauses",
+        "description": "КПП автомат, белый, КПП механика, кожа",
+        "expected": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "actual": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "passed": true
+      },
+      {
+        "name": "missing_boundary",
+        "description": "черный, литые диски, люк",
+        "expected": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "actual": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "passed": true
+      },
+      {
+        "name": "missing_description",
+        "description": null,
+        "expected": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "actual": {
+          "exterior_color_literal": "not_stated",
+          "equipment_literals": []
+        },
+        "passed": true
+      }
+    ],
+    "lexical_results": [
+      {
+        "brand": "BMW",
+        "model": "525",
+        "expected": "BMW | numeric_prefix_5",
+        "actual": "BMW | numeric_prefix_5",
+        "passed": true
+      },
+      {
+        "brand": "BMW",
+        "model": "530",
+        "expected": "BMW | numeric_prefix_5",
+        "actual": "BMW | numeric_prefix_5",
+        "passed": true
+      },
+      {
+        "brand": "BMW",
+        "model": "X5",
+        "expected": "BMW | original_model:X5",
+        "actual": "BMW | original_model:X5",
+        "passed": true
+      },
+      {
+        "brand": "BMW",
+        "model": "X5 M",
+        "expected": "BMW | original_model:X5 M",
+        "actual": "BMW | original_model:X5 M",
+        "passed": true
+      },
+      {
+        "brand": "Mercedes-Benz",
+        "model": "E 280",
+        "expected": "Mercedes-Benz | literal_prefix_E",
+        "actual": "Mercedes-Benz | literal_prefix_E",
+        "passed": true
+      },
+      {
+        "brand": "Mercedes-Benz",
+        "model": "GLE Coupe 53 AMG",
+        "expected": "Mercedes-Benz | original_model:GLE Coupe 53 AMG",
+        "actual": "Mercedes-Benz | original_model:GLE Coupe 53 AMG",
+        "passed": true
+      },
+      {
+        "brand": "Lexus",
+        "model": "RX 300 F Sport Design",
+        "expected": "Lexus | literal_prefix_RX",
+        "actual": "Lexus | literal_prefix_RX",
+        "passed": true
+      },
+      {
+        "brand": "Toyota",
+        "model": "Land Cruiser",
+        "expected": "Toyota | original_model:Land Cruiser",
+        "actual": "Toyota | original_model:Land Cruiser",
+        "passed": true
+      },
+      {
+        "brand": "Toyota",
+        "model": "Land Cruiser Prado",
+        "expected": "Toyota | original_model:Land Cruiser Prado",
+        "actual": "Toyota | original_model:Land Cruiser Prado",
+        "passed": true
+      }
+    ]
+  }
+}

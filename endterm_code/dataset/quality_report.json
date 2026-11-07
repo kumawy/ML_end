@@ -1,0 +1,257 @@
+{
+  "rows": 2553,
+  "columns": 47,
+  "source_csv": "kolesa_cars_2025.csv",
+  "source_raw_sha256": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+  "enriched_csv_sha256": "90d62b41527f4f4ee5445894df3b63a097140062dab3bb6311ce02cea92b2f87",
+  "retained_ad_ids_sha256": "06abe4e212fbbec2a537d92752700228513eb6d2f3908bfaa21ba488bf96a614",
+  "preserves_ids_targets": true,
+  "source_row_order_preserved": true,
+  "snapshot_year_for_proxies": 2025,
+  "split_counts": {
+    "train": 1787,
+    "validation": 383,
+    "test": 383
+  },
+  "candidate_feature_columns": [
+    "year",
+    "log_km",
+    "mileage_missing",
+    "engine_liters_clean",
+    "engine_missing",
+    "engine_not_applicable",
+    "engine_source_conflict",
+    "dual_fuel_claim",
+    "fuel_text_conflict",
+    "restyling_claim",
+    "leather_claim",
+    "panorama_claim",
+    "warranty_claim",
+    "power_kw",
+    "power_missing",
+    "brand",
+    "model",
+    "body",
+    "fuel",
+    "transmission",
+    "brand_model",
+    "trim",
+    "steering",
+    "log_vehicle_age",
+    "log_annual_mileage_proxy",
+    "alloy_wheels_claim",
+    "sunroof_claim",
+    "model_family_lexical",
+    "color_literal",
+    "upholstery_literal"
+  ],
+  "quality_only_columns": [
+    "description_truncation_signal",
+    "review_low_mileage_old_vehicle",
+    "review_repeated_digit_mileage",
+    "original_drive_requires_review"
+  ],
+  "excluded_identity_target_text_metadata": [
+    "name",
+    "price",
+    "price_raw",
+    "desc",
+    "link",
+    "condition",
+    "mileage_km",
+    "engine_liters",
+    "drive",
+    "ad_id",
+    "vehicle_age_proxy",
+    "description_truncation_signal",
+    "review_low_mileage_old_vehicle",
+    "review_repeated_digit_mileage",
+    "original_drive_requires_review",
+    "source_row_index",
+    "split"
+  ],
+  "all_rows": {
+    "rows": 2553,
+    "mileage_missing": 497,
+    "quality_flag_counts": {
+      "description_truncation_signal": 2193,
+      "review_low_mileage_old_vehicle": 18,
+      "review_repeated_digit_mileage": 70,
+      "original_drive_requires_review": 30
+    },
+    "literal_counts": {
+      "color_literal": {
+        "not_stated": 711,
+        "белый": 573,
+        "черный": 415,
+        "серебристый": 256,
+        "серый": 245,
+        "синий": 111,
+        "зеленый": 61,
+        "красный": 31,
+        "золотистый": 25,
+        "бордовый": 24,
+        "коричневый": 20,
+        "бежевый": 18,
+        "голубой": 14,
+        "вишня": 13,
+        "хамелеон": 10,
+        "жёлтый": 7,
+        "бирюзовый": 7,
+        "бронза": 6,
+        "фиолетовый": 3,
+        "оранжевый": 3
+      },
+      "upholstery_literal": {
+        "not_stated": 2110,
+        "велюр": 209,
+        "кожа": 192,
+        "комбинированный": 18,
+        "multiple_literals": 17,
+        "алькантара": 7
+      }
+    },
+    "positive_claim_counts": {
+      "alloy_wheels_claim": 901,
+      "sunroof_claim": 284
+    }
+  },
+  "by_split": {
+    "train": {
+      "rows": 1787,
+      "mileage_missing": 349,
+      "quality_flag_counts": {
+        "description_truncation_signal": 1545,
+        "review_low_mileage_old_vehicle": 11,
+        "review_repeated_digit_mileage": 43,
+        "original_drive_requires_review": 23
+      },
+      "literal_counts": {
+        "color_literal": {
+          "not_stated": 506,
+          "белый": 407,
+          "черный": 295,
+          "серебристый": 176,
+          "серый": 169,
+          "синий": 71,
+          "зеленый": 42,
+          "красный": 19,
+          "бордовый": 18,
+          "золотистый": 17,
+          "бежевый": 13,
+          "голубой": 12,
+          "коричневый": 11,
+          "вишня": 6,
+          "жёлтый": 6,
+          "хамелеон": 6,
+          "бронза": 4,
+          "бирюзовый": 4,
+          "фиолетовый": 3,
+          "оранжевый": 2
+        },
+        "upholstery_literal": {
+          "not_stated": 1466,
+          "велюр": 158,
+          "кожа": 130,
+          "multiple_literals": 15,
+          "комбинированный": 14,
+          "алькантара": 4
+        }
+      },
+      "positive_claim_counts": {
+        "alloy_wheels_claim": 642,
+        "sunroof_claim": 194
+      }
+    },
+    "validation": {
+      "rows": 383,
+      "mileage_missing": 78,
+      "quality_flag_counts": {
+        "description_truncation_signal": 330,
+        "review_low_mileage_old_vehicle": 5,
+        "review_repeated_digit_mileage": 13,
+        "original_drive_requires_review": 3
+      },
+      "literal_counts": {
+        "color_literal": {
+          "not_stated": 108,
+          "белый": 78,
+          "черный": 62,
+          "серебристый": 44,
+          "серый": 32,
+          "синий": 23,
+          "зеленый": 9,
+          "коричневый": 4,
+          "красный": 4,
+          "золотистый": 4,
+          "бордовый": 4,
+          "вишня": 3,
+          "бирюзовый": 2,
+          "бронза": 2,
+          "голубой": 1,
+          "бежевый": 1,
+          "хамелеон": 1,
+          "жёлтый": 1
+        },
+        "upholstery_literal": {
+          "not_stated": 321,
+          "кожа": 37,
+          "велюр": 23,
+          "комбинированный": 1,
+          "алькантара": 1
+        }
+      },
+      "positive_claim_counts": {
+        "alloy_wheels_claim": 137,
+        "sunroof_claim": 48
+      }
+    },
+    "test": {
+      "rows": 383,
+      "mileage_missing": 70,
+      "quality_flag_counts": {
+        "description_truncation_signal": 318,
+        "review_low_mileage_old_vehicle": 2,
+        "review_repeated_digit_mileage": 14,
+        "original_drive_requires_review": 4
+      },
+      "literal_counts": {
+        "color_literal": {
+          "not_stated": 97,
+          "белый": 88,
+          "черный": 58,
+          "серый": 44,
+          "серебристый": 36,
+          "синий": 17,
+          "зеленый": 10,
+          "красный": 8,
+          "коричневый": 5,
+          "вишня": 4,
+          "золотистый": 4,
+          "бежевый": 4,
+          "хамелеон": 3,
+          "бордовый": 2,
+          "голубой": 1,
+          "оранжевый": 1,
+          "бирюзовый": 1
+        },
+        "upholstery_literal": {
+          "not_stated": 323,
+          "велюр": 28,
+          "кожа": 25,
+          "комбинированный": 3,
+          "multiple_literals": 2,
+          "алькантара": 2
+        }
+      },
+      "positive_claim_counts": {
+        "alloy_wheels_claim": 122,
+        "sunroof_claim": 42
+      }
+    }
+  },
+  "manual_review_rows": 598,
+  "fitted_transforms": "None in this export. Model imputers, indicators, scalers and encoders must be fitted within the training fold.",
+  "model_status": "This export does not fit or select a model. Actual field usage and model metrics are recorded in the project README and results/report.json; candidate status does not mean every extra field is enabled.",
+  "source_limits": "Capped seller descriptions; unmentioned fields are unknown. Literal claims are not verified vehicle facts. No external specs, new ads, synthetic rows, price changes or target-based exclusions."
+}

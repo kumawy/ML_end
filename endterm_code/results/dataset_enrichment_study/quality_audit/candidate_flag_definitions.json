@@ -1,0 +1,57 @@
+{
+  "scope": "Target-independent metadata candidates; retain all original values and rows. Counts refer only to TRAIN.",
+  "row_local": {
+    "review_mileage_missing": {
+      "definition": "mileage_km is NaN",
+      "count_train": 349,
+      "meaning": "No numeric mileage in source; existing model already has mileage_missing. Preserve missingness."
+    },
+    "review_old_low_mileage": {
+      "definition": "year <= 2025 - 10 and 0 <= mileage_km <= 1000",
+      "count_train": 11,
+      "meaning": "Unusually low advertised mileage on a car at least ten model-years old in the 2025 snapshot; possible restoration, reset, entry convention, or error. Not proof of falsification."
+    },
+    "review_mileage_repeated_digits": {
+      "definition": "mileage_km is a nonnegative integer; its base-10 digits have length >= 3 and all equal",
+      "count_train": 43,
+      "meaning": "An entry pattern worth review, including 555/777 and larger repeats. Not proof of a placeholder."
+    },
+    "review_mileage_narrative_without_numeric": {
+      "definition": "mileage_km is NaN and desc contains regex \\bпробег\\w*\\b (ignore case)",
+      "count_train": 2,
+      "meaning": "A mileage-related narrative exists but lacks a safely recoverable explicit numeric km field; do not infer current odometer from historical or unitless wording."
+    },
+    "review_description_ellipsis": {
+      "definition": "desc.rstrip().endswith('...')",
+      "count_train": 1545,
+      "meaning": "Visible truncation marker; omitted equipment/condition wording is unknown, so absence of a claim is not verified absence of equipment."
+    },
+    "description_characters": {
+      "definition": "len(desc) in Unicode code points",
+      "meaning": "Observed snippet coverage, not full description length."
+    }
+  },
+  "audit_only_train_local": {
+    "review_train_attribute_collision": {
+      "definition": "Group size > 1 within TRAIN on brand, model, year, mileage_km, engine_liters_clean, fuel, body, transmission; group missing values together.",
+      "count_train": 62,
+      "meaning": "Similar attribute records, not confirmed duplicate cars. Do not remove or use as model predictor."
+    },
+    "review_train_attribute_and_description_collision": {
+      "definition": "As above, also requiring identical desc.",
+      "count_train": 2,
+      "meaning": "Distinct ad IDs share visible attributes and snippet; mark for provenance review only. Not enough evidence for deduplication."
+    }
+  },
+  "excluded": [
+    "price-derived flags",
+    "price corrections",
+    "seller claims promoted to verified condition",
+    "automatic suspicious-row deletion",
+    "new synthetic rows",
+    "inferred true mileage",
+    "model/brand-inferred fuel or drive",
+    "validation/test analysis"
+  ],
+  "modelling_note": "No predictive benefit is claimed. Adding these columns to an enriched artifact is metadata work; using new predictors requires a separately frozen TRAIN-only validation protocol and no known-test tuning."
+}

@@ -1,0 +1,81 @@
+{
+  "selected_components": [
+    "ANN corrected",
+    "Random forest tuned"
+  ],
+  "weights": [
+    0.75,
+    0.25
+  ],
+  "validation_mae_kzt": 2289371.696786993,
+  "candidates": [
+    {
+      "components": [
+        "ANN corrected",
+        "CatBoost"
+      ],
+      "weights": [
+        0.25,
+        0.75
+      ],
+      "validation_mae_kzt": 2492955.3443715726
+    },
+    {
+      "components": [
+        "ANN corrected",
+        "CatBoost"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ],
+      "validation_mae_kzt": 2363426.8750823704
+    },
+    {
+      "components": [
+        "ANN corrected",
+        "CatBoost"
+      ],
+      "weights": [
+        0.75,
+        0.25
+      ],
+      "validation_mae_kzt": 2319060.8838784453
+    },
+    {
+      "components": [
+        "ANN corrected",
+        "Random forest tuned"
+      ],
+      "weights": [
+        0.25,
+        0.75
+      ],
+      "validation_mae_kzt": 2478848.5158907394
+    },
+    {
+      "components": [
+        "ANN corrected",
+        "Random forest tuned"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ],
+      "validation_mae_kzt": 2315844.3382689264
+    },
+    {
+      "components": [
+        "ANN corrected",
+        "Random forest tuned"
+      ],
+      "weights": [
+        0.75,
+        0.25
+      ],
+      "validation_mae_kzt": 2289371.696786993
+    }
+  ],
+  "selection": "Lowest validation MAE among predeclared pairs and weights; no fitting on test",
+  "test_data_used": false
+}

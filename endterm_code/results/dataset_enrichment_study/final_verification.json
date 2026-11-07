@@ -1,0 +1,15 @@
+{
+  "rows": 2553,
+  "dataset_columns": 47,
+  "review_rows": 598,
+  "source_and_split_unchanged": true,
+  "old_15_predictions_max_difference_kzt": 0.0,
+  "metric_checks": 256,
+  "saved_model_reproduces_frozen_test": true,
+  "components": 11,
+  "selected": "Usage ensemble",
+  "mae_kzt": 1634563.563433875,
+  "within20": 0.5848563968668408,
+  "dictionary_refreshed": true,
+  "tests_passed": 58
+}

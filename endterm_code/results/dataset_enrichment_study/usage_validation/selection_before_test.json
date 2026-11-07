@@ -1,0 +1,162 @@
+{
+  "selected": {
+    "candidate": "ANN age usage MAE 0.25 + current 0.75",
+    "mae_kzt": 2238371.607965701,
+    "within20": 0.6762402088772846,
+    "dual_score": 0.978389653866472,
+    "eligible": true
+  },
+  "eligible_count": 3,
+  "baseline_mae_kzt": 2248401.7333698105,
+  "baseline_within20": 0.6631853785900783,
+  "registry": {
+    "current": {
+      "kind": "reference"
+    },
+    "forest": {
+      "kind": "forest"
+    },
+    "ANN age usage MAE": {
+      "kind": "pool",
+      "artifact": "/Users/muratovaslan/Documents/Codex/2026-11-07/z/work/dataset_enrichment/usage_validation/pool/robust_ann_pool_mae.joblib"
+    },
+    "ANN age usage dual": {
+      "kind": "pool",
+      "artifact": "/Users/muratovaslan/Documents/Codex/2026-11-07/z/work/dataset_enrichment/usage_validation/pool/robust_ann_pool_dual.joblib"
+    },
+    "ANN age usage MAE 0.25 + forest 0.75": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage MAE",
+        "forest"
+      ],
+      "weights": [
+        0.25,
+        0.75
+      ]
+    },
+    "ANN age usage MAE 0.5 + forest 0.5": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage MAE",
+        "forest"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ]
+    },
+    "ANN age usage MAE 0.75 + forest 0.25": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage MAE",
+        "forest"
+      ],
+      "weights": [
+        0.75,
+        0.25
+      ]
+    },
+    "ANN age usage MAE 0.25 + current 0.75": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage MAE",
+        "current"
+      ],
+      "weights": [
+        0.25,
+        0.75
+      ]
+    },
+    "ANN age usage MAE 0.5 + current 0.5": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage MAE",
+        "current"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ]
+    },
+    "ANN age usage MAE 0.75 + current 0.25": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage MAE",
+        "current"
+      ],
+      "weights": [
+        0.75,
+        0.25
+      ]
+    },
+    "ANN age usage dual 0.25 + forest 0.75": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage dual",
+        "forest"
+      ],
+      "weights": [
+        0.25,
+        0.75
+      ]
+    },
+    "ANN age usage dual 0.5 + forest 0.5": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage dual",
+        "forest"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ]
+    },
+    "ANN age usage dual 0.75 + forest 0.25": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage dual",
+        "forest"
+      ],
+      "weights": [
+        0.75,
+        0.25
+      ]
+    },
+    "ANN age usage dual 0.25 + current 0.75": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage dual",
+        "current"
+      ],
+      "weights": [
+        0.25,
+        0.75
+      ]
+    },
+    "ANN age usage dual 0.5 + current 0.5": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage dual",
+        "current"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ]
+    },
+    "ANN age usage dual 0.75 + current 0.25": {
+      "kind": "blend",
+      "components": [
+        "ANN age usage dual",
+        "current"
+      ],
+      "weights": [
+        0.75,
+        0.25
+      ]
+    }
+  },
+  "test_evaluated": false,
+  "feature_source": "TRAIN-only utility study; no test-guided group expansion."
+}

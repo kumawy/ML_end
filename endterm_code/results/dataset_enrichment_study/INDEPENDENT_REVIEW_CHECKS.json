@@ -1,0 +1,209 @@
+{
+  "original_column_roundtrip": {
+    "name": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "price": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "price_raw": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "desc": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "link": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "brand": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "model": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "condition": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "year": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "mileage_km": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "engine_liters": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "fuel": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "transmission": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "drive": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "ad_id": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "dual_fuel_claim": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "fuel_text_conflict": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "engine_source_conflict": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "engine_not_applicable": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "engine_liters_clean": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "engine_missing": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "body": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "brand_model": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "trim": {
+      "missing_mask_equal": true,
+      "values_equal": true
+    },
+    "restyling_claim": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "leather_claim": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "panorama_claim": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "warranty_claim": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "power_kw": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "power_missing": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "log_km": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    },
+    "mileage_missing": {
+      "missing_mask_equal": true,
+      "values_equal": true,
+      "max_roundtrip_abs_difference": 0.0
+    }
+  },
+  "all_original_columns_pass": true,
+  "targets_exact": true,
+  "split_exact": true,
+  "split_counts": {
+    "train": 1787,
+    "validation": 383,
+    "test": 383
+  },
+  "train_family_distinct_labels": 384,
+  "train_prefix_group_rows": 254,
+  "source_hash": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+  "code_hashes": {
+    "dataset_features.py": "782599a5f5bb401eeeef14d6599737a718112dba8bd043a9e5074edbf2a814b7",
+    "dataset_export.py": "04e3cbfc5272ae9b2840ffce60c07879dcf5b9e8e32f4f241662c8c7ddf865f6",
+    "tests/test_dataset_features.py": "38c5ee1720663b4d5d7d055416c5c6b37dbfd61c193808d6933b7bbf0c6fc35b",
+    "tests/test_dataset_export.py": "e395436500b107924b62109aa0125468c8852530a59de3eda7ee5d37a01ea4b7"
+  },
+  "unchanged_from_original": {
+    "kolesa_cars_2025.csv": true,
+    "data.py": true,
+    "structured_features.py": true,
+    "robust_ann.py": true,
+    "ensemble.py": true,
+    "results/selected_model.joblib": true
+  },
+  "focused_dataset_tests": {
+    "passed": 19,
+    "failed": 0
+  },
+  "artifact_rows": 2553,
+  "artifact_columns": 47,
+  "dictionary_covers_every_export_column_once": true,
+  "candidate_count": 30,
+  "candidate_forbidden_overlap": [],
+  "quality_flags_excluded": true,
+  "review_queue_rows": 598,
+  "review_queue_exact_source_subset": true,
+  "current_export_csv_hash_matches_report": true,
+  "train_description_cap_count": 1545,
+  "dictionary_snapshot_issue": {
+    "price_units": "source units",
+    "price_raw_role": "raw_source_text",
+    "expected_price_units": "KZT",
+    "expected_price_raw_role": "raw_target_text"
+  },
+  "findings": [
+    {
+      "priority": "P2",
+      "kind": "stale_generated_artifact",
+      "file": "code/dataset/data_dictionary.csv",
+      "action": "Regenerate export using final dataset_export.py; expected price units KZT and price_raw role raw_target_text."
+    }
+  ],
+  "disposition": "Code and dataset integrity pass; refresh stale generated dictionary before handoff.",
+  "snapshot_context": "Initial enrichment-only review, before separate usage-model integration. Historical unchanged-model hashes apply to that snapshot.",
+  "later_resolution": {
+    "generated_dictionary": "Resolved after final main export: price units KZT, price_raw role raw_target_text; independently rechecked.",
+    "final_integration_review": "INTEGRATION_REVIEW.md"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "scope": "Original seed-42 TRAIN subset only; no test or validation records analysed",
+  "train_rows": 1787,
+  "steering_counts": {
+    "not_stated": 1694,
+    "right_explicit": 93
+  },
+  "rows_with_kpp_boundary": 1787,
+  "rows_with_negated_steering_phrase": 0,
+  "model_categories": 436,
+  "singleton_model_categories": 210,
+  "rare_lt5_model_categories": 348,
+  "rare_lt5_model_rows": 571,
+  "steering_by_brand_model_mixed_groups": 19,
+  "no_mutation_verified": true,
+  "source_files_changed": false,
+  "model_fits_run": 0,
+  "semantic_fixtures": "8 standalone string fixtures passed; not dataset augmentation",
+  "warning": "Absence stays not_stated; no source evidence for left_explicit or conflict in TRAIN; validation must establish improvement on BOTH MAE and within20."
+}

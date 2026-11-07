@@ -1,0 +1,8 @@
+{
+  "rows": 2553,
+  "recognized_target_text": 2553,
+  "exact_matches": 2553,
+  "unrecognized": 0,
+  "recognized_mismatches": 0,
+  "interpretation": "Checks consistency of the retained numeric target with its original currency text, not actual market value or seller truth. No price was changed. These target-derived diagnostics are audit only, not predictors."
+}

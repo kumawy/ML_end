@@ -1,0 +1,808 @@
+{
+  "scope": "Read-only completed-artifact verification; no fits, searches or new target associations.",
+  "export": {
+    "rows": 2553,
+    "columns": 47,
+    "all_32_original_columns_exact": true,
+    "column_checks": {
+      "name": true,
+      "price": true,
+      "price_raw": true,
+      "desc": true,
+      "link": true,
+      "brand": true,
+      "model": true,
+      "condition": true,
+      "year": true,
+      "mileage_km": true,
+      "engine_liters": true,
+      "fuel": true,
+      "transmission": true,
+      "drive": true,
+      "ad_id": true,
+      "dual_fuel_claim": true,
+      "fuel_text_conflict": true,
+      "engine_source_conflict": true,
+      "engine_not_applicable": true,
+      "engine_liters_clean": true,
+      "engine_missing": true,
+      "body": true,
+      "brand_model": true,
+      "trim": true,
+      "restyling_claim": true,
+      "leather_claim": true,
+      "panorama_claim": true,
+      "warranty_claim": true,
+      "power_kw": true,
+      "power_missing": true,
+      "log_km": true,
+      "mileage_missing": true
+    },
+    "source_order_exact": true,
+    "split_exact": true,
+    "price_units_kzt": true,
+    "price_raw_target_text_role": true,
+    "model_status_stage_neutral": true,
+    "model_status_text": "This export does not fit or select a model. Actual field usage and model metrics are recorded in the project README and results/report.json; candidate status does not mean every extra field is enabled.",
+    "csv_hash_matches_report": true
+  },
+  "old_controls": {
+    "count": 15,
+    "test_identity_order_exact": true,
+    "test_targets_exact": true,
+    "validation_identity_order_exact": true,
+    "validation_targets_exact": true,
+    "test_predictions": {
+      "Median baseline": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Linear regression": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "KNN midterm": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Tree midterm": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "KNN tuned": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Tree tuned": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Random forest tuned": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "ANN previous": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "ANN": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "ANN corrected": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "CatBoost": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Ensemble": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "ANN pool MAE": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "ANN pool dual": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Robust ensemble": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      }
+    },
+    "validation_predictions": {
+      "Median baseline": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Linear regression": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "KNN midterm": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Tree midterm": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "KNN tuned": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Tree tuned": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Random forest tuned": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "ANN previous": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "ANN": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "ANN corrected": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "CatBoost": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Ensemble": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "ANN pool MAE": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "ANN pool dual": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      },
+      "Robust ensemble": {
+        "exact": true,
+        "max_abs_difference": 0.0,
+        "close_1e_7_kzt": true
+      }
+    }
+  },
+  "comparison": {
+    "rows": 16,
+    "selected": [
+      "Usage ensemble"
+    ]
+  },
+  "usage_research_prediction_equivalence": {
+    "Usage ANN pool MAE": {
+      "exact": true,
+      "max_abs_difference": 0.0,
+      "close_1e_7_kzt": true
+    },
+    "Usage ANN pool dual": {
+      "exact": true,
+      "max_abs_difference": 0.0,
+      "close_1e_7_kzt": true
+    },
+    "Robust ensemble": {
+      "exact": true,
+      "max_abs_difference": 0.0,
+      "close_1e_7_kzt": true
+    },
+    "Random forest tuned": {
+      "exact": true,
+      "max_abs_difference": 0.0,
+      "close_1e_7_kzt": true
+    }
+  },
+  "selection": {
+    "default_candidates": 9,
+    "expanded_candidates": 15,
+    "selected_components": [
+      "Usage ANN pool MAE",
+      "Robust ensemble"
+    ],
+    "weights": [
+      0.25,
+      0.75
+    ],
+    "validation_mae_kzt": 2238371.607965701,
+    "validation_within20": 0.6762402088772846,
+    "candidate_checks": [
+      {
+        "name": "Robust ensemble",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool MAE",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool dual",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool MAE 0.25 + Random forest tuned 0.75",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool MAE 0.5 + Random forest tuned 0.5",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool MAE 0.75 + Random forest tuned 0.25",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool MAE 0.25 + Robust ensemble 0.75",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool MAE 0.5 + Robust ensemble 0.5",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool MAE 0.75 + Robust ensemble 0.25",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool dual 0.25 + Random forest tuned 0.75",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool dual 0.5 + Random forest tuned 0.5",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool dual 0.75 + Random forest tuned 0.25",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool dual 0.25 + Robust ensemble 0.75",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool dual 0.5 + Robust ensemble 0.5",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      },
+      {
+        "name": "Usage ANN pool dual 0.75 + Robust ensemble 0.25",
+        "prediction_vs_research": {
+          "exact": true,
+          "max_abs_difference": 0.0,
+          "close_1e_7_kzt": true
+        },
+        "mae_difference": 0.0,
+        "hit_difference": 0.0,
+        "dual_score_difference": 0.0
+      }
+    ]
+  },
+  "main_ordering": {
+    "freeze_line": 388,
+    "test_input_line": 390,
+    "freeze_precedes_test": true
+  },
+  "saved_bundle": {
+    "selected_model": "Usage ensemble",
+    "representation": "mixed",
+    "enhanced_schema": [
+      "year",
+      "log_km",
+      "mileage_missing",
+      "engine_liters_clean",
+      "engine_missing",
+      "engine_not_applicable",
+      "engine_source_conflict",
+      "dual_fuel_claim",
+      "fuel_text_conflict",
+      "restyling_claim",
+      "leather_claim",
+      "panorama_claim",
+      "warranty_claim",
+      "power_kw",
+      "power_missing",
+      "brand",
+      "model",
+      "body",
+      "fuel",
+      "transmission",
+      "brand_model",
+      "trim",
+      "steering",
+      "log_vehicle_age",
+      "log_annual_mileage_proxy"
+    ],
+    "enhanced_schema_size": 25,
+    "legacy_schema_size": 9,
+    "forbidden_schema_overlap": [],
+    "flat_components": 11,
+    "weights": [
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.11250000000000002,
+      0.11250000000000002,
+      0.11250000000000002,
+      0.11250000000000002,
+      0.11250000000000002,
+      0.1875
+    ],
+    "weight_sum": 1.0000000000000002,
+    "component_contracts": [
+      {
+        "representation": "enhanced",
+        "weight": 0.05,
+        "estimator_class": "ANNRegressor",
+        "numeric_inputs": [
+          "year",
+          "log_km",
+          "mileage_missing",
+          "engine_liters_clean",
+          "engine_missing",
+          "engine_not_applicable",
+          "engine_source_conflict",
+          "log_vehicle_age",
+          "log_annual_mileage_proxy"
+        ],
+        "categorical_inputs": [
+          "brand",
+          "model",
+          "body",
+          "fuel",
+          "transmission",
+          "steering"
+        ]
+      },
+      {
+        "representation": "enhanced",
+        "weight": 0.05,
+        "estimator_class": "ANNRegressor",
+        "numeric_inputs": [
+          "year",
+          "log_km",
+          "mileage_missing",
+          "engine_liters_clean",
+          "engine_missing",
+          "engine_not_applicable",
+          "engine_source_conflict",
+          "log_vehicle_age",
+          "log_annual_mileage_proxy"
+        ],
+        "categorical_inputs": [
+          "brand",
+          "model",
+          "body",
+          "fuel",
+          "transmission",
+          "steering"
+        ]
+      },
+      {
+        "representation": "enhanced",
+        "weight": 0.05,
+        "estimator_class": "ANNRegressor",
+        "numeric_inputs": [
+          "year",
+          "log_km",
+          "mileage_missing",
+          "engine_liters_clean",
+          "engine_missing",
+          "engine_not_applicable",
+          "engine_source_conflict",
+          "log_vehicle_age",
+          "log_annual_mileage_proxy"
+        ],
+        "categorical_inputs": [
+          "brand",
+          "model",
+          "body",
+          "fuel",
+          "transmission",
+          "steering"
+        ]
+      },
+      {
+        "representation": "enhanced",
+        "weight": 0.05,
+        "estimator_class": "ANNRegressor",
+        "numeric_inputs": [
+          "year",
+          "log_km",
+          "mileage_missing",
+          "engine_liters_clean",
+          "engine_missing",
+          "engine_not_applicable",
+          "engine_source_conflict",
+          "log_vehicle_age",
+          "log_annual_mileage_proxy"
+        ],
+        "categorical_inputs": [
+          "brand",
+          "model",
+          "body",
+          "fuel",
+          "transmission",
+          "steering"
+        ]
+      },
+      {
+        "representation": "enhanced",
+        "weight": 0.05,
+        "estimator_class": "ANNRegressor",
+        "numeric_inputs": [
+          "year",
+          "log_km",
+          "mileage_missing",
+          "engine_liters_clean",
+          "engine_missing",
+          "engine_not_applicable",
+          "engine_source_conflict",
+          "log_vehicle_age",
+          "log_annual_mileage_proxy"
+        ],
+        "categorical_inputs": [
+          "brand",
+          "model",
+          "body",
+          "fuel",
+          "transmission",
+          "steering"
+        ]
+      },
+      {
+        "representation": "enhanced",
+        "weight": 0.11250000000000002,
+        "estimator_class": "ANNRegressor",
+        "numeric_inputs": [
+          "year",
+          "log_km",
+          "mileage_missing",
+          "engine_liters_clean",
+          "engine_missing",
+          "engine_not_applicable",
+          "engine_source_conflict"
+        ],
+        "categorical_inputs": [
+          "brand",
+          "model",
+          "body",
+          "fuel",
+          "transmission",
+          "steering"
+        ]
+      },
+      {
+        "representation": "enhanced",
+        "weight": 0.11250000000000002,
+        "estimator_class": "ANNRegressor",
+        "numeric_inputs": [
+          "year",
+          "log_km",
+          "mileage_missing",
+          "engine_liters_clean",
+          "engine_missing",
+          "engine_not_applicable",
+          "engine_source_conflict"
+        ],
+        "categorical_inputs": [
+          "brand",
+          "model",
+          "body",
+          "fuel",
+          "transmission",
+          "steering"
+        ]
+      },
+      {
+        "representation": "enhanced",
+        "weight": 0.11250000000000002,
+        "estimator_class": "ANNRegressor",
+        "numeric_inputs": [
+          "year",
+          "log_km",
+          "mileage_missing",
+          "engine_liters_clean",
+          "engine_missing",
+          "engine_not_applicable",
+          "engine_source_conflict"
+        ],
+        "categorical_inputs": [
+          "brand",
+          "model",
+          "body",
+          "fuel",
+          "transmission",
+          "steering"
+        ]
+      },
+      {
+        "representation": "enhanced",
+        "weight": 0.11250000000000002,
+        "estimator_class": "ANNRegressor",
+        "numeric_inputs": [
+          "year",
+          "log_km",
+          "mileage_missing",
+          "engine_liters_clean",
+          "engine_missing",
+          "engine_not_applicable",
+          "engine_source_conflict"
+        ],
+        "categorical_inputs": [
+          "brand",
+          "model",
+          "body",
+          "fuel",
+          "transmission",
+          "steering"
+        ]
+      },
+      {
+        "representation": "enhanced",
+        "weight": 0.11250000000000002,
+        "estimator_class": "ANNRegressor",
+        "numeric_inputs": [
+          "year",
+          "log_km",
+          "mileage_missing",
+          "engine_liters_clean",
+          "engine_missing",
+          "engine_not_applicable",
+          "engine_source_conflict"
+        ],
+        "categorical_inputs": [
+          "brand",
+          "model",
+          "body",
+          "fuel",
+          "transmission",
+          "steering"
+        ]
+      },
+      {
+        "representation": "enhanced",
+        "weight": 0.1875,
+        "estimator_class": "Pipeline",
+        "numeric_inputs": [],
+        "categorical_inputs": []
+      }
+    ],
+    "saved_inference_matches_main": {
+      "exact": true,
+      "max_abs_difference": 0.0,
+      "close_1e_7_kzt": true
+    },
+    "report_additional_numeric": [
+      "log_vehicle_age",
+      "log_annual_mileage_proxy"
+    ],
+    "report_artifact_base": "usage_ann",
+    "report_model_files_exist": true
+  },
+  "frozen_evaluation": {
+    "saved_csv_rows": 383,
+    "main_vs_frozen_before": {
+      "exact": true,
+      "max_abs_difference": 0.0,
+      "close_1e_7_kzt": true
+    },
+    "main_vs_frozen_after": {
+      "exact": true,
+      "max_abs_difference": 0.0,
+      "close_1e_7_kzt": true
+    },
+    "frozen_identity_order_exact": true,
+    "metrics": {
+      "before": {
+        "mae_kzt": 1646174.8054945795,
+        "rmse_kzt": 3246982.8581770137,
+        "r2": 0.9134769875811917,
+        "median_absolute_error_kzt": 795924.5400783457,
+        "median_ape": 0.16628280378792468,
+        "within_10pct": 0.34464751958224543,
+        "within_20pct": 0.577023498694517,
+        "within_30pct": 0.7493472584856397
+      },
+      "after": {
+        "mae_kzt": 1634563.563433875,
+        "rmse_kzt": 3189732.2920589773,
+        "r2": 0.9165012238379535,
+        "median_absolute_error_kzt": 801611.0973327365,
+        "median_ape": 0.16608758020438757,
+        "within_10pct": 0.34203655352480417,
+        "within_20pct": 0.5848563968668408,
+        "within_30pct": 0.7467362924281984
+      }
+    },
+    "max_metric_difference_from_frozen_json": 0.0,
+    "selection_hash_matches_pretest_freeze": true,
+    "bootstrap": {
+      "draws": 10000,
+      "seed": 20261107,
+      "rng": "numpy.random.default_rng",
+      "method": "paired fixed-prediction row resampling; plain percentile 2.5/97.5",
+      "mae_gain_ci95_kzt": [
+        -15173.169213397076,
+        41639.709250695094
+      ],
+      "within20_gain_ci95_pp": [
+        -0.7832898172323759,
+        2.610966057441253
+      ],
+      "mae_ci_max_abs_difference": 0.0,
+      "within20_ci_max_abs_difference": 0.0,
+      "both_include_zero": true
+    }
+  },
+  "hashes": {
+    "source": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+    "main": "3c5fe6ec7ad2f7d3ec970534301431149323865b3ebe6c165efd4bcd6bcebafd",
+    "robust_ann": "cec349426475402825f47014641c8e0a38a5b972ead9fe5ebc8eb120ab2f86c8",
+    "dataset_export": "2c1542b4794431eeffb57d0c7b5bd6e29ccd777ddd2d25c8f381774708c8858e",
+    "dataset_features": "782599a5f5bb401eeeef14d6599737a718112dba8bd043a9e5074edbf2a814b7",
+    "selected_model": "00a8820cfd5b9deee4f7993a1bbcc595ae01a4f9db9c9fb371715478ef557296"
+  },
+  "verdict": "PASS: completed code/export/selected inference/frozen metrics/bootstrap and final documentation consistency; no unresolved finding",
+  "findings": [],
+  "independent_no_fit_tests": {
+    "passed": 24,
+    "failed": 0,
+    "log": "INTEGRATION_REVIEW_TESTS.log"
+  },
+  "documentation_status": "PASS: final six documents reviewed; no remaining consistency finding.",
+  "documentation_review": {
+    "files_sha256": {
+      "README.md": "e5787ace830a303f86eae6b22e8123fbbe203fd06b47707bd9cfb4e2e8390928",
+      "METHODOLOGY.md": "cc717576d1676bcf862379a56467adfd88afc28b13cd6a8db7001005fe4bc6e0",
+      "EXPERIMENT_LOG.md": "abb2c0a77bb66eee15724764d363bd367e3f001873e1b213be46536c356d6f4d",
+      "REGULATION_COMPLIANCE.md": "d0b39cd471b6b64ed2bb0f86ece859f5daa841c033c052bc1234029354ae5dbd",
+      "CONTRIBUTIONS.md": "c07e221d7332bc5c50a06c70dd25512b7dcedba8a8aa276d8fdf4d7255cb1bda",
+      "DEFENSE_NOTES_RU.md": "e01e9d4c729a305e5e3407e6bdab09c1aea805f8ff0b1837a55fe2d54d1209b8"
+    },
+    "defense_timed_sections": 15,
+    "defense_total_seconds": 700,
+    "resolved_finding": "README generic baseline paragraph now explicitly maps steering to Ensemble and usage to Robust ensemble.",
+    "remaining_findings": []
+  }
+}

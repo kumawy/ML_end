@@ -1,0 +1,45 @@
+{
+  "checks": [
+    {
+      "candidate_id": "full_log_rmse_d7_oh2",
+      "roundtrip_exact": true,
+      "finite_nonnegative": true,
+      "rows": 383
+    },
+    {
+      "candidate_id": "full_log_rmse_d5_oh2",
+      "roundtrip_exact": true,
+      "finite_nonnegative": true,
+      "rows": 383
+    },
+    {
+      "candidate_id": "full_log_mae_d7_oh2",
+      "roundtrip_exact": true,
+      "finite_nonnegative": true,
+      "rows": 383
+    },
+    {
+      "candidate_id": "full_raw_huber_d7_oh2",
+      "roundtrip_exact": true,
+      "finite_nonnegative": true,
+      "rows": 383
+    },
+    {
+      "candidate_id": "full_raw_mae_d7_oh2",
+      "roundtrip_exact": true,
+      "finite_nonnegative": true,
+      "rows": 383
+    },
+    {
+      "candidate_id": "corrected_raw_rmse_d7_oh2",
+      "roundtrip_exact": true,
+      "finite_nonnegative": true,
+      "rows": 383
+    }
+  ],
+  "oof_files_checked": 20,
+  "source_data_sha256": "7f3e8a64d6dfd02e5cde3354f4f957fb23c32e6ef0ed0e6a735074becf57ec19",
+  "runner_sha256": "ade5bd501320f799ef419dc1814b61fd85ae77e2e8603af7d4e29195480f8d81",
+  "inference_module_sha256": "50bb27e5e794608df7c647c01b10db1e3188a58dd6bf7aae2272a2e1e70f62d1",
+  "test_data_used": false
+}

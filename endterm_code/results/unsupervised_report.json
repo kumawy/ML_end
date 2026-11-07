@@ -1,0 +1,263 @@
+{
+  "fit_rows": 1775,
+  "seed": 42,
+  "feature_columns": [
+    "year",
+    "log_km",
+    "engine_liters_clean"
+  ],
+  "numeric_dimensions": 3,
+  "price_used_as_input": false,
+  "categorical_features_used": false,
+  "preprocessing": {
+    "fit_scope": "training listings only; no validation or test listings",
+    "imputation": "per-feature training median",
+    "imputer_statistics": {
+      "year": 2013.0,
+      "log_km": 11.9576176965,
+      "engine_liters_clean": 2.4
+    },
+    "missing_numeric_counts": {
+      "year": 0,
+      "log_km": 348,
+      "engine_liters_clean": 1
+    },
+    "scaler": "StandardScaler: subtract training mean and divide by training population standard deviation",
+    "scaler_mean": {
+      "year": 2010.985915493,
+      "log_km": 11.7269675041,
+      "engine_liters_clean": 2.4802816901
+    },
+    "scaler_scale": {
+      "year": 9.6169641161,
+      "log_km": 1.072688682,
+      "engine_liters_clean": 0.9413475086
+    }
+  },
+  "kmeans": {
+    "candidate_k": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "n_init": 20,
+    "random_state": 42
+  },
+  "selection_rule": "Highest training silhouette over k=2..8; exact ties choose smaller k.",
+  "selected_k": 4,
+  "selected_silhouette": 0.3686023149,
+  "selection_scores": [
+    {
+      "k": 2,
+      "inertia": 3673.8855429876,
+      "silhouette": 0.3266049497
+    },
+    {
+      "k": 3,
+      "inertia": 2793.8116517707,
+      "silhouette": 0.3386968654
+    },
+    {
+      "k": 4,
+      "inertia": 2054.0853698674,
+      "silhouette": 0.3686023149
+    },
+    {
+      "k": 5,
+      "inertia": 1632.1260882153,
+      "silhouette": 0.3571800598
+    },
+    {
+      "k": 6,
+      "inertia": 1382.7903098836,
+      "silhouette": 0.3410889396
+    },
+    {
+      "k": 7,
+      "inertia": 1233.1161957876,
+      "silhouette": 0.344661348
+    },
+    {
+      "k": 8,
+      "inertia": 1108.7951013131,
+      "silhouette": 0.3319873382
+    }
+  ],
+  "cluster_profiles": [
+    {
+      "cluster": 0,
+      "count": 813,
+      "median_year": 2015.0,
+      "median_mileage_km": 146000.0,
+      "median_engine_liters": 2.0,
+      "median_price_kzt": 7690000.0,
+      "observed_year_count": 813,
+      "observed_mileage_count": 685,
+      "observed_engine_count": 812,
+      "observed_price_count": 813
+    },
+    {
+      "cluster": 1,
+      "count": 245,
+      "median_year": 2011.0,
+      "median_mileage_km": 183500.0,
+      "median_engine_liters": 4.0,
+      "median_price_kzt": 12200000.0,
+      "observed_year_count": 245,
+      "observed_mileage_count": 198,
+      "observed_engine_count": 245,
+      "observed_price_count": 245
+    },
+    {
+      "cluster": 2,
+      "count": 210,
+      "median_year": 2023.0,
+      "median_mileage_km": 23900.0,
+      "median_engine_liters": 2.0,
+      "median_price_kzt": 14125000.0,
+      "observed_year_count": 210,
+      "observed_mileage_count": 210,
+      "observed_engine_count": 210,
+      "observed_price_count": 210
+    },
+    {
+      "cluster": 3,
+      "count": 507,
+      "median_year": 1999.0,
+      "median_mileage_km": 280000.0,
+      "median_engine_liters": 2.4,
+      "median_price_kzt": 3000000.0,
+      "observed_year_count": 507,
+      "observed_mileage_count": 334,
+      "observed_engine_count": 507,
+      "observed_price_count": 507
+    }
+  ],
+  "scaled_centroids": [
+    {
+      "cluster": 0,
+      "year": 0.5072927868,
+      "log_km": 0.1232010894,
+      "engine_liters_clean": -0.4491108448
+    },
+    {
+      "cluster": 1,
+      "year": 0.0129708548,
+      "log_km": 0.2295689527,
+      "engine_liters_clean": 1.926133459
+    },
+    {
+      "cluster": 2,
+      "year": 0.9564397517,
+      "log_km": -2.0111611949,
+      "engine_liters_clean": -0.2586603089
+    },
+    {
+      "cluster": 3,
+      "year": -1.2186427195,
+      "log_km": 0.5331598901,
+      "engine_liters_clean": -0.0995317012
+    }
+  ],
+  "original_centroids": [
+    {
+      "cluster": 0,
+      "year": 2015.8645320197,
+      "log_km": 11.8591239183,
+      "engine_liters_clean": 2.0575123153,
+      "mileage_km_from_log_centroid": 141367.3138070962
+    },
+    {
+      "cluster": 1,
+      "year": 2011.1106557377,
+      "log_km": 11.9732235214,
+      "engine_liters_clean": 4.293442623,
+      "mileage_km_from_log_centroid": 158453.6198803712
+    },
+    {
+      "cluster": 2,
+      "year": 2020.1839622642,
+      "log_km": 9.5696176526,
+      "engine_liters_clean": 2.2367924528,
+      "mileage_km_from_log_centroid": 14321.9389387529
+    },
+    {
+      "cluster": 3,
+      "year": 1999.2662721893,
+      "log_km": 12.2988820838,
+      "engine_liters_clean": 2.3865877712,
+      "mileage_km_from_log_centroid": 219449.5242074291
+    }
+  ],
+  "profile_definition": "Cluster medians use observed original values; missing values are excluded, with observed counts reported. Price is added only after fitting for descriptive comparison.",
+  "centroid_definition": "Centroids are means in scaled, imputed numeric space. The original-space table inverses scaling; expm1(log-mileage centroid) is not the arithmetic mean or median mileage.",
+  "pca": {
+    "input": "The same train-imputed and train-standardized three numeric features as KMeans.",
+    "n_components": 3,
+    "svd_solver": "full",
+    "explained_variance_ratio": [
+      0.4766627967,
+      0.3246389711,
+      0.1986982322
+    ],
+    "cumulative_explained_variance_ratio": [
+      0.4766627967,
+      0.8013017678,
+      1.0
+    ],
+    "explained_variance": [
+      1.4307944715,
+      0.9744659082,
+      0.5964307139
+    ],
+    "loadings": [
+      {
+        "component": "PC1",
+        "year": 0.6905552028,
+        "log_km": -0.6801043608,
+        "engine_liters_clean": -0.2461535503
+      },
+      {
+        "component": "PC2",
+        "year": 0.1286096489,
+        "log_km": -0.2194452887,
+        "engine_liters_clean": 0.9671108124
+      },
+      {
+        "component": "PC3",
+        "year": 0.7117535178,
+        "log_km": 0.6995011249,
+        "engine_liters_clean": 0.0640711028
+      }
+    ],
+    "loading_definition": "Signed unit-length component coefficients (sklearn PCA.components_); not feature-component correlations. Component signs are arbitrary."
+  },
+  "interpretation": [
+    "Categories are deliberately omitted so the three numeric axes remain interpretable; brand, model and equipment differences are not represented.",
+    "Silhouette is a geometric heuristic in this chosen standardized feature space; the winning k does not establish natural market segments or universal optimality.",
+    "PCA is descriptive dimensionality reduction, not a supervised predictor or evidence of causal effects on price.",
+    "The two-dimensional chart loses the variance in PC3; separation in the projection can differ from separation in all three dimensions.",
+    "Median imputation and a single seed can influence clustering; no cluster stability study is claimed.",
+    "Post-hoc price differences are descriptive asking-price summaries; price never enters clustering or PCA."
+  ],
+  "files": {
+    "cluster_selection.csv": "cluster_selection.csv",
+    "cluster_selection.png": "cluster_selection.png",
+    "cluster_profiles.csv": "cluster_profiles.csv",
+    "cluster_centroids_scaled.csv": "cluster_centroids_scaled.csv",
+    "cluster_centroids_original.csv": "cluster_centroids_original.csv",
+    "cluster_assignments.csv": "cluster_assignments.csv",
+    "pca_projection.csv": "pca_projection.csv",
+    "pca_loadings.csv": "pca_loadings.csv",
+    "pca_variance.csv": "pca_variance.csv",
+    "pca_variance.png": "pca_variance.png",
+    "pca_scatter.png": "pca_scatter.png",
+    "unsupervised_report.json": "unsupervised_report.json"
+  },
+  "analysis_subset": "Non-electric training listings only; engine displacement is not applicable to explicit electric listings.",
+  "excluded_electric_rows": 12
+}

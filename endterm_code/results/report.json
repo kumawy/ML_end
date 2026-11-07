@@ -1,0 +1,3636 @@
+{
+  "data": {
+    "source_url": "https://www.kaggle.com/datasets/mutashevdarkhan/kolesa-cars-2025",
+    "source_git_blob_sha": "01e57295927f91ffd7996745ce6a867b6d41b0f7",
+    "source_sha256": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+    "raw_rows": 3999,
+    "raw_columns": 14,
+    "new_rows_removed": 527,
+    "on_order_rows_removed": 51,
+    "duplicate_used_rows_removed": 868,
+    "invalid_rows_removed": 0,
+    "clean_rows": 2553,
+    "missing_mileage": 497,
+    "missing_engine": 2,
+    "fuel_from_structured_electric": 16,
+    "fuel_from_structured_gas_petrol": 109,
+    "source_fuel_missing_recovered": 16,
+    "source_petrol_relabelled_gas_petrol": 109,
+    "narrative_dual_fuel_claims": 114,
+    "fuel_text_conflicts": 5,
+    "unknown_fuel": 0,
+    "engine_structurally_not_applicable": 15,
+    "engine_source_conflicts": 1,
+    "fuel_counts": {
+      "petrol": 2277,
+      "gas_petrol": 109,
+      "diesel": 94,
+      "hybrid": 29,
+      "gas": 28,
+      "electric": 16
+    },
+    "explicit_claim_counts": {
+      "restyling_claim": 8,
+      "leather_claim": 205,
+      "panorama_claim": 53,
+      "warranty_claim": 6
+    },
+    "explicit_trim_counts": {
+      "not_stated": 2530,
+      "AMG": 18,
+      "F Sport": 2,
+      "GTS": 2,
+      "M Sport": 1
+    },
+    "explicit_power_rows": 3,
+    "feature_semantics": {
+      "fuel": "Literal structured pre-КПП fuel takes precedence; unknown is explicit. Five narrative dual-fuel/structured-petrol disagreements (including one spaced em dash) retain petrol and receive dual_fuel_claim/fuel_text_conflict flags.",
+      "engine": "Electric without a positive literal displacement is 0 L plus engine_not_applicable=1. Electric with positive reported displacement retains the reported valid value and gets engine_source_conflict=1. Invalid/missing combustion displacement stays NaN plus engine_missing=1.",
+      "claims": "Positive text claims only, with local negation rejected; zero means not positively stated, not verified absence. Trim tokens describe seller wording, not authenticated trim.",
+      "power": "Explicit unit required: Russian л.с./лс uses metric horsepower ×0.73549875; hp/bhp uses ×0.745699872; kW unchanged. Conflicting values remain missing; no inferred model specifications.",
+      "inputs": "Only existing title/specification/description and original vehicle columns; no price, price_raw, listing ID or URL predictors."
+    },
+    "source_missing_counts": {
+      "name": 0,
+      "price": 0,
+      "price_raw": 0,
+      "desc": 0,
+      "link": 0,
+      "brand": 0,
+      "model": 0,
+      "condition": 0,
+      "year": 0,
+      "mileage_km": 1119,
+      "engine_liters": 1158,
+      "fuel": 67,
+      "transmission": 0,
+      "drive": 3964,
+      "ad_id": 0
+    },
+    "target": "advertised asking price of used cars",
+    "currency": "KZT",
+    "snapshot": "2025; individual listing dates unavailable",
+    "splits": {
+      "train": 1787,
+      "validation": 383,
+      "test": 383
+    },
+    "split_price_summary": {
+      "train": {
+        "count": 1787,
+        "median_price_kzt": 6700000.0,
+        "max_price_kzt": 160000000.0,
+        "above_100m_count": 2
+      },
+      "validation": {
+        "count": 383,
+        "median_price_kzt": 6500000.0,
+        "max_price_kzt": 222000000.0,
+        "above_100m_count": 1
+      },
+      "test": {
+        "count": 383,
+        "median_price_kzt": 6000000.0,
+        "max_price_kzt": 93500000.0,
+        "above_100m_count": 0
+      }
+    },
+    "numeric_features": [
+      "year",
+      "log_km",
+      "mileage_missing",
+      "engine_liters_clean",
+      "engine_missing",
+      "engine_not_applicable",
+      "engine_source_conflict",
+      "dual_fuel_claim",
+      "fuel_text_conflict",
+      "restyling_claim",
+      "leather_claim",
+      "panorama_claim",
+      "warranty_claim",
+      "power_kw",
+      "power_missing"
+    ],
+    "categorical_features": [
+      "brand",
+      "model",
+      "body",
+      "fuel",
+      "transmission",
+      "brand_model",
+      "trim"
+    ],
+    "preprocessing": "Enhanced train-fitted numeric imputation/scaling and categorical unknown/OHE. OHE threshold selected on train CV or validation for ANN. CatBoost consumes native categories; legacy controls use unchanged legacy_data.py."
+  },
+  "eda": {
+    "training_mean_price_kzt": 9532173.623391159,
+    "training_median_price_kzt": 6700000.0,
+    "year_price_spearman": 0.6924940835,
+    "mileage_price_spearman": -0.5289711409,
+    "price_bands": [
+      {
+        "price_band_million_kzt": "<2",
+        "count": 205
+      },
+      {
+        "price_band_million_kzt": "2-5",
+        "count": 459
+      },
+      {
+        "price_band_million_kzt": "5-10",
+        "count": 574
+      },
+      {
+        "price_band_million_kzt": "10-20",
+        "count": 389
+      },
+      {
+        "price_band_million_kzt": "20-40",
+        "count": 113
+      },
+      {
+        "price_band_million_kzt": "40+",
+        "count": 47
+      }
+    ],
+    "fuel_groups": [
+      {
+        "fuel": "diesel",
+        "median": 5700000.0,
+        "size": 77
+      },
+      {
+        "fuel": "electric",
+        "median": 13250000.0,
+        "size": 12
+      },
+      {
+        "fuel": "gas",
+        "median": 8275000.0,
+        "size": 24
+      },
+      {
+        "fuel": "gas_petrol",
+        "median": 5900000.0,
+        "size": 74
+      },
+      {
+        "fuel": "hybrid",
+        "median": 19000000.0,
+        "size": 22
+      },
+      {
+        "fuel": "petrol",
+        "median": 6500000.0,
+        "size": 1578
+      }
+    ],
+    "plots": [
+      {
+        "file": "eda_prices.png",
+        "interpretation": "Training mean price 9.53m exceeds median 6.70m KZT, indicating a high-price tail."
+      },
+      {
+        "file": "eda_year.png",
+        "interpretation": "Newer model years generally have higher median asking prices. Year-price association does not establish causality; displayed years require at least eight training listings."
+      },
+      {
+        "file": "eda_mileage.png",
+        "interpretation": "Higher observed mileage is associated with lower asking prices, with substantial spread. The chart uses a seeded sample of up to 1200 training rows with known mileage."
+      },
+      {
+        "file": "eda_fuel.png",
+        "interpretation": "Fuel groups have different price distributions, but also different vehicle mixes. All training rows are retained; logarithmic price scale and group counts are explicit. Electric and hybrid groups are small, so group price gaps are descriptive, not causal."
+      }
+    ],
+    "fit_scope": "Training listings only; four explicit EDA plots, each with an interpretation."
+  },
+  "supervised": {
+    "cv_results": [
+      {
+        "model": "KNN tuned",
+        "best_parameters": {
+          "model__n_neighbors": 5,
+          "model__p": 1,
+          "model__weights": "distance",
+          "prep__cat__encode__min_frequency": 1
+        },
+        "cv_mae_kzt": 2622853.4097602475,
+        "cv_std_mae_kzt": 104264.1066120209,
+        "candidate_count": 72,
+        "folds": 3,
+        "shuffle": true,
+        "seed": 42
+      },
+      {
+        "model": "Tree tuned",
+        "best_parameters": {
+          "model__max_depth": 10,
+          "model__min_samples_leaf": 3,
+          "prep__cat__encode__min_frequency": 1
+        },
+        "cv_mae_kzt": 2841664.261810472,
+        "cv_std_mae_kzt": 140589.2035074684,
+        "candidate_count": 36,
+        "folds": 3,
+        "shuffle": true,
+        "seed": 42
+      },
+      {
+        "model": "Random forest tuned",
+        "best_parameters": {
+          "model__max_features": 0.7,
+          "model__min_samples_leaf": 1,
+          "prep__cat__encode__min_frequency": 1
+        },
+        "cv_mae_kzt": 2171676.3177778074,
+        "cv_std_mae_kzt": 142352.2034598081,
+        "candidate_count": 12,
+        "folds": 3,
+        "shuffle": true,
+        "seed": 42
+      }
+    ],
+    "cv_protocol": "3-fold KFold, shuffle=True, seed 42, within training only",
+    "cv_score": "negative MAE in KZT",
+    "all_final_fits": "1787 training listings; validation not refitted",
+    "midterm_tree_parameters": {
+      "max_depth": 10,
+      "min_samples_leaf": 3
+    },
+    "midterm_cv_note": "Original tree used unshuffled 3-fold CV. New searches use one shared shuffled CV.",
+    "representation": "Four original baselines use unchanged legacy_data.py. Tuned models use corrected/enriched inputs; OHE min_frequency 1/2/5 is selected inside CV."
+  },
+  "ann": {
+    "model": "ANN",
+    "selected_candidate_id": "ann_128_64",
+    "hidden_layer_sizes": [
+      128,
+      64
+    ],
+    "best_epoch": 71,
+    "epochs_run": 111,
+    "best_validation_mae_kzt": 2371127.804370948,
+    "configuration": {
+      "activation": "relu",
+      "output_activation": "identity (linear)",
+      "solver": "adam",
+      "loss": "squared_error (half squared error plus L2 penalty)",
+      "learning_rate_init": 0.001,
+      "alpha": 0.001,
+      "batch_size": 64,
+      "beta_1": 0.9,
+      "beta_2": 0.999,
+      "epsilon": 1e-08,
+      "shuffle": true,
+      "max_epochs": 400,
+      "patience": 40,
+      "minimum_validation_mae_improvement": 0.0,
+      "random_state": 42,
+      "early_stopping": "external validation MAE in KZT; sklearn internal early_stopping=False"
+    },
+    "candidate_architectures": [
+      [
+        64,
+        32
+      ],
+      [
+        128,
+        64
+      ]
+    ],
+    "target_scaler": {
+      "fit_split": "training only",
+      "n_samples_seen": 1787,
+      "mean_log1p": 15.6530337903,
+      "scale_log1p": 0.9198202842
+    },
+    "target_transform": "z = (log1p(price_KZT) - train_mean) / train_std; prediction = max(0, expm1(z_hat * train_std + train_mean)); log clipped only to avoid numerical overflow.",
+    "selection": "Lowest validation MAE across min_frequency [2, 5] and two fixed architectures, with checkpoint selection. Test not accepted.",
+    "history_loss": "Ordinary MSE of standardized log1p targets, without the optimizer's one-half factor or L2 term.",
+    "assessment": {
+      "stopping_reason": "validation_patience_exhausted",
+      "training_mse_first": 0.2258554672,
+      "training_mse_best_checkpoint": 0.0222064166,
+      "training_mse_final": 0.0191334196,
+      "relative_training_mse_improvement_last_up_to_20_epochs": 0.1595804644,
+      "validation_mae_deterioration_after_best_fraction": 0.0250289999,
+      "overfitting_signal": false,
+      "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
+      "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+    },
+    "candidates": [
+      {
+        "candidate_id": "ann_64_32",
+        "hidden_layer_sizes": [
+          64,
+          32
+        ],
+        "best_epoch": 68,
+        "epochs_run": 108,
+        "best_validation_mae_kzt": 2426543.6115300613,
+        "checkpoint_train_mae_kzt": 851973.787415015,
+        "checkpoint_train_scaled_log_mse": 0.0272067765,
+        "checkpoint_validation_scaled_log_mse": 0.1945831541,
+        "assessment": {
+          "stopping_reason": "validation_patience_exhausted",
+          "training_mse_first": 0.2902465001,
+          "training_mse_best_checkpoint": 0.0272067765,
+          "training_mse_final": 0.0230116257,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.1312481715,
+          "validation_mae_deterioration_after_best_fraction": 0.0368715316,
+          "overfitting_signal": false,
+          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
+          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+        }
+      },
+      {
+        "candidate_id": "ann_128_64",
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "best_epoch": 71,
+        "epochs_run": 111,
+        "best_validation_mae_kzt": 2371127.804370948,
+        "checkpoint_train_mae_kzt": 767821.888169888,
+        "checkpoint_train_scaled_log_mse": 0.0222064166,
+        "checkpoint_validation_scaled_log_mse": 0.1876903007,
+        "assessment": {
+          "stopping_reason": "validation_patience_exhausted",
+          "training_mse_first": 0.2258554672,
+          "training_mse_best_checkpoint": 0.0222064166,
+          "training_mse_final": 0.0191334196,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.1595804644,
+          "validation_mae_deterioration_after_best_fraction": 0.0250289999,
+          "overfitting_signal": false,
+          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
+          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+        }
+      }
+    ],
+    "artifacts": {
+      "history_csv": "ann_history.csv",
+      "history_plot": "ann_history.png"
+    },
+    "test_data_used": false,
+    "input_feature_count": 305,
+    "selected_min_frequency": 2,
+    "feature_set": "corrected",
+    "history_directory": "ann_corrected_minfreq_2",
+    "feature_frequency_candidates": [
+      {
+        "min_frequency": 2,
+        "input_feature_count": 305,
+        "validation_mae_kzt": 2371127.804370948,
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "best_epoch": 71,
+        "epochs_run": 111
+      },
+      {
+        "min_frequency": 5,
+        "input_feature_count": 152,
+        "validation_mae_kzt": 2424869.9111136235,
+        "hidden_layer_sizes": [
+          64,
+          32
+        ],
+        "best_epoch": 42,
+        "epochs_run": 82
+      }
+    ],
+    "reported_model_name": "ANN corrected"
+  },
+  "ann_full": {
+    "model": "ANN",
+    "selected_candidate_id": "ann_128_64",
+    "hidden_layer_sizes": [
+      128,
+      64
+    ],
+    "best_epoch": 167,
+    "epochs_run": 207,
+    "best_validation_mae_kzt": 2445651.1517004175,
+    "configuration": {
+      "activation": "relu",
+      "output_activation": "identity (linear)",
+      "solver": "adam",
+      "loss": "squared_error (half squared error plus L2 penalty)",
+      "learning_rate_init": 0.001,
+      "alpha": 0.001,
+      "batch_size": 64,
+      "beta_1": 0.9,
+      "beta_2": 0.999,
+      "epsilon": 1e-08,
+      "shuffle": true,
+      "max_epochs": 400,
+      "patience": 40,
+      "minimum_validation_mae_improvement": 0.0,
+      "random_state": 42,
+      "early_stopping": "external validation MAE in KZT; sklearn internal early_stopping=False"
+    },
+    "candidate_architectures": [
+      [
+        64,
+        32
+      ],
+      [
+        128,
+        64
+      ]
+    ],
+    "target_scaler": {
+      "fit_split": "training only",
+      "n_samples_seen": 1787,
+      "mean_log1p": 15.6530337903,
+      "scale_log1p": 0.9198202842
+    },
+    "target_transform": "z = (log1p(price_KZT) - train_mean) / train_std; prediction = max(0, expm1(z_hat * train_std + train_mean)); log clipped only to avoid numerical overflow.",
+    "selection": "Lowest validation MAE across min_frequency [1, 2, 5] and two fixed architectures, with checkpoint selection. Test not accepted.",
+    "history_loss": "Ordinary MSE of standardized log1p targets, without the optimizer's one-half factor or L2 term.",
+    "assessment": {
+      "stopping_reason": "validation_patience_exhausted",
+      "training_mse_first": 0.2325673523,
+      "training_mse_best_checkpoint": 0.0151601367,
+      "training_mse_final": 0.0133671009,
+      "relative_training_mse_improvement_last_up_to_20_epochs": 0.017068516,
+      "validation_mae_deterioration_after_best_fraction": 0.0236325961,
+      "overfitting_signal": false,
+      "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
+      "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+    },
+    "candidates": [
+      {
+        "candidate_id": "ann_64_32",
+        "hidden_layer_sizes": [
+          64,
+          32
+        ],
+        "best_epoch": 26,
+        "epochs_run": 66,
+        "best_validation_mae_kzt": 2586525.2552780025,
+        "checkpoint_train_mae_kzt": 1055441.9509611973,
+        "checkpoint_train_scaled_log_mse": 0.0372970146,
+        "checkpoint_validation_scaled_log_mse": 0.1896019634,
+        "assessment": {
+          "stopping_reason": "validation_patience_exhausted",
+          "training_mse_first": 0.5308923368,
+          "training_mse_best_checkpoint": 0.0372970146,
+          "training_mse_final": 0.0350940049,
+          "relative_training_mse_improvement_last_up_to_20_epochs": -0.2832687537,
+          "validation_mae_deterioration_after_best_fraction": 0.0610960052,
+          "overfitting_signal": true,
+          "assessment": "Training error continues to fall while validation MAE worsens by over 5% after its best epoch; the saved checkpoint avoids the later deterioration.",
+          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+        }
+      },
+      {
+        "candidate_id": "ann_128_64",
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "best_epoch": 167,
+        "epochs_run": 207,
+        "best_validation_mae_kzt": 2445651.1517004175,
+        "checkpoint_train_mae_kzt": 646915.1739226918,
+        "checkpoint_train_scaled_log_mse": 0.0151601367,
+        "checkpoint_validation_scaled_log_mse": 0.1993171644,
+        "assessment": {
+          "stopping_reason": "validation_patience_exhausted",
+          "training_mse_first": 0.2325673523,
+          "training_mse_best_checkpoint": 0.0151601367,
+          "training_mse_final": 0.0133671009,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.017068516,
+          "validation_mae_deterioration_after_best_fraction": 0.0236325961,
+          "overfitting_signal": false,
+          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
+          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+        }
+      }
+    ],
+    "artifacts": {
+      "history_csv": "ann_history.csv",
+      "history_plot": "ann_history.png"
+    },
+    "test_data_used": false,
+    "input_feature_count": 544,
+    "selected_min_frequency": 2,
+    "feature_set": "full",
+    "history_directory": "ann_full_minfreq_2",
+    "feature_frequency_candidates": [
+      {
+        "min_frequency": 1,
+        "input_feature_count": 982,
+        "validation_mae_kzt": 2518317.216084738,
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "best_epoch": 23,
+        "epochs_run": 63
+      },
+      {
+        "min_frequency": 2,
+        "input_feature_count": 544,
+        "validation_mae_kzt": 2445651.1517004175,
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "best_epoch": 167,
+        "epochs_run": 207
+      },
+      {
+        "min_frequency": 5,
+        "input_feature_count": 253,
+        "validation_mae_kzt": 2514918.583745452,
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "best_epoch": 39,
+        "epochs_run": 79
+      }
+    ]
+  },
+  "corrected_ann": {
+    "model": "ANN",
+    "selected_candidate_id": "ann_128_64",
+    "hidden_layer_sizes": [
+      128,
+      64
+    ],
+    "best_epoch": 71,
+    "epochs_run": 111,
+    "best_validation_mae_kzt": 2371127.804370948,
+    "configuration": {
+      "activation": "relu",
+      "output_activation": "identity (linear)",
+      "solver": "adam",
+      "loss": "squared_error (half squared error plus L2 penalty)",
+      "learning_rate_init": 0.001,
+      "alpha": 0.001,
+      "batch_size": 64,
+      "beta_1": 0.9,
+      "beta_2": 0.999,
+      "epsilon": 1e-08,
+      "shuffle": true,
+      "max_epochs": 400,
+      "patience": 40,
+      "minimum_validation_mae_improvement": 0.0,
+      "random_state": 42,
+      "early_stopping": "external validation MAE in KZT; sklearn internal early_stopping=False"
+    },
+    "candidate_architectures": [
+      [
+        64,
+        32
+      ],
+      [
+        128,
+        64
+      ]
+    ],
+    "target_scaler": {
+      "fit_split": "training only",
+      "n_samples_seen": 1787,
+      "mean_log1p": 15.6530337903,
+      "scale_log1p": 0.9198202842
+    },
+    "target_transform": "z = (log1p(price_KZT) - train_mean) / train_std; prediction = max(0, expm1(z_hat * train_std + train_mean)); log clipped only to avoid numerical overflow.",
+    "selection": "Lowest validation MAE across min_frequency [2, 5] and two fixed architectures, with checkpoint selection. Test not accepted.",
+    "history_loss": "Ordinary MSE of standardized log1p targets, without the optimizer's one-half factor or L2 term.",
+    "assessment": {
+      "stopping_reason": "validation_patience_exhausted",
+      "training_mse_first": 0.2258554672,
+      "training_mse_best_checkpoint": 0.0222064166,
+      "training_mse_final": 0.0191334196,
+      "relative_training_mse_improvement_last_up_to_20_epochs": 0.1595804644,
+      "validation_mae_deterioration_after_best_fraction": 0.0250289999,
+      "overfitting_signal": false,
+      "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
+      "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+    },
+    "candidates": [
+      {
+        "candidate_id": "ann_64_32",
+        "hidden_layer_sizes": [
+          64,
+          32
+        ],
+        "best_epoch": 68,
+        "epochs_run": 108,
+        "best_validation_mae_kzt": 2426543.6115300613,
+        "checkpoint_train_mae_kzt": 851973.787415015,
+        "checkpoint_train_scaled_log_mse": 0.0272067765,
+        "checkpoint_validation_scaled_log_mse": 0.1945831541,
+        "assessment": {
+          "stopping_reason": "validation_patience_exhausted",
+          "training_mse_first": 0.2902465001,
+          "training_mse_best_checkpoint": 0.0272067765,
+          "training_mse_final": 0.0230116257,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.1312481715,
+          "validation_mae_deterioration_after_best_fraction": 0.0368715316,
+          "overfitting_signal": false,
+          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
+          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+        }
+      },
+      {
+        "candidate_id": "ann_128_64",
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "best_epoch": 71,
+        "epochs_run": 111,
+        "best_validation_mae_kzt": 2371127.804370948,
+        "checkpoint_train_mae_kzt": 767821.888169888,
+        "checkpoint_train_scaled_log_mse": 0.0222064166,
+        "checkpoint_validation_scaled_log_mse": 0.1876903007,
+        "assessment": {
+          "stopping_reason": "validation_patience_exhausted",
+          "training_mse_first": 0.2258554672,
+          "training_mse_best_checkpoint": 0.0222064166,
+          "training_mse_final": 0.0191334196,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.1595804644,
+          "validation_mae_deterioration_after_best_fraction": 0.0250289999,
+          "overfitting_signal": false,
+          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
+          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+        }
+      }
+    ],
+    "artifacts": {
+      "history_csv": "ann_history.csv",
+      "history_plot": "ann_history.png"
+    },
+    "test_data_used": false,
+    "input_feature_count": 305,
+    "selected_min_frequency": 2,
+    "feature_set": "corrected",
+    "history_directory": "ann_corrected_minfreq_2",
+    "feature_frequency_candidates": [
+      {
+        "min_frequency": 2,
+        "input_feature_count": 305,
+        "validation_mae_kzt": 2371127.804370948,
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "best_epoch": 71,
+        "epochs_run": 111
+      },
+      {
+        "min_frequency": 5,
+        "input_feature_count": 152,
+        "validation_mae_kzt": 2424869.9111136235,
+        "hidden_layer_sizes": [
+          64,
+          32
+        ],
+        "best_epoch": 42,
+        "epochs_run": 82
+      }
+    ]
+  },
+  "previous_ann": {
+    "model": "ANN",
+    "selected_candidate_id": "ann_128_64",
+    "hidden_layer_sizes": [
+      128,
+      64
+    ],
+    "best_epoch": 18,
+    "epochs_run": 58,
+    "best_validation_mae_kzt": 2456897.177657078,
+    "configuration": {
+      "activation": "relu",
+      "output_activation": "identity (linear)",
+      "solver": "adam",
+      "loss": "squared_error (half squared error plus L2 penalty)",
+      "learning_rate_init": 0.001,
+      "alpha": 0.001,
+      "batch_size": 64,
+      "beta_1": 0.9,
+      "beta_2": 0.999,
+      "epsilon": 1e-08,
+      "shuffle": true,
+      "max_epochs": 400,
+      "patience": 40,
+      "minimum_validation_mae_improvement": 0.0,
+      "random_state": 42,
+      "early_stopping": "external validation MAE in KZT; sklearn internal early_stopping=False"
+    },
+    "candidate_architectures": [
+      [
+        64,
+        32
+      ],
+      [
+        128,
+        64
+      ]
+    ],
+    "target_scaler": {
+      "fit_split": "training only",
+      "n_samples_seen": 1787,
+      "mean_log1p": 15.6530337903,
+      "scale_log1p": 0.9198202842
+    },
+    "target_transform": "z = (log1p(price_KZT) - train_mean) / train_std; prediction = max(0, expm1(z_hat * train_std + train_mean)); log clipped only to avoid numerical overflow.",
+    "selection": "Lowest validation MAE in KZT across all candidate epochs; exact ties retain the first checkpoint/candidate.",
+    "history_loss": "Ordinary MSE of standardized log1p targets, without the optimizer's one-half factor or L2 term.",
+    "assessment": {
+      "stopping_reason": "validation_patience_exhausted",
+      "training_mse_first": 0.2341155417,
+      "training_mse_best_checkpoint": 0.0477856779,
+      "training_mse_final": 0.0291216797,
+      "relative_training_mse_improvement_last_up_to_20_epochs": 0.0814215383,
+      "validation_mae_deterioration_after_best_fraction": 0.0715425689,
+      "overfitting_signal": true,
+      "assessment": "Training error continues to fall while validation MAE worsens by over 5% after its best epoch; the saved checkpoint avoids the later deterioration.",
+      "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+    },
+    "candidates": [
+      {
+        "candidate_id": "ann_64_32",
+        "hidden_layer_sizes": [
+          64,
+          32
+        ],
+        "best_epoch": 42,
+        "epochs_run": 82,
+        "best_validation_mae_kzt": 2501333.349081391,
+        "checkpoint_train_mae_kzt": 1199539.226615344,
+        "checkpoint_train_scaled_log_mse": 0.0377625618,
+        "checkpoint_validation_scaled_log_mse": 0.1901722284,
+        "assessment": {
+          "stopping_reason": "validation_patience_exhausted",
+          "training_mse_first": 0.2526540038,
+          "training_mse_best_checkpoint": 0.0377625618,
+          "training_mse_final": 0.0293335301,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.0682462415,
+          "validation_mae_deterioration_after_best_fraction": 0.0399198662,
+          "overfitting_signal": false,
+          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
+          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+        }
+      },
+      {
+        "candidate_id": "ann_128_64",
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "best_epoch": 18,
+        "epochs_run": 58,
+        "best_validation_mae_kzt": 2456897.177657078,
+        "checkpoint_train_mae_kzt": 1323717.7019693227,
+        "checkpoint_train_scaled_log_mse": 0.0477856779,
+        "checkpoint_validation_scaled_log_mse": 0.1812310828,
+        "assessment": {
+          "stopping_reason": "validation_patience_exhausted",
+          "training_mse_first": 0.2341155417,
+          "training_mse_best_checkpoint": 0.0477856779,
+          "training_mse_final": 0.0291216797,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.0814215383,
+          "validation_mae_deterioration_after_best_fraction": 0.0715425689,
+          "overfitting_signal": true,
+          "assessment": "Training error continues to fall while validation MAE worsens by over 5% after its best epoch; the saved checkpoint avoids the later deterioration.",
+          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+        }
+      }
+    ],
+    "artifacts": {
+      "history_csv": "ann_history.csv",
+      "history_plot": "ann_history.png"
+    },
+    "test_data_used": false,
+    "input_feature_count": 147
+  },
+  "catboost": {
+    "model": "CatBoost",
+    "catboost_version": "1.2.10",
+    "selected_candidate_id": "catboost_log_rmse_depth8",
+    "best_validation_mae_kzt": 2689678.454849997,
+    "selected_cv_mae_kzt": 2093993.1485219037,
+    "selected_cv_std_mae_kzt": 65490.9808264078,
+    "best_iteration": 993,
+    "iterations_run": 1000,
+    "retained_tree_count": 993,
+    "configuration": {
+      "depth": 8,
+      "loss_function": "RMSE",
+      "target_transform": "log1p",
+      "iterations_max": 1000,
+      "learning_rate": 0.05,
+      "l2_leaf_reg": 5.0,
+      "thread_count": 2,
+      "random_seed": 42,
+      "patience": 60,
+      "task_type": "CPU",
+      "boosting_type": "Plain",
+      "grow_policy": "SymmetricTree",
+      "one_hot_max_size": 0,
+      "checkpoint_metric": "LogTargetMAE",
+      "use_best_model": true
+    },
+    "fitted_parameters": {
+      "nan_mode": "Min",
+      "eval_metric": "PythonUserDefinedPerObject",
+      "combinations_ctr": [
+        "Borders:CtrBorderCount=15:CtrBorderType=Uniform:TargetBorderCount=1:TargetBorderType=MinEntropy:Prior=0/1:Prior=0.5/1:Prior=1/1",
+        "Counter:CtrBorderCount=15:CtrBorderType=Uniform:Prior=0/1"
+      ],
+      "iterations": 1000,
+      "sampling_frequency": "PerTree",
+      "fold_permutation_block": 0,
+      "leaf_estimation_method": "Newton",
+      "od_pval": 0,
+      "random_score_type": "NormalWithModelSizeDecrease",
+      "counter_calc_method": "SkipTest",
+      "grow_policy": "SymmetricTree",
+      "penalties_coefficient": 1,
+      "boosting_type": "Plain",
+      "model_shrink_mode": "Constant",
+      "feature_border_type": "GreedyLogSum",
+      "ctr_leaf_count_limit": 18446744073709551615,
+      "bayesian_matrix_reg": 0.1000000015,
+      "one_hot_max_size": 0,
+      "eval_fraction": 0,
+      "force_unit_auto_pair_weights": false,
+      "l2_leaf_reg": 5,
+      "random_strength": 1,
+      "od_type": "Iter",
+      "rsm": 1,
+      "boost_from_average": true,
+      "max_ctr_complexity": 4,
+      "model_size_reg": 0.5,
+      "simple_ctr": [
+        "Borders:CtrBorderCount=15:CtrBorderType=Uniform:TargetBorderCount=1:TargetBorderType=MinEntropy:Prior=0/1:Prior=0.5/1:Prior=1/1",
+        "Counter:CtrBorderCount=15:CtrBorderType=Uniform:Prior=0/1"
+      ],
+      "pool_metainfo_options": {
+        "tags": {}
+      },
+      "subsample": 0.8000000119,
+      "use_best_model": true,
+      "od_wait": 60,
+      "random_seed": 42,
+      "depth": 8,
+      "ctr_target_border_count": 1,
+      "posterior_sampling": false,
+      "has_time": false,
+      "store_all_simple_ctr": false,
+      "border_count": 254,
+      "classes_count": 0,
+      "auto_class_weights": "None",
+      "sparse_features_conflict_fraction": 0,
+      "leaf_estimation_backtracking": "AnyImprovement",
+      "best_model_min_trees": 1,
+      "model_shrink_rate": 0,
+      "min_data_in_leaf": 1,
+      "loss_function": "RMSE",
+      "learning_rate": 0.0500000007,
+      "score_function": "Cosine",
+      "task_type": "CPU",
+      "leaf_estimation_iterations": 1,
+      "bootstrap_type": "MVS",
+      "max_leaves": 256,
+      "permutation_count": 4
+    },
+    "architecture": "Additive gradient boosting of symmetric decision trees; native categorical statistics, no one-hot preprocessing.",
+    "numeric_features": [
+      "year",
+      "log_km",
+      "mileage_missing",
+      "engine_liters_clean",
+      "engine_missing",
+      "engine_not_applicable",
+      "engine_source_conflict",
+      "dual_fuel_claim",
+      "fuel_text_conflict",
+      "restyling_claim",
+      "leather_claim",
+      "panorama_claim",
+      "warranty_claim",
+      "power_kw",
+      "power_missing"
+    ],
+    "categorical_features": [
+      "brand",
+      "model",
+      "body",
+      "fuel",
+      "transmission",
+      "brand_model",
+      "trim"
+    ],
+    "feature_columns": [
+      "year",
+      "log_km",
+      "mileage_missing",
+      "engine_liters_clean",
+      "engine_missing",
+      "engine_not_applicable",
+      "engine_source_conflict",
+      "dual_fuel_claim",
+      "fuel_text_conflict",
+      "restyling_claim",
+      "leather_claim",
+      "panorama_claim",
+      "warranty_claim",
+      "power_kw",
+      "power_missing",
+      "brand",
+      "model",
+      "body",
+      "fuel",
+      "transmission",
+      "brand_model",
+      "trim"
+    ],
+    "preprocessing": {
+      "numeric": "float64; genuine missing numeric values remain NaN and are handled by CatBoost",
+      "categorical": "missing values become __missing__; all categories cast to strings; saved training column order retained",
+      "learned_transform_fit_split": "each CV training fold; final fit uses training only"
+    },
+    "target_transform": "log1p(price_KZT); predict max(0, expm1(predicted_log_price)); no target scaler; log clipped only for numerical safety",
+    "cv": {
+      "n_splits": 3,
+      "shuffle": true,
+      "random_seed": 42,
+      "fit_split": "training only; fold validation controls each fit's early stopping",
+      "selection_metric": "mean fold MAE in original KZT; standard deviation uses ddof=0",
+      "tie_breaking": "first candidate in raw MAE then log RMSE, each depth 4/6/8",
+      "candidate_count": 6
+    },
+    "final_fit": "training observations only; external validation selects the best MAE-in-KZT checkpoint with patience 60 and at most 1000 iterations",
+    "history_metric_precision": "CatBoost evaluates its internally rounded target buffers; inverse-log history metrics can differ by a few KZT from exact original-label errors. Reported CV scores and final validation MAE are recomputed against original KZT targets.",
+    "global_model_selection": "Caller compares this final validation MAE with other model families before retrospective test evaluation.",
+    "candidates": [
+      {
+        "candidate_id": "catboost_raw_mae_depth4",
+        "depth": 4,
+        "loss_function": "MAE",
+        "target_transform": "identity",
+        "mean_cv_mae_kzt": 2346839.8196381084,
+        "std_cv_mae_kzt": 128552.9200420955,
+        "fold_mae_kzt": [
+          2447303.700313478,
+          2427829.2052606423,
+          2165386.553340205
+        ],
+        "fold_best_iterations": [
+          998,
+          676,
+          508
+        ],
+        "fold_iterations_run": [
+          1000,
+          736,
+          568
+        ]
+      },
+      {
+        "candidate_id": "catboost_raw_mae_depth6",
+        "depth": 6,
+        "loss_function": "MAE",
+        "target_transform": "identity",
+        "mean_cv_mae_kzt": 2342855.1932065524,
+        "std_cv_mae_kzt": 155545.2358912127,
+        "fold_mae_kzt": [
+          2471910.6277521,
+          2432599.9677246814,
+          2124054.984142875
+        ],
+        "fold_best_iterations": [
+          667,
+          467,
+          326
+        ],
+        "fold_iterations_run": [
+          727,
+          527,
+          386
+        ]
+      },
+      {
+        "candidate_id": "catboost_raw_mae_depth8",
+        "depth": 8,
+        "loss_function": "MAE",
+        "target_transform": "identity",
+        "mean_cv_mae_kzt": 2284512.461728532,
+        "std_cv_mae_kzt": 143864.1955378684,
+        "fold_mae_kzt": [
+          2464751.810784174,
+          2276128.2931062584,
+          2112657.281295163
+        ],
+        "fold_best_iterations": [
+          432,
+          576,
+          414
+        ],
+        "fold_iterations_run": [
+          492,
+          636,
+          474
+        ]
+      },
+      {
+        "candidate_id": "catboost_log_rmse_depth4",
+        "depth": 4,
+        "loss_function": "RMSE",
+        "target_transform": "log1p",
+        "mean_cv_mae_kzt": 2155142.989624835,
+        "std_cv_mae_kzt": 51922.595067729,
+        "fold_mae_kzt": [
+          2209850.6364328368,
+          2170206.6019448293,
+          2085371.7304968394
+        ],
+        "fold_best_iterations": [
+          998,
+          997,
+          998
+        ],
+        "fold_iterations_run": [
+          1000,
+          1000,
+          1000
+        ]
+      },
+      {
+        "candidate_id": "catboost_log_rmse_depth6",
+        "depth": 6,
+        "loss_function": "RMSE",
+        "target_transform": "log1p",
+        "mean_cv_mae_kzt": 2112288.391921991,
+        "std_cv_mae_kzt": 73894.2725637057,
+        "fold_mae_kzt": [
+          2201204.9008782315,
+          2020280.835631384,
+          2115379.4392563566
+        ],
+        "fold_best_iterations": [
+          999,
+          994,
+          996
+        ],
+        "fold_iterations_run": [
+          1000,
+          1000,
+          1000
+        ]
+      },
+      {
+        "candidate_id": "catboost_log_rmse_depth8",
+        "depth": 8,
+        "loss_function": "RMSE",
+        "target_transform": "log1p",
+        "mean_cv_mae_kzt": 2093993.1485219037,
+        "std_cv_mae_kzt": 65490.9808264078,
+        "fold_mae_kzt": [
+          2186098.179265175,
+          2039508.531499842,
+          2056372.7348006933
+        ],
+        "fold_best_iterations": [
+          662,
+          980,
+          744
+        ],
+        "fold_iterations_run": [
+          722,
+          1000,
+          804
+        ]
+      }
+    ],
+    "artifacts": {
+      "cv_csv": "catboost_cv.csv",
+      "history_csv": "catboost_history.csv",
+      "history_plot": "catboost_history.png",
+      "report_json": "catboost_report.json"
+    },
+    "test_data_used": false
+  },
+  "ensemble": {
+    "selected_components": [
+      "ANN corrected",
+      "Random forest tuned"
+    ],
+    "weights": [
+      0.75,
+      0.25
+    ],
+    "validation_mae_kzt": 2289371.696786993,
+    "candidates": [
+      {
+        "components": [
+          "ANN corrected",
+          "CatBoost"
+        ],
+        "weights": [
+          0.25,
+          0.75
+        ],
+        "validation_mae_kzt": 2492955.3443715726
+      },
+      {
+        "components": [
+          "ANN corrected",
+          "CatBoost"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "validation_mae_kzt": 2363426.8750823704
+      },
+      {
+        "components": [
+          "ANN corrected",
+          "CatBoost"
+        ],
+        "weights": [
+          0.75,
+          0.25
+        ],
+        "validation_mae_kzt": 2319060.8838784453
+      },
+      {
+        "components": [
+          "ANN corrected",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.25,
+          0.75
+        ],
+        "validation_mae_kzt": 2478848.5158907394
+      },
+      {
+        "components": [
+          "ANN corrected",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "validation_mae_kzt": 2315844.3382689264
+      },
+      {
+        "components": [
+          "ANN corrected",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.75,
+          0.25
+        ],
+        "validation_mae_kzt": 2289371.696786993
+      }
+    ],
+    "selection": "Lowest validation MAE among predeclared pairs and weights; no fitting on test",
+    "test_data_used": false
+  },
+  "robust_ann": {
+    "model": "Fixed five-seed ANN pools",
+    "configuration": {
+      "seeds": [
+        11,
+        23,
+        42,
+        71,
+        101
+      ],
+      "hidden_layer_sizes": [
+        128,
+        64
+      ],
+      "activation": "relu",
+      "solver": "adam",
+      "alpha": 0.001,
+      "batch_size": 64,
+      "learning_rate_init": 0.001,
+      "max_epochs": 300,
+      "patience": 45,
+      "min_frequency": 2
+    },
+    "split_seed": 42,
+    "representation": "enhanced",
+    "feature_set": "corrected_plus_literal_steering",
+    "numeric_inputs": [
+      "year",
+      "log_km",
+      "mileage_missing",
+      "engine_liters_clean",
+      "engine_missing",
+      "engine_not_applicable",
+      "engine_source_conflict"
+    ],
+    "categorical_inputs": [
+      "brand",
+      "model",
+      "body",
+      "fuel",
+      "transmission",
+      "steering"
+    ],
+    "additional_numeric_inputs": [],
+    "input_features": 307,
+    "training_rows": 1787,
+    "validation_rows": 383,
+    "preprocessing_fit_split": "training only",
+    "target_scaler": {
+      "fit_split": "training only",
+      "n_samples_seen": 1787,
+      "mean_log1p": 15.6530337903,
+      "scale_log1p": 0.9198202842
+    },
+    "target_transform": "Training-standardized log1p KZT; ANNRegressor converts predictions back to finite nonnegative KZT.",
+    "aggregation": "Equal arithmetic mean of every fixed seed; no seed subsets are searched.",
+    "baseline_validation_metrics": {
+      "mae_kzt": 2289371.696786993,
+      "within_20pct": 0.6422976501,
+      "median_ape": 0.1400908309
+    },
+    "candidate_validation_metrics": {
+      "ANN pool MAE": {
+        "mae_kzt": 2274288.461998604,
+        "within_20pct": 0.6527415144,
+        "median_ape": 0.135472532,
+        "dual_score": 0.9821072733,
+        "validation_mae_kzt": 2274288.461998604,
+        "validation_within_20pct": 0.6527415144,
+        "checkpoint_metric": "mae_kzt"
+      },
+      "ANN pool dual": {
+        "mae_kzt": 2298694.2301891106,
+        "within_20pct": 0.6475195822,
+        "median_ape": 0.134617198,
+        "dual_score": 0.9947367762,
+        "validation_mae_kzt": 2298694.2301891106,
+        "validation_within_20pct": 0.6475195822,
+        "checkpoint_metric": "dual_score"
+      }
+    },
+    "members": [
+      {
+        "seed": 11,
+        "epochs_run": 101,
+        "stopped_after_both_checkpoints_stale": true,
+        "checkpoints": {
+          "mae_kzt": {
+            "best_epoch": 56,
+            "best_value": 2361682.066957,
+            "validation_mae_kzt": 2361682.066957,
+            "validation_within_20pct": 0.6318537859,
+            "dual_score": 1.0303911636,
+            "train_scaled_log_mse": 0.0204999404,
+            "val_scaled_log_mse": 0.1839966943,
+            "generalization_gap_scaled_log_mse": 0.1634967539,
+            "validation_log_mse_change_after_checkpoint": 0.0108562631,
+            "validation_mae_change_after_checkpoint_kzt": 137554.7267855848,
+            "artifact": "robust_ann_checkpoints/seed_11_mae_kzt.joblib"
+          },
+          "dual_score": {
+            "best_epoch": 30,
+            "best_value": 1.0004950043,
+            "validation_mae_kzt": 2375191.9062330476,
+            "validation_within_20pct": 0.6553524804,
+            "dual_score": 1.0004950043,
+            "train_scaled_log_mse": 0.0286277333,
+            "val_scaled_log_mse": 0.1800760503,
+            "generalization_gap_scaled_log_mse": 0.151448317,
+            "validation_log_mse_change_after_checkpoint": 0.0147769071,
+            "validation_mae_change_after_checkpoint_kzt": 124044.8875095374,
+            "artifact": "robust_ann_checkpoints/seed_11_dual_score.joblib"
+          }
+        },
+        "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+      },
+      {
+        "seed": 23,
+        "epochs_run": 106,
+        "stopped_after_both_checkpoints_stale": true,
+        "checkpoints": {
+          "mae_kzt": {
+            "best_epoch": 54,
+            "best_value": 2345815.5057440535,
+            "validation_mae_kzt": 2345815.5057440535,
+            "validation_within_20pct": 0.6240208877,
+            "dual_score": 1.0378748032,
+            "train_scaled_log_mse": 0.0195706309,
+            "val_scaled_log_mse": 0.1869685169,
+            "generalization_gap_scaled_log_mse": 0.167397886,
+            "validation_log_mse_change_after_checkpoint": 0.0045131764,
+            "validation_mae_change_after_checkpoint_kzt": 83050.4434075034,
+            "artifact": "robust_ann_checkpoints/seed_23_mae_kzt.joblib"
+          },
+          "dual_score": {
+            "best_epoch": 61,
+            "best_value": 1.0189488309,
+            "validation_mae_kzt": 2359422.7885688706,
+            "validation_within_20pct": 0.6396866841,
+            "dual_score": 1.0189488309,
+            "train_scaled_log_mse": 0.0172916995,
+            "val_scaled_log_mse": 0.1882881971,
+            "generalization_gap_scaled_log_mse": 0.1709964976,
+            "validation_log_mse_change_after_checkpoint": 0.0031934963,
+            "validation_mae_change_after_checkpoint_kzt": 69443.1605826863,
+            "artifact": "robust_ann_checkpoints/seed_23_dual_score.joblib"
+          }
+        },
+        "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+      },
+      {
+        "seed": 42,
+        "epochs_run": 117,
+        "stopped_after_both_checkpoints_stale": true,
+        "checkpoints": {
+          "mae_kzt": {
+            "best_epoch": 72,
+            "best_value": 2345711.128088299,
+            "validation_mae_kzt": 2345711.128088299,
+            "validation_within_20pct": 0.6266318538,
+            "dual_score": 1.0342023721,
+            "train_scaled_log_mse": 0.0202876631,
+            "val_scaled_log_mse": 0.1910240318,
+            "generalization_gap_scaled_log_mse": 0.1707363687,
+            "validation_log_mse_change_after_checkpoint": 0.0173252051,
+            "validation_mae_change_after_checkpoint_kzt": 197714.6659506024,
+            "artifact": "robust_ann_checkpoints/seed_42_mae_kzt.joblib"
+          },
+          "dual_score": {
+            "best_epoch": 69,
+            "best_value": 1.0254613185,
+            "validation_mae_kzt": 2355820.3139248188,
+            "validation_within_20pct": 0.634464752,
+            "dual_score": 1.0254613185,
+            "train_scaled_log_mse": 0.0267260776,
+            "val_scaled_log_mse": 0.1879406865,
+            "generalization_gap_scaled_log_mse": 0.1612146089,
+            "validation_log_mse_change_after_checkpoint": 0.0204085504,
+            "validation_mae_change_after_checkpoint_kzt": 187605.4801140828,
+            "artifact": "robust_ann_checkpoints/seed_42_dual_score.joblib"
+          }
+        },
+        "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+      },
+      {
+        "seed": 71,
+        "epochs_run": 108,
+        "stopped_after_both_checkpoints_stale": true,
+        "checkpoints": {
+          "mae_kzt": {
+            "best_epoch": 24,
+            "best_value": 2372674.6373403147,
+            "validation_mae_kzt": 2372674.6373403147,
+            "validation_within_20pct": 0.6083550914,
+            "dual_score": 1.0656386621,
+            "train_scaled_log_mse": 0.0347644489,
+            "val_scaled_log_mse": 0.1723754753,
+            "generalization_gap_scaled_log_mse": 0.1376110265,
+            "validation_log_mse_change_after_checkpoint": 0.0164901862,
+            "validation_mae_change_after_checkpoint_kzt": 107316.7569401534,
+            "artifact": "robust_ann_checkpoints/seed_71_mae_kzt.joblib"
+          },
+          "dual_score": {
+            "best_epoch": 63,
+            "best_value": 1.0550733225,
+            "validation_mae_kzt": 2441273.8542704536,
+            "validation_within_20pct": 0.6266318538,
+            "dual_score": 1.0550733225,
+            "train_scaled_log_mse": 0.0206206457,
+            "val_scaled_log_mse": 0.1759537486,
+            "generalization_gap_scaled_log_mse": 0.1553331029,
+            "validation_log_mse_change_after_checkpoint": 0.012911913,
+            "validation_mae_change_after_checkpoint_kzt": 38717.5400100145,
+            "artifact": "robust_ann_checkpoints/seed_71_dual_score.joblib"
+          }
+        },
+        "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+      },
+      {
+        "seed": 101,
+        "epochs_run": 69,
+        "stopped_after_both_checkpoints_stale": true,
+        "checkpoints": {
+          "mae_kzt": {
+            "best_epoch": 21,
+            "best_value": 2338724.087547255,
+            "validation_mae_kzt": 2338724.087547255,
+            "validation_within_20pct": 0.6109660574,
+            "dual_score": 1.0545742089,
+            "train_scaled_log_mse": 0.0316583274,
+            "val_scaled_log_mse": 0.1864527037,
+            "generalization_gap_scaled_log_mse": 0.1547943762,
+            "validation_log_mse_change_after_checkpoint": 0.0097763634,
+            "validation_mae_change_after_checkpoint_kzt": 40548.3049476468,
+            "artifact": "robust_ann_checkpoints/seed_101_mae_kzt.joblib"
+          },
+          "dual_score": {
+            "best_epoch": 24,
+            "best_value": 1.0383070481,
+            "validation_mae_kzt": 2347794.64405756,
+            "validation_within_20pct": 0.6240208877,
+            "dual_score": 1.0383070481,
+            "train_scaled_log_mse": 0.031471815,
+            "val_scaled_log_mse": 0.1882250586,
+            "generalization_gap_scaled_log_mse": 0.1567532435,
+            "validation_log_mse_change_after_checkpoint": 0.0080040085,
+            "validation_mae_change_after_checkpoint_kzt": 31477.7484373422,
+            "artifact": "robust_ann_checkpoints/seed_101_dual_score.joblib"
+          }
+        },
+        "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+      }
+    ],
+    "member_best_epochs": {
+      "mae_kzt": [
+        56,
+        54,
+        72,
+        24,
+        21
+      ],
+      "dual_score": [
+        30,
+        61,
+        69,
+        63,
+        24
+      ]
+    },
+    "member_epochs_run": [
+      101,
+      106,
+      117,
+      108,
+      69
+    ],
+    "loss": "Ordinary MSE of training-standardized log1p targets, without optimizer one-half factor or L2 term.",
+    "checkpoint_selection": "Strictly lower validation original-KZT MAE or 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction); ties keep the first checkpoint. Stop 45 epochs after both best epochs stop improving under the default protocol.",
+    "checkpoint_selection_caveat": "Validation is reused to select every checkpoint and the blend. Its reported gains and convergence are selection-dependent, not independent generalization evidence. The historical test was already known and any final evaluation is retrospective.",
+    "source": {
+      "csv": "kolesa_cars_2025.csv",
+      "source_url": "https://www.kaggle.com/datasets/mutashevdarkhan/kolesa-cars-2025",
+      "features": "Original per-row vehicle fields and literal pre-КПП steering clauses only; price, price_raw, ad_id and link are not predictors."
+    },
+    "artifacts": {
+      "history_csv": "robust_ann_history.csv",
+      "history_plot": "robust_ann_history.png",
+      "models": {
+        "ANN pool MAE": "robust_ann_pool_mae.joblib",
+        "ANN pool dual": "robust_ann_pool_dual.joblib"
+      },
+      "report_json": "robust_ann_report.json"
+    },
+    "test_data_used": false,
+    "test_data_policy": "Test data is not accepted or evaluated by this API.",
+    "artifact_base_directory": "robust_ann"
+  },
+  "dual_selection": {
+    "selected_name": "ANN pool dual 0.75 + Random forest tuned 0.25",
+    "selected_components": [
+      "ANN pool dual",
+      "Random forest tuned"
+    ],
+    "weights": [
+      0.75,
+      0.25
+    ],
+    "validation_mae_kzt": 2248401.7333698105,
+    "validation_within_20pct": 0.6631853786,
+    "mae_kzt": 2248401.7333698105,
+    "within_20pct": 0.6631853786,
+    "median_ape": 0.1388566633,
+    "dual_score": 0.9618550578,
+    "candidates": [
+      {
+        "name": "Ensemble",
+        "candidate": "Ensemble",
+        "components": [
+          "Ensemble"
+        ],
+        "weights": [
+          1.0
+        ],
+        "mae_kzt": 2289371.696786993,
+        "within_20pct": 0.6422976501,
+        "median_ape": 0.1400908309,
+        "dual_score": 1.0,
+        "validation_mae_kzt": 2289371.696786993,
+        "validation_within_20pct": 0.6422976501,
+        "eligible": false
+      },
+      {
+        "name": "ANN pool MAE",
+        "candidate": "ANN pool MAE",
+        "components": [
+          "ANN pool MAE"
+        ],
+        "weights": [
+          1.0
+        ],
+        "mae_kzt": 2274288.461998604,
+        "within_20pct": 0.6527415144,
+        "median_ape": 0.135472532,
+        "dual_score": 0.9821072733,
+        "validation_mae_kzt": 2274288.461998604,
+        "validation_within_20pct": 0.6527415144,
+        "eligible": true
+      },
+      {
+        "name": "ANN pool dual",
+        "candidate": "ANN pool dual",
+        "components": [
+          "ANN pool dual"
+        ],
+        "weights": [
+          1.0
+        ],
+        "mae_kzt": 2298694.2301891106,
+        "within_20pct": 0.6475195822,
+        "median_ape": 0.134617198,
+        "dual_score": 0.9947367762,
+        "validation_mae_kzt": 2298694.2301891106,
+        "validation_within_20pct": 0.6475195822,
+        "eligible": false
+      },
+      {
+        "name": "ANN pool MAE 0.25 + Random forest tuned 0.75",
+        "candidate": "ANN pool MAE 0.25 + Random forest tuned 0.75",
+        "components": [
+          "ANN pool MAE",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.25,
+          0.75
+        ],
+        "mae_kzt": 2502176.585164845,
+        "within_20pct": 0.5953002611,
+        "median_ape": 0.1585725997,
+        "dual_score": 1.1121701318,
+        "validation_mae_kzt": 2502176.585164845,
+        "validation_within_20pct": 0.5953002611,
+        "eligible": false
+      },
+      {
+        "name": "ANN pool MAE 0.5 + Random forest tuned 0.5",
+        "candidate": "ANN pool MAE 0.5 + Random forest tuned 0.5",
+        "components": [
+          "ANN pool MAE",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "mae_kzt": 2332837.0865136012,
+        "within_20pct": 0.6266318538,
+        "median_ape": 0.1432605521,
+        "dual_score": 1.0313906745,
+        "validation_mae_kzt": 2332837.0865136012,
+        "validation_within_20pct": 0.6266318538,
+        "eligible": false
+      },
+      {
+        "name": "ANN pool MAE 0.75 + Random forest tuned 0.25",
+        "candidate": "ANN pool MAE 0.75 + Random forest tuned 0.25",
+        "components": [
+          "ANN pool MAE",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.75,
+          0.25
+        ],
+        "mae_kzt": 2247103.274930505,
+        "within_20pct": 0.6579634465,
+        "median_ape": 0.1422848864,
+        "dual_score": 0.9688707439,
+        "validation_mae_kzt": 2247103.274930505,
+        "validation_within_20pct": 0.6579634465,
+        "eligible": true
+      },
+      {
+        "name": "ANN pool dual 0.25 + Random forest tuned 0.75",
+        "candidate": "ANN pool dual 0.25 + Random forest tuned 0.75",
+        "components": [
+          "ANN pool dual",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.25,
+          0.75
+        ],
+        "mae_kzt": 2490814.3848561496,
+        "within_20pct": 0.6005221932,
+        "median_ape": 0.1563431132,
+        "dual_score": 1.1023893511,
+        "validation_mae_kzt": 2490814.3848561496,
+        "validation_within_20pct": 0.6005221932,
+        "eligible": false
+      },
+      {
+        "name": "ANN pool dual 0.5 + Random forest tuned 0.5",
+        "candidate": "ANN pool dual 0.5 + Random forest tuned 0.5",
+        "components": [
+          "ANN pool dual",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "mae_kzt": 2309559.3664376526,
+        "within_20pct": 0.6266318538,
+        "median_ape": 0.1408988846,
+        "dual_score": 1.026306808,
+        "validation_mae_kzt": 2309559.3664376526,
+        "validation_within_20pct": 0.6266318538,
+        "eligible": false
+      },
+      {
+        "name": "ANN pool dual 0.75 + Random forest tuned 0.25",
+        "candidate": "ANN pool dual 0.75 + Random forest tuned 0.25",
+        "components": [
+          "ANN pool dual",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.75,
+          0.25
+        ],
+        "mae_kzt": 2248401.7333698105,
+        "within_20pct": 0.6631853786,
+        "median_ape": 0.1388566633,
+        "dual_score": 0.9618550578,
+        "validation_mae_kzt": 2248401.7333698105,
+        "validation_within_20pct": 0.6631853786,
+        "eligible": true
+      }
+    ],
+    "eligible_count": 3,
+    "baseline_validation_metrics": {
+      "mae_kzt": 2289371.696786993,
+      "within_20pct": 0.6422976501,
+      "median_ape": 0.1400908309
+    },
+    "selection": "Strict validation MAE decrease and within-20% increase versus baseline; then lowest 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction). Baseline retained if none; exact score ties retain the first declared candidate.",
+    "declared_blend_weights": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "include_baseline_blends": false,
+    "test_data_used": false,
+    "test_data_policy": "No test targets or predictions accepted.",
+    "checkpoint_selection_caveat": "Validation has already selected pool checkpoints and now selects the mixture; results are selection-dependent. Historical-test reuse prevents an independent generalization claim."
+  },
+  "usage_ann": {
+    "model": "Fixed five-seed ANN pools",
+    "configuration": {
+      "seeds": [
+        11,
+        23,
+        42,
+        71,
+        101
+      ],
+      "hidden_layer_sizes": [
+        128,
+        64
+      ],
+      "activation": "relu",
+      "solver": "adam",
+      "alpha": 0.001,
+      "batch_size": 64,
+      "learning_rate_init": 0.001,
+      "max_epochs": 300,
+      "patience": 45,
+      "min_frequency": 2
+    },
+    "split_seed": 42,
+    "representation": "enhanced",
+    "feature_set": "corrected_steering_plus_age_usage",
+    "numeric_inputs": [
+      "year",
+      "log_km",
+      "mileage_missing",
+      "engine_liters_clean",
+      "engine_missing",
+      "engine_not_applicable",
+      "engine_source_conflict",
+      "log_vehicle_age",
+      "log_annual_mileage_proxy"
+    ],
+    "categorical_inputs": [
+      "brand",
+      "model",
+      "body",
+      "fuel",
+      "transmission",
+      "steering"
+    ],
+    "additional_numeric_inputs": [
+      "log_vehicle_age",
+      "log_annual_mileage_proxy"
+    ],
+    "input_features": 309,
+    "training_rows": 1787,
+    "validation_rows": 383,
+    "preprocessing_fit_split": "training only",
+    "target_scaler": {
+      "fit_split": "training only",
+      "n_samples_seen": 1787,
+      "mean_log1p": 15.6530337903,
+      "scale_log1p": 0.9198202842
+    },
+    "target_transform": "Training-standardized log1p KZT; ANNRegressor converts predictions back to finite nonnegative KZT.",
+    "aggregation": "Equal arithmetic mean of every fixed seed; no seed subsets are searched.",
+    "baseline_validation_metrics": {
+      "mae_kzt": 2248401.7333698105,
+      "within_20pct": 0.6631853786,
+      "median_ape": 0.1388566633
+    },
+    "candidate_validation_metrics": {
+      "ANN pool MAE": {
+        "mae_kzt": 2257650.404213965,
+        "within_20pct": 0.6475195822,
+        "median_ape": 0.1348593578,
+        "dual_score": 1.0253125351,
+        "validation_mae_kzt": 2257650.404213965,
+        "validation_within_20pct": 0.6475195822,
+        "checkpoint_metric": "mae_kzt"
+      },
+      "ANN pool dual": {
+        "mae_kzt": 2270380.088956957,
+        "within_20pct": 0.6553524804,
+        "median_ape": 0.1354401659,
+        "dual_score": 1.0165154578,
+        "validation_mae_kzt": 2270380.088956957,
+        "validation_within_20pct": 0.6553524804,
+        "checkpoint_metric": "dual_score"
+      }
+    },
+    "members": [
+      {
+        "seed": 11,
+        "epochs_run": 79,
+        "stopped_after_both_checkpoints_stale": true,
+        "checkpoints": {
+          "mae_kzt": {
+            "best_epoch": 34,
+            "best_value": 2304562.3158153687,
+            "validation_mae_kzt": 2304562.3158153687,
+            "validation_within_20pct": 0.6161879896,
+            "dual_score": 1.0822564427,
+            "train_scaled_log_mse": 0.0246404964,
+            "val_scaled_log_mse": 0.1782756786,
+            "generalization_gap_scaled_log_mse": 0.1536351823,
+            "validation_log_mse_change_after_checkpoint": 0.0086742966,
+            "validation_mae_change_after_checkpoint_kzt": 82881.470063101,
+            "artifact": "robust_ann_checkpoints/seed_11_mae_kzt.joblib"
+          },
+          "dual_score": {
+            "best_epoch": 29,
+            "best_value": 1.0424783864,
+            "validation_mae_kzt": 2317412.3928161594,
+            "validation_within_20pct": 0.6449086162,
+            "dual_score": 1.0424783864,
+            "train_scaled_log_mse": 0.0250863642,
+            "val_scaled_log_mse": 0.1769059393,
+            "generalization_gap_scaled_log_mse": 0.1518195751,
+            "validation_log_mse_change_after_checkpoint": 0.010044036,
+            "validation_mae_change_after_checkpoint_kzt": 70031.3930623103,
+            "artifact": "robust_ann_checkpoints/seed_11_dual_score.joblib"
+          }
+        },
+        "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+      },
+      {
+        "seed": 23,
+        "epochs_run": 103,
+        "stopped_after_both_checkpoints_stale": true,
+        "checkpoints": {
+          "mae_kzt": {
+            "best_epoch": 56,
+            "best_value": 2344097.8274567975,
+            "validation_mae_kzt": 2344097.8274567975,
+            "validation_within_20pct": 0.6449086162,
+            "dual_score": 1.0484126983,
+            "train_scaled_log_mse": 0.021575618,
+            "val_scaled_log_mse": 0.1702873515,
+            "generalization_gap_scaled_log_mse": 0.1487117336,
+            "validation_log_mse_change_after_checkpoint": 0.0041670222,
+            "validation_mae_change_after_checkpoint_kzt": 114473.6776686218,
+            "artifact": "robust_ann_checkpoints/seed_23_mae_kzt.joblib"
+          },
+          "dual_score": {
+            "best_epoch": 58,
+            "best_value": 1.0371253801,
+            "validation_mae_kzt": 2345629.388087416,
+            "validation_within_20pct": 0.6527415144,
+            "dual_score": 1.0371253801,
+            "train_scaled_log_mse": 0.0205044503,
+            "val_scaled_log_mse": 0.1710488244,
+            "generalization_gap_scaled_log_mse": 0.1505443741,
+            "validation_log_mse_change_after_checkpoint": 0.0034055493,
+            "validation_mae_change_after_checkpoint_kzt": 112942.1170380032,
+            "artifact": "robust_ann_checkpoints/seed_23_dual_score.joblib"
+          }
+        },
+        "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+      },
+      {
+        "seed": 42,
+        "epochs_run": 138,
+        "stopped_after_both_checkpoints_stale": true,
+        "checkpoints": {
+          "mae_kzt": {
+            "best_epoch": 93,
+            "best_value": 2388385.941830409,
+            "validation_mae_kzt": 2388385.941830409,
+            "validation_within_20pct": 0.6005221932,
+            "dual_score": 1.1241529704,
+            "train_scaled_log_mse": 0.0139951493,
+            "val_scaled_log_mse": 0.1765004357,
+            "generalization_gap_scaled_log_mse": 0.1625052864,
+            "validation_log_mse_change_after_checkpoint": 0.0064998374,
+            "validation_mae_change_after_checkpoint_kzt": 67233.6573419082,
+            "artifact": "robust_ann_checkpoints/seed_42_mae_kzt.joblib"
+          },
+          "dual_score": {
+            "best_epoch": 74,
+            "best_value": 1.0961084408,
+            "validation_mae_kzt": 2401710.970541398,
+            "validation_within_20pct": 0.6214099217,
+            "dual_score": 1.0961084408,
+            "train_scaled_log_mse": 0.0167075738,
+            "val_scaled_log_mse": 0.1783265369,
+            "generalization_gap_scaled_log_mse": 0.1616189631,
+            "validation_log_mse_change_after_checkpoint": 0.0046737362,
+            "validation_mae_change_after_checkpoint_kzt": 53908.6286309194,
+            "artifact": "robust_ann_checkpoints/seed_42_dual_score.joblib"
+          }
+        },
+        "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+      },
+      {
+        "seed": 71,
+        "epochs_run": 103,
+        "stopped_after_both_checkpoints_stale": true,
+        "checkpoints": {
+          "mae_kzt": {
+            "best_epoch": 56,
+            "best_value": 2383182.048311042,
+            "validation_mae_kzt": 2383182.048311042,
+            "validation_within_20pct": 0.6135770235,
+            "dual_score": 1.1036158826,
+            "train_scaled_log_mse": 0.0282615302,
+            "val_scaled_log_mse": 0.1672229934,
+            "generalization_gap_scaled_log_mse": 0.1389614632,
+            "validation_log_mse_change_after_checkpoint": 0.0088685538,
+            "validation_mae_change_after_checkpoint_kzt": 226558.6090596421,
+            "artifact": "robust_ann_checkpoints/seed_71_mae_kzt.joblib"
+          },
+          "dual_score": {
+            "best_epoch": 58,
+            "best_value": 1.0660844209,
+            "validation_mae_kzt": 2440993.5615673945,
+            "validation_within_20pct": 0.6475195822,
+            "dual_score": 1.0660844209,
+            "train_scaled_log_mse": 0.0241267955,
+            "val_scaled_log_mse": 0.1681466918,
+            "generalization_gap_scaled_log_mse": 0.1440198963,
+            "validation_log_mse_change_after_checkpoint": 0.0079448555,
+            "validation_mae_change_after_checkpoint_kzt": 168747.0958032897,
+            "artifact": "robust_ann_checkpoints/seed_71_dual_score.joblib"
+          }
+        },
+        "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+      },
+      {
+        "seed": 101,
+        "epochs_run": 76,
+        "stopped_after_both_checkpoints_stale": true,
+        "checkpoints": {
+          "mae_kzt": {
+            "best_epoch": 31,
+            "best_value": 2314353.519015239,
+            "validation_mae_kzt": 2314353.519015239,
+            "validation_within_20pct": 0.6083550914,
+            "dual_score": 1.0960617193,
+            "train_scaled_log_mse": 0.0231777224,
+            "val_scaled_log_mse": 0.1771126047,
+            "generalization_gap_scaled_log_mse": 0.1539348823,
+            "validation_log_mse_change_after_checkpoint": 0.0054580759,
+            "validation_mae_change_after_checkpoint_kzt": 20593.9886757531,
+            "artifact": "robust_ann_checkpoints/seed_101_mae_kzt.joblib"
+          },
+          "dual_score": {
+            "best_epoch": 20,
+            "best_value": 1.0526527154,
+            "validation_mae_kzt": 2328305.4094542954,
+            "validation_within_20pct": 0.6396866841,
+            "dual_score": 1.0526527154,
+            "train_scaled_log_mse": 0.0309249924,
+            "val_scaled_log_mse": 0.1734294815,
+            "generalization_gap_scaled_log_mse": 0.1425044891,
+            "validation_log_mse_change_after_checkpoint": 0.0091411992,
+            "validation_mae_change_after_checkpoint_kzt": 6642.0982366968,
+            "artifact": "robust_ann_checkpoints/seed_101_dual_score.joblib"
+          }
+        },
+        "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+      }
+    ],
+    "member_best_epochs": {
+      "mae_kzt": [
+        34,
+        56,
+        93,
+        56,
+        31
+      ],
+      "dual_score": [
+        29,
+        58,
+        74,
+        58,
+        20
+      ]
+    },
+    "member_epochs_run": [
+      79,
+      103,
+      138,
+      103,
+      76
+    ],
+    "loss": "Ordinary MSE of training-standardized log1p targets, without optimizer one-half factor or L2 term.",
+    "checkpoint_selection": "Strictly lower validation original-KZT MAE or 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction); ties keep the first checkpoint. Stop 45 epochs after both best epochs stop improving under the default protocol.",
+    "checkpoint_selection_caveat": "Validation is reused to select every checkpoint and the blend. Its reported gains and convergence are selection-dependent, not independent generalization evidence. The historical test was already known and any final evaluation is retrospective.",
+    "source": {
+      "csv": "kolesa_cars_2025.csv",
+      "source_url": "https://www.kaggle.com/datasets/mutashevdarkhan/kolesa-cars-2025",
+      "features": "Original per-row vehicle fields and literal pre-КПП steering clauses plus explicitly declared fixed-snapshot age/usage proxies only; price, price_raw, ad_id and link are not predictors."
+    },
+    "artifacts": {
+      "history_csv": "robust_ann_history.csv",
+      "history_plot": "robust_ann_history.png",
+      "models": {
+        "ANN pool MAE": "robust_ann_pool_mae.joblib",
+        "ANN pool dual": "robust_ann_pool_dual.joblib"
+      },
+      "report_json": "robust_ann_report.json"
+    },
+    "test_data_used": false,
+    "test_data_policy": "Test data is not accepted or evaluated by this API.",
+    "artifact_base_directory": "usage_ann"
+  },
+  "usage_selection": {
+    "selected_name": "Usage ANN pool MAE 0.25 + Robust ensemble 0.75",
+    "selected_components": [
+      "Usage ANN pool MAE",
+      "Robust ensemble"
+    ],
+    "weights": [
+      0.25,
+      0.75
+    ],
+    "validation_mae_kzt": 2238371.607965701,
+    "validation_within_20pct": 0.6762402089,
+    "mae_kzt": 2238371.607965701,
+    "within_20pct": 0.6762402089,
+    "median_ape": 0.1368460151,
+    "dual_score": 0.9783896539,
+    "candidates": [
+      {
+        "name": "Robust ensemble",
+        "candidate": "Robust ensemble",
+        "components": [
+          "Robust ensemble"
+        ],
+        "weights": [
+          1.0
+        ],
+        "mae_kzt": 2248401.7333698105,
+        "within_20pct": 0.6631853786,
+        "median_ape": 0.1388566633,
+        "dual_score": 1.0,
+        "validation_mae_kzt": 2248401.7333698105,
+        "validation_within_20pct": 0.6631853786,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool MAE",
+        "candidate": "Usage ANN pool MAE",
+        "components": [
+          "Usage ANN pool MAE"
+        ],
+        "weights": [
+          1.0
+        ],
+        "mae_kzt": 2257650.404213965,
+        "within_20pct": 0.6475195822,
+        "median_ape": 0.1348593578,
+        "dual_score": 1.0253125351,
+        "validation_mae_kzt": 2257650.404213965,
+        "validation_within_20pct": 0.6475195822,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool dual",
+        "candidate": "Usage ANN pool dual",
+        "components": [
+          "Usage ANN pool dual"
+        ],
+        "weights": [
+          1.0
+        ],
+        "mae_kzt": 2270380.088956957,
+        "within_20pct": 0.6553524804,
+        "median_ape": 0.1354401659,
+        "dual_score": 1.0165154578,
+        "validation_mae_kzt": 2270380.088956957,
+        "validation_within_20pct": 0.6553524804,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool MAE 0.25 + Random forest tuned 0.75",
+        "candidate": "Usage ANN pool MAE 0.25 + Random forest tuned 0.75",
+        "components": [
+          "Usage ANN pool MAE",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.25,
+          0.75
+        ],
+        "mae_kzt": 2506106.3694153116,
+        "within_20pct": 0.5953002611,
+        "median_ape": 0.1585395971,
+        "dual_score": 1.1580835992,
+        "validation_mae_kzt": 2506106.3694153116,
+        "validation_within_20pct": 0.5953002611,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool MAE 0.5 + Random forest tuned 0.5",
+        "candidate": "Usage ANN pool MAE 0.5 + Random forest tuned 0.5",
+        "components": [
+          "Usage ANN pool MAE",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "mae_kzt": 2338514.8223478594,
+        "within_20pct": 0.6240208877,
+        "median_ape": 0.1420459515,
+        "dual_score": 1.0781789005,
+        "validation_mae_kzt": 2338514.8223478594,
+        "validation_within_20pct": 0.6240208877,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool MAE 0.75 + Random forest tuned 0.25",
+        "candidate": "Usage ANN pool MAE 0.75 + Random forest tuned 0.25",
+        "components": [
+          "Usage ANN pool MAE",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.75,
+          0.25
+        ],
+        "mae_kzt": 2258713.6369350264,
+        "within_20pct": 0.6553524804,
+        "median_ape": 0.1423452932,
+        "dual_score": 1.01392107,
+        "validation_mae_kzt": 2258713.6369350264,
+        "validation_within_20pct": 0.6553524804,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool MAE 0.25 + Robust ensemble 0.75",
+        "candidate": "Usage ANN pool MAE 0.25 + Robust ensemble 0.75",
+        "components": [
+          "Usage ANN pool MAE",
+          "Robust ensemble"
+        ],
+        "weights": [
+          0.25,
+          0.75
+        ],
+        "mae_kzt": 2238371.607965701,
+        "within_20pct": 0.6762402089,
+        "median_ape": 0.1368460151,
+        "dual_score": 0.9783896539,
+        "validation_mae_kzt": 2238371.607965701,
+        "validation_within_20pct": 0.6762402089,
+        "eligible": true
+      },
+      {
+        "name": "Usage ANN pool MAE 0.5 + Robust ensemble 0.5",
+        "candidate": "Usage ANN pool MAE 0.5 + Robust ensemble 0.5",
+        "components": [
+          "Usage ANN pool MAE",
+          "Robust ensemble"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "mae_kzt": 2233223.135899448,
+        "within_20pct": 0.6631853786,
+        "median_ape": 0.1388161373,
+        "dual_score": 0.9966245806,
+        "validation_mae_kzt": 2233223.135899448,
+        "validation_within_20pct": 0.6631853786,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool MAE 0.75 + Robust ensemble 0.25",
+        "candidate": "Usage ANN pool MAE 0.75 + Robust ensemble 0.25",
+        "components": [
+          "Usage ANN pool MAE",
+          "Robust ensemble"
+        ],
+        "weights": [
+          0.75,
+          0.25
+        ],
+        "mae_kzt": 2239886.9664337942,
+        "within_20pct": 0.6657963446,
+        "median_ape": 0.1351923323,
+        "dual_score": 0.9942305155,
+        "validation_mae_kzt": 2239886.9664337942,
+        "validation_within_20pct": 0.6657963446,
+        "eligible": true
+      },
+      {
+        "name": "Usage ANN pool dual 0.25 + Random forest tuned 0.75",
+        "candidate": "Usage ANN pool dual 0.25 + Random forest tuned 0.75",
+        "components": [
+          "Usage ANN pool dual",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.25,
+          0.75
+        ],
+        "mae_kzt": 2506384.925586784,
+        "within_20pct": 0.5979112272,
+        "median_ape": 0.1604243226,
+        "dual_score": 1.1542695756,
+        "validation_mae_kzt": 2506384.925586784,
+        "validation_within_20pct": 0.5979112272,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool dual 0.5 + Random forest tuned 0.5",
+        "candidate": "Usage ANN pool dual 0.5 + Random forest tuned 0.5",
+        "components": [
+          "Usage ANN pool dual",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "mae_kzt": 2342289.739207425,
+        "within_20pct": 0.6161879896,
+        "median_ape": 0.1413228456,
+        "dual_score": 1.0906462742,
+        "validation_mae_kzt": 2342289.739207425,
+        "validation_within_20pct": 0.6161879896,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool dual 0.75 + Random forest tuned 0.25",
+        "candidate": "Usage ANN pool dual 0.75 + Random forest tuned 0.25",
+        "components": [
+          "Usage ANN pool dual",
+          "Random forest tuned"
+        ],
+        "weights": [
+          0.75,
+          0.25
+        ],
+        "mae_kzt": 2261623.1782700275,
+        "within_20pct": 0.6501305483,
+        "median_ape": 0.1396386894,
+        "dual_score": 1.0223200324,
+        "validation_mae_kzt": 2261623.1782700275,
+        "validation_within_20pct": 0.6501305483,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool dual 0.25 + Robust ensemble 0.75",
+        "candidate": "Usage ANN pool dual 0.25 + Robust ensemble 0.75",
+        "components": [
+          "Usage ANN pool dual",
+          "Robust ensemble"
+        ],
+        "weights": [
+          0.25,
+          0.75
+        ],
+        "mae_kzt": 2239468.46579332,
+        "within_20pct": 0.6736292428,
+        "median_ape": 0.138268089,
+        "dual_score": 0.9825095423,
+        "validation_mae_kzt": 2239468.46579332,
+        "validation_within_20pct": 0.6736292428,
+        "eligible": true
+      },
+      {
+        "name": "Usage ANN pool dual 0.5 + Robust ensemble 0.5",
+        "candidate": "Usage ANN pool dual 0.5 + Robust ensemble 0.5",
+        "components": [
+          "Usage ANN pool dual",
+          "Robust ensemble"
+        ],
+        "weights": [
+          0.5,
+          0.5
+        ],
+        "mae_kzt": 2237521.8364445297,
+        "within_20pct": 0.6605744125,
+        "median_ape": 0.1387424894,
+        "dual_score": 1.0014564955,
+        "validation_mae_kzt": 2237521.8364445297,
+        "validation_within_20pct": 0.6605744125,
+        "eligible": false
+      },
+      {
+        "name": "Usage ANN pool dual 0.75 + Robust ensemble 0.25",
+        "candidate": "Usage ANN pool dual 0.75 + Robust ensemble 0.25",
+        "components": [
+          "Usage ANN pool dual",
+          "Robust ensemble"
+        ],
+        "weights": [
+          0.75,
+          0.25
+        ],
+        "mae_kzt": 2249009.7745731315,
+        "within_20pct": 0.6605744125,
+        "median_ape": 0.1371225485,
+        "dual_score": 1.0040111853,
+        "validation_mae_kzt": 2249009.7745731315,
+        "validation_within_20pct": 0.6605744125,
+        "eligible": false
+      }
+    ],
+    "eligible_count": 3,
+    "baseline_validation_metrics": {
+      "mae_kzt": 2248401.7333698105,
+      "within_20pct": 0.6631853786,
+      "median_ape": 0.1388566633
+    },
+    "selection": "Strict validation MAE decrease and within-20% increase versus baseline; then lowest 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction). Baseline retained if none; exact score ties retain the first declared candidate.",
+    "declared_blend_weights": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "include_baseline_blends": true,
+    "test_data_used": false,
+    "test_data_policy": "No test targets or predictions accepted.",
+    "checkpoint_selection_caveat": "Validation has already selected pool checkpoints and now selects the mixture; results are selection-dependent. Historical-test reuse prevents an independent generalization claim."
+  },
+  "dataset_enrichment": {
+    "directory": "dataset",
+    "rows": 2553,
+    "columns": 47,
+    "source_csv": "kolesa_cars_2025.csv",
+    "source_raw_sha256": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+    "enriched_csv_sha256": "90d62b41527f4f4ee5445894df3b63a097140062dab3bb6311ce02cea92b2f87",
+    "retained_ad_ids_sha256": "06abe4e212fbbec2a537d92752700228513eb6d2f3908bfaa21ba488bf96a614",
+    "preserves_ids_targets": true,
+    "source_row_order_preserved": true,
+    "snapshot_year_for_proxies": 2025,
+    "split_counts": {
+      "train": 1787,
+      "validation": 383,
+      "test": 383
+    },
+    "candidate_feature_columns": [
+      "year",
+      "log_km",
+      "mileage_missing",
+      "engine_liters_clean",
+      "engine_missing",
+      "engine_not_applicable",
+      "engine_source_conflict",
+      "dual_fuel_claim",
+      "fuel_text_conflict",
+      "restyling_claim",
+      "leather_claim",
+      "panorama_claim",
+      "warranty_claim",
+      "power_kw",
+      "power_missing",
+      "brand",
+      "model",
+      "body",
+      "fuel",
+      "transmission",
+      "brand_model",
+      "trim",
+      "steering",
+      "log_vehicle_age",
+      "log_annual_mileage_proxy",
+      "alloy_wheels_claim",
+      "sunroof_claim",
+      "model_family_lexical",
+      "color_literal",
+      "upholstery_literal"
+    ],
+    "quality_only_columns": [
+      "description_truncation_signal",
+      "review_low_mileage_old_vehicle",
+      "review_repeated_digit_mileage",
+      "original_drive_requires_review"
+    ],
+    "excluded_identity_target_text_metadata": [
+      "name",
+      "price",
+      "price_raw",
+      "desc",
+      "link",
+      "condition",
+      "mileage_km",
+      "engine_liters",
+      "drive",
+      "ad_id",
+      "vehicle_age_proxy",
+      "description_truncation_signal",
+      "review_low_mileage_old_vehicle",
+      "review_repeated_digit_mileage",
+      "original_drive_requires_review",
+      "source_row_index",
+      "split"
+    ],
+    "all_rows": {
+      "rows": 2553,
+      "mileage_missing": 497,
+      "quality_flag_counts": {
+        "description_truncation_signal": 2193,
+        "review_low_mileage_old_vehicle": 18,
+        "review_repeated_digit_mileage": 70,
+        "original_drive_requires_review": 30
+      },
+      "literal_counts": {
+        "color_literal": {
+          "not_stated": 711,
+          "белый": 573,
+          "черный": 415,
+          "серебристый": 256,
+          "серый": 245,
+          "синий": 111,
+          "зеленый": 61,
+          "красный": 31,
+          "золотистый": 25,
+          "бордовый": 24,
+          "коричневый": 20,
+          "бежевый": 18,
+          "голубой": 14,
+          "вишня": 13,
+          "хамелеон": 10,
+          "жёлтый": 7,
+          "бирюзовый": 7,
+          "бронза": 6,
+          "фиолетовый": 3,
+          "оранжевый": 3
+        },
+        "upholstery_literal": {
+          "not_stated": 2110,
+          "велюр": 209,
+          "кожа": 192,
+          "комбинированный": 18,
+          "multiple_literals": 17,
+          "алькантара": 7
+        }
+      },
+      "positive_claim_counts": {
+        "alloy_wheels_claim": 901,
+        "sunroof_claim": 284
+      }
+    },
+    "by_split": {
+      "train": {
+        "rows": 1787,
+        "mileage_missing": 349,
+        "quality_flag_counts": {
+          "description_truncation_signal": 1545,
+          "review_low_mileage_old_vehicle": 11,
+          "review_repeated_digit_mileage": 43,
+          "original_drive_requires_review": 23
+        },
+        "literal_counts": {
+          "color_literal": {
+            "not_stated": 506,
+            "белый": 407,
+            "черный": 295,
+            "серебристый": 176,
+            "серый": 169,
+            "синий": 71,
+            "зеленый": 42,
+            "красный": 19,
+            "бордовый": 18,
+            "золотистый": 17,
+            "бежевый": 13,
+            "голубой": 12,
+            "коричневый": 11,
+            "вишня": 6,
+            "жёлтый": 6,
+            "хамелеон": 6,
+            "бронза": 4,
+            "бирюзовый": 4,
+            "фиолетовый": 3,
+            "оранжевый": 2
+          },
+          "upholstery_literal": {
+            "not_stated": 1466,
+            "велюр": 158,
+            "кожа": 130,
+            "multiple_literals": 15,
+            "комбинированный": 14,
+            "алькантара": 4
+          }
+        },
+        "positive_claim_counts": {
+          "alloy_wheels_claim": 642,
+          "sunroof_claim": 194
+        }
+      },
+      "validation": {
+        "rows": 383,
+        "mileage_missing": 78,
+        "quality_flag_counts": {
+          "description_truncation_signal": 330,
+          "review_low_mileage_old_vehicle": 5,
+          "review_repeated_digit_mileage": 13,
+          "original_drive_requires_review": 3
+        },
+        "literal_counts": {
+          "color_literal": {
+            "not_stated": 108,
+            "белый": 78,
+            "черный": 62,
+            "серебристый": 44,
+            "серый": 32,
+            "синий": 23,
+            "зеленый": 9,
+            "коричневый": 4,
+            "красный": 4,
+            "золотистый": 4,
+            "бордовый": 4,
+            "вишня": 3,
+            "бирюзовый": 2,
+            "бронза": 2,
+            "голубой": 1,
+            "бежевый": 1,
+            "хамелеон": 1,
+            "жёлтый": 1
+          },
+          "upholstery_literal": {
+            "not_stated": 321,
+            "кожа": 37,
+            "велюр": 23,
+            "комбинированный": 1,
+            "алькантара": 1
+          }
+        },
+        "positive_claim_counts": {
+          "alloy_wheels_claim": 137,
+          "sunroof_claim": 48
+        }
+      },
+      "test": {
+        "rows": 383,
+        "mileage_missing": 70,
+        "quality_flag_counts": {
+          "description_truncation_signal": 318,
+          "review_low_mileage_old_vehicle": 2,
+          "review_repeated_digit_mileage": 14,
+          "original_drive_requires_review": 4
+        },
+        "literal_counts": {
+          "color_literal": {
+            "not_stated": 97,
+            "белый": 88,
+            "черный": 58,
+            "серый": 44,
+            "серебристый": 36,
+            "синий": 17,
+            "зеленый": 10,
+            "красный": 8,
+            "коричневый": 5,
+            "вишня": 4,
+            "золотистый": 4,
+            "бежевый": 4,
+            "хамелеон": 3,
+            "бордовый": 2,
+            "голубой": 1,
+            "оранжевый": 1,
+            "бирюзовый": 1
+          },
+          "upholstery_literal": {
+            "not_stated": 323,
+            "велюр": 28,
+            "кожа": 25,
+            "комбинированный": 3,
+            "multiple_literals": 2,
+            "алькантара": 2
+          }
+        },
+        "positive_claim_counts": {
+          "alloy_wheels_claim": 122,
+          "sunroof_claim": 42
+        }
+      }
+    },
+    "manual_review_rows": 598,
+    "fitted_transforms": "None in this export. Model imputers, indicators, scalers and encoders must be fitted within the training fold.",
+    "model_status": "This export does not fit or select a model. Actual field usage and model metrics are recorded in the project README and results/report.json; candidate status does not mean every extra field is enabled.",
+    "source_limits": "Capped seller descriptions; unmentioned fields are unknown. Literal claims are not verified vehicle facts. No external specs, new ads, synthetic rows, price changes or target-based exclusions."
+  },
+  "unsupervised": {
+    "fit_rows": 1775,
+    "seed": 42,
+    "feature_columns": [
+      "year",
+      "log_km",
+      "engine_liters_clean"
+    ],
+    "numeric_dimensions": 3,
+    "price_used_as_input": false,
+    "categorical_features_used": false,
+    "preprocessing": {
+      "fit_scope": "training listings only; no validation or test listings",
+      "imputation": "per-feature training median",
+      "imputer_statistics": {
+        "year": 2013.0,
+        "log_km": 11.9576176965,
+        "engine_liters_clean": 2.4
+      },
+      "missing_numeric_counts": {
+        "year": 0,
+        "log_km": 348,
+        "engine_liters_clean": 1
+      },
+      "scaler": "StandardScaler: subtract training mean and divide by training population standard deviation",
+      "scaler_mean": {
+        "year": 2010.985915493,
+        "log_km": 11.7269675041,
+        "engine_liters_clean": 2.4802816901
+      },
+      "scaler_scale": {
+        "year": 9.6169641161,
+        "log_km": 1.072688682,
+        "engine_liters_clean": 0.9413475086
+      }
+    },
+    "kmeans": {
+      "candidate_k": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "n_init": 20,
+      "random_state": 42
+    },
+    "selection_rule": "Highest training silhouette over k=2..8; exact ties choose smaller k.",
+    "selected_k": 4,
+    "selected_silhouette": 0.3686023149,
+    "selection_scores": [
+      {
+        "k": 2,
+        "inertia": 3673.8855429876,
+        "silhouette": 0.3266049497
+      },
+      {
+        "k": 3,
+        "inertia": 2793.8116517707,
+        "silhouette": 0.3386968654
+      },
+      {
+        "k": 4,
+        "inertia": 2054.0853698674,
+        "silhouette": 0.3686023149
+      },
+      {
+        "k": 5,
+        "inertia": 1632.1260882153,
+        "silhouette": 0.3571800598
+      },
+      {
+        "k": 6,
+        "inertia": 1382.7903098836,
+        "silhouette": 0.3410889396
+      },
+      {
+        "k": 7,
+        "inertia": 1233.1161957876,
+        "silhouette": 0.344661348
+      },
+      {
+        "k": 8,
+        "inertia": 1108.7951013131,
+        "silhouette": 0.3319873382
+      }
+    ],
+    "cluster_profiles": [
+      {
+        "cluster": 0,
+        "count": 813,
+        "median_year": 2015.0,
+        "median_mileage_km": 146000.0,
+        "median_engine_liters": 2.0,
+        "median_price_kzt": 7690000.0,
+        "observed_year_count": 813,
+        "observed_mileage_count": 685,
+        "observed_engine_count": 812,
+        "observed_price_count": 813
+      },
+      {
+        "cluster": 1,
+        "count": 245,
+        "median_year": 2011.0,
+        "median_mileage_km": 183500.0,
+        "median_engine_liters": 4.0,
+        "median_price_kzt": 12200000.0,
+        "observed_year_count": 245,
+        "observed_mileage_count": 198,
+        "observed_engine_count": 245,
+        "observed_price_count": 245
+      },
+      {
+        "cluster": 2,
+        "count": 210,
+        "median_year": 2023.0,
+        "median_mileage_km": 23900.0,
+        "median_engine_liters": 2.0,
+        "median_price_kzt": 14125000.0,
+        "observed_year_count": 210,
+        "observed_mileage_count": 210,
+        "observed_engine_count": 210,
+        "observed_price_count": 210
+      },
+      {
+        "cluster": 3,
+        "count": 507,
+        "median_year": 1999.0,
+        "median_mileage_km": 280000.0,
+        "median_engine_liters": 2.4,
+        "median_price_kzt": 3000000.0,
+        "observed_year_count": 507,
+        "observed_mileage_count": 334,
+        "observed_engine_count": 507,
+        "observed_price_count": 507
+      }
+    ],
+    "scaled_centroids": [
+      {
+        "cluster": 0,
+        "year": 0.5072927868,
+        "log_km": 0.1232010894,
+        "engine_liters_clean": -0.4491108448
+      },
+      {
+        "cluster": 1,
+        "year": 0.0129708548,
+        "log_km": 0.2295689527,
+        "engine_liters_clean": 1.926133459
+      },
+      {
+        "cluster": 2,
+        "year": 0.9564397517,
+        "log_km": -2.0111611949,
+        "engine_liters_clean": -0.2586603089
+      },
+      {
+        "cluster": 3,
+        "year": -1.2186427195,
+        "log_km": 0.5331598901,
+        "engine_liters_clean": -0.0995317012
+      }
+    ],
+    "original_centroids": [
+      {
+        "cluster": 0,
+        "year": 2015.8645320197,
+        "log_km": 11.8591239183,
+        "engine_liters_clean": 2.0575123153,
+        "mileage_km_from_log_centroid": 141367.3138070962
+      },
+      {
+        "cluster": 1,
+        "year": 2011.1106557377,
+        "log_km": 11.9732235214,
+        "engine_liters_clean": 4.293442623,
+        "mileage_km_from_log_centroid": 158453.6198803712
+      },
+      {
+        "cluster": 2,
+        "year": 2020.1839622642,
+        "log_km": 9.5696176526,
+        "engine_liters_clean": 2.2367924528,
+        "mileage_km_from_log_centroid": 14321.9389387529
+      },
+      {
+        "cluster": 3,
+        "year": 1999.2662721893,
+        "log_km": 12.2988820838,
+        "engine_liters_clean": 2.3865877712,
+        "mileage_km_from_log_centroid": 219449.5242074291
+      }
+    ],
+    "profile_definition": "Cluster medians use observed original values; missing values are excluded, with observed counts reported. Price is added only after fitting for descriptive comparison.",
+    "centroid_definition": "Centroids are means in scaled, imputed numeric space. The original-space table inverses scaling; expm1(log-mileage centroid) is not the arithmetic mean or median mileage.",
+    "pca": {
+      "input": "The same train-imputed and train-standardized three numeric features as KMeans.",
+      "n_components": 3,
+      "svd_solver": "full",
+      "explained_variance_ratio": [
+        0.4766627967,
+        0.3246389711,
+        0.1986982322
+      ],
+      "cumulative_explained_variance_ratio": [
+        0.4766627967,
+        0.8013017678,
+        1.0
+      ],
+      "explained_variance": [
+        1.4307944715,
+        0.9744659082,
+        0.5964307139
+      ],
+      "loadings": [
+        {
+          "component": "PC1",
+          "year": 0.6905552028,
+          "log_km": -0.6801043608,
+          "engine_liters_clean": -0.2461535503
+        },
+        {
+          "component": "PC2",
+          "year": 0.1286096489,
+          "log_km": -0.2194452887,
+          "engine_liters_clean": 0.9671108124
+        },
+        {
+          "component": "PC3",
+          "year": 0.7117535178,
+          "log_km": 0.6995011249,
+          "engine_liters_clean": 0.0640711028
+        }
+      ],
+      "loading_definition": "Signed unit-length component coefficients (sklearn PCA.components_); not feature-component correlations. Component signs are arbitrary."
+    },
+    "interpretation": [
+      "Categories are deliberately omitted so the three numeric axes remain interpretable; brand, model and equipment differences are not represented.",
+      "Silhouette is a geometric heuristic in this chosen standardized feature space; the winning k does not establish natural market segments or universal optimality.",
+      "PCA is descriptive dimensionality reduction, not a supervised predictor or evidence of causal effects on price.",
+      "The two-dimensional chart loses the variance in PC3; separation in the projection can differ from separation in all three dimensions.",
+      "Median imputation and a single seed can influence clustering; no cluster stability study is claimed.",
+      "Post-hoc price differences are descriptive asking-price summaries; price never enters clustering or PCA."
+    ],
+    "files": {
+      "cluster_selection.csv": "cluster_selection.csv",
+      "cluster_selection.png": "cluster_selection.png",
+      "cluster_profiles.csv": "cluster_profiles.csv",
+      "cluster_centroids_scaled.csv": "cluster_centroids_scaled.csv",
+      "cluster_centroids_original.csv": "cluster_centroids_original.csv",
+      "cluster_assignments.csv": "cluster_assignments.csv",
+      "pca_projection.csv": "pca_projection.csv",
+      "pca_loadings.csv": "pca_loadings.csv",
+      "pca_variance.csv": "pca_variance.csv",
+      "pca_variance.png": "pca_variance.png",
+      "pca_scatter.png": "pca_scatter.png",
+      "unsupervised_report.json": "unsupervised_report.json"
+    },
+    "analysis_subset": "Non-electric training listings only; engine displacement is not applicable to explicit electric listings.",
+    "excluded_electric_rows": 12
+  },
+  "evaluation": {
+    "selected_model": "Usage ensemble",
+    "selection_metric": "Each follow-up requires strictly lower validation MAE and higher within ±20% than its preceding retained ensemble; then minimize equal-weight normalized MAE and miss fraction.",
+    "seed": 42,
+    "validation": {
+      "Median baseline": {
+        "mae_kzt": 6496552.477806789,
+        "rmse_kzt": 14996202.741611594,
+        "r2": -0.0517985048,
+        "median_absolute_error_kzt": 3800000.0,
+        "median_ape": 0.5379310345,
+        "within_10pct": 0.0704960836,
+        "within_20pct": 0.1644908616,
+        "within_30pct": 0.27154047
+      },
+      "Linear regression": {
+        "mae_kzt": 4646979.751746838,
+        "rmse_kzt": 12247688.966468701,
+        "r2": 0.2984183197,
+        "median_absolute_error_kzt": 2595597.0962787587,
+        "median_ape": 0.3690072451,
+        "within_10pct": 0.1723237598,
+        "within_20pct": 0.3289817232,
+        "within_30pct": 0.4308093995
+      },
+      "KNN midterm": {
+        "mae_kzt": 3179133.654159502,
+        "rmse_kzt": 11457362.485683149,
+        "r2": 0.3860411705,
+        "median_absolute_error_kzt": 1198971.8674195483,
+        "median_ape": 0.1924687113,
+        "within_10pct": 0.3002610966,
+        "within_20pct": 0.5091383812,
+        "within_30pct": 0.6605744125
+      },
+      "Tree midterm": {
+        "mae_kzt": 3436400.1376930433,
+        "rmse_kzt": 9775996.406857671,
+        "r2": 0.5530159676,
+        "median_absolute_error_kzt": 1281111.111111111,
+        "median_ape": 0.2271706804,
+        "within_10pct": 0.2140992167,
+        "within_20pct": 0.4673629243,
+        "within_30pct": 0.6083550914
+      },
+      "KNN tuned": {
+        "mae_kzt": 3409617.569199459,
+        "rmse_kzt": 12121621.783664122,
+        "r2": 0.3127869456,
+        "median_absolute_error_kzt": 1195273.5775082437,
+        "median_ape": 0.1868015361,
+        "within_10pct": 0.2819843342,
+        "within_20pct": 0.5274151436,
+        "within_30pct": 0.6318537859
+      },
+      "Tree tuned": {
+        "mae_kzt": 3363974.385484718,
+        "rmse_kzt": 12195953.616532544,
+        "r2": 0.3043328908,
+        "median_absolute_error_kzt": 1323529.4117647056,
+        "median_ape": 0.216031746,
+        "within_10pct": 0.2036553525,
+        "within_20pct": 0.4569190601,
+        "within_30pct": 0.6214099217
+      },
+      "Random forest tuned": {
+        "mae_kzt": 2697353.057279622,
+        "rmse_kzt": 11393308.77427621,
+        "r2": 0.392886797,
+        "median_absolute_error_kzt": 945150.0,
+        "median_ape": 0.1718454545,
+        "within_10pct": 0.318537859,
+        "within_20pct": 0.5509138381,
+        "within_30pct": 0.6919060052
+      },
+      "ANN previous": {
+        "mae_kzt": 2456897.177657078,
+        "rmse_kzt": 11624205.57475083,
+        "r2": 0.3680299362,
+        "median_absolute_error_kzt": 921157.3528773263,
+        "median_ape": 0.1563305307,
+        "within_10pct": 0.3577023499,
+        "within_20pct": 0.6005221932,
+        "within_30pct": 0.7597911227
+      },
+      "ANN": {
+        "mae_kzt": 2445651.1517004175,
+        "rmse_kzt": 11671094.816400923,
+        "r2": 0.3629212237,
+        "median_absolute_error_kzt": 1047888.7987336675,
+        "median_ape": 0.1396409076,
+        "within_10pct": 0.3577023499,
+        "within_20pct": 0.6161879896,
+        "within_30pct": 0.7310704961
+      },
+      "ANN corrected": {
+        "mae_kzt": 2371127.804370948,
+        "rmse_kzt": 11550097.078341128,
+        "r2": 0.3760623231,
+        "median_absolute_error_kzt": 957786.8961057104,
+        "median_ape": 0.147918362,
+        "within_10pct": 0.3603133159,
+        "within_20pct": 0.6161879896,
+        "within_30pct": 0.7362924282
+      },
+      "CatBoost": {
+        "mae_kzt": 2689678.454849997,
+        "rmse_kzt": 11801401.223060824,
+        "r2": 0.348615989,
+        "median_absolute_error_kzt": 946019.3011453543,
+        "median_ape": 0.1647355321,
+        "within_10pct": 0.3054830287,
+        "within_20pct": 0.5796344648,
+        "within_30pct": 0.725848564
+      },
+      "Ensemble": {
+        "mae_kzt": 2289371.696786993,
+        "rmse_kzt": 11421405.911381075,
+        "r2": 0.3898886905,
+        "median_absolute_error_kzt": 928907.7797644585,
+        "median_ape": 0.1400908309,
+        "within_10pct": 0.362924282,
+        "within_20pct": 0.6422976501,
+        "within_30pct": 0.7441253264
+      },
+      "ANN pool MAE": {
+        "mae_kzt": 2274288.461998604,
+        "rmse_kzt": 11526954.396664537,
+        "r2": 0.3785601593,
+        "median_absolute_error_kzt": 865434.5410399241,
+        "median_ape": 0.135472532,
+        "within_10pct": 0.3707571802,
+        "within_20pct": 0.6527415144,
+        "within_30pct": 0.772845953
+      },
+      "ANN pool dual": {
+        "mae_kzt": 2298694.2301891106,
+        "rmse_kzt": 11515039.144431226,
+        "r2": 0.3798442427,
+        "median_absolute_error_kzt": 875011.7871362632,
+        "median_ape": 0.134617198,
+        "within_10pct": 0.3890339426,
+        "within_20pct": 0.6475195822,
+        "within_30pct": 0.7676240209
+      },
+      "Robust ensemble": {
+        "mae_kzt": 2248401.7333698105,
+        "rmse_kzt": 11404110.23229094,
+        "r2": 0.3917351006,
+        "median_absolute_error_kzt": 829536.6780317724,
+        "median_ape": 0.1388566633,
+        "within_10pct": 0.3759791123,
+        "within_20pct": 0.6631853786,
+        "within_30pct": 0.7676240209
+      },
+      "Usage ensemble": {
+        "mae_kzt": 2238371.607965701,
+        "rmse_kzt": 11412167.748605328,
+        "r2": 0.390875264,
+        "median_absolute_error_kzt": 831039.4376099668,
+        "median_ape": 0.1368460151,
+        "within_10pct": 0.365535248,
+        "within_20pct": 0.6762402089,
+        "within_30pct": 0.7650130548
+      }
+    },
+    "test_policy": "Historical test errors motivated feature-engineering hypotheses. Parameters/checkpoints are selected using train CV/validation only. This reused test is retrospective and cannot establish independent generalization of the improvements.",
+    "follow_up": "First preserve the frozen steering pool control; then test only the TRAIN-OOF-supported age/usage pair with two checkpoints and 12 fixed pool/reference mixtures. No further test-guided tuning.",
+    "model_rows": [
+      {
+        "model": "Median baseline",
+        "validation_mae_kzt": 6496552.477806789,
+        "validation_rmse_kzt": 14996202.741611594,
+        "validation_r2": -0.0517985048,
+        "validation_median_absolute_error_kzt": 3800000.0,
+        "validation_median_ape": 0.5379310345,
+        "validation_within_10pct": 0.0704960836,
+        "validation_within_20pct": 0.1644908616,
+        "validation_within_30pct": 0.27154047,
+        "test_mae_kzt": 5950857.5587467365,
+        "test_rmse_kzt": 11301223.507748693,
+        "test_r2": -0.0481478993,
+        "test_median_absolute_error_kzt": 3740000.0,
+        "test_median_ape": 0.5314685315,
+        "test_within_10pct": 0.0835509138,
+        "test_within_20pct": 0.1775456919,
+        "test_within_30pct": 0.2898172324,
+        "selected": false,
+        "representation": "legacy"
+      },
+      {
+        "model": "Linear regression",
+        "validation_mae_kzt": 4646979.751746838,
+        "validation_rmse_kzt": 12247688.966468701,
+        "validation_r2": 0.2984183197,
+        "validation_median_absolute_error_kzt": 2595597.0962787587,
+        "validation_median_ape": 0.3690072451,
+        "validation_within_10pct": 0.1723237598,
+        "validation_within_20pct": 0.3289817232,
+        "validation_within_30pct": 0.4308093995,
+        "test_mae_kzt": 3499175.757614889,
+        "test_rmse_kzt": 6464505.316759798,
+        "test_r2": 0.6570409766,
+        "test_median_absolute_error_kzt": 2257283.7089348473,
+        "test_median_ape": 0.351427495,
+        "test_within_10pct": 0.1932114883,
+        "test_within_20pct": 0.3759791123,
+        "test_within_30pct": 0.4621409922,
+        "selected": false,
+        "representation": "legacy"
+      },
+      {
+        "model": "KNN midterm",
+        "validation_mae_kzt": 3179133.654159502,
+        "validation_rmse_kzt": 11457362.485683149,
+        "validation_r2": 0.3860411705,
+        "validation_median_absolute_error_kzt": 1198971.8674195483,
+        "validation_median_ape": 0.1924687113,
+        "validation_within_10pct": 0.3002610966,
+        "validation_within_20pct": 0.5091383812,
+        "validation_within_30pct": 0.6605744125,
+        "test_mae_kzt": 2442973.6510694358,
+        "test_rmse_kzt": 5889268.476338608,
+        "test_r2": 0.7153610386,
+        "test_median_absolute_error_kzt": 1100000.0,
+        "test_median_ape": 0.1808942257,
+        "test_within_10pct": 0.2767624021,
+        "test_within_20pct": 0.5430809399,
+        "test_within_30pct": 0.6422976501,
+        "selected": false,
+        "representation": "legacy"
+      },
+      {
+        "model": "Tree midterm",
+        "validation_mae_kzt": 3436400.1376930433,
+        "validation_rmse_kzt": 9775996.406857671,
+        "validation_r2": 0.5530159676,
+        "validation_median_absolute_error_kzt": 1281111.111111111,
+        "validation_median_ape": 0.2271706804,
+        "validation_within_10pct": 0.2140992167,
+        "validation_within_20pct": 0.4673629243,
+        "validation_within_30pct": 0.6083550914,
+        "test_mae_kzt": 2458743.9163376684,
+        "test_rmse_kzt": 5484572.8560049655,
+        "test_r2": 0.7531362853,
+        "test_median_absolute_error_kzt": 1173392.857142857,
+        "test_median_ape": 0.207751938,
+        "test_within_10pct": 0.274151436,
+        "test_within_20pct": 0.4830287206,
+        "test_within_30pct": 0.6240208877,
+        "selected": false,
+        "representation": "legacy"
+      },
+      {
+        "model": "KNN tuned",
+        "validation_mae_kzt": 3409617.569199459,
+        "validation_rmse_kzt": 12121621.783664122,
+        "validation_r2": 0.3127869456,
+        "validation_median_absolute_error_kzt": 1195273.5775082437,
+        "validation_median_ape": 0.1868015361,
+        "validation_within_10pct": 0.2819843342,
+        "validation_within_20pct": 0.5274151436,
+        "validation_within_30pct": 0.6318537859,
+        "test_mae_kzt": 2786019.2580285734,
+        "test_rmse_kzt": 6416220.822199441,
+        "test_r2": 0.6621450825,
+        "test_median_absolute_error_kzt": 1128571.428571429,
+        "test_median_ape": 0.2103736165,
+        "test_within_10pct": 0.274151436,
+        "test_within_20pct": 0.4778067885,
+        "test_within_30pct": 0.637075718,
+        "selected": false,
+        "representation": "enhanced"
+      },
+      {
+        "model": "Tree tuned",
+        "validation_mae_kzt": 3363974.385484718,
+        "validation_rmse_kzt": 12195953.616532544,
+        "validation_r2": 0.3043328908,
+        "validation_median_absolute_error_kzt": 1323529.4117647056,
+        "validation_median_ape": 0.216031746,
+        "validation_within_10pct": 0.2036553525,
+        "validation_within_20pct": 0.4569190601,
+        "validation_within_30pct": 0.6214099217,
+        "test_mae_kzt": 2534645.0198975555,
+        "test_rmse_kzt": 6207085.607281692,
+        "test_r2": 0.6838107429,
+        "test_median_absolute_error_kzt": 1063021.9692307692,
+        "test_median_ape": 0.1906188235,
+        "test_within_10pct": 0.2924281984,
+        "test_within_20pct": 0.5248041775,
+        "test_within_30pct": 0.6422976501,
+        "selected": false,
+        "representation": "enhanced"
+      },
+      {
+        "model": "Random forest tuned",
+        "validation_mae_kzt": 2697353.057279622,
+        "validation_rmse_kzt": 11393308.77427621,
+        "validation_r2": 0.392886797,
+        "validation_median_absolute_error_kzt": 945150.0,
+        "validation_median_ape": 0.1718454545,
+        "validation_within_10pct": 0.318537859,
+        "validation_within_20pct": 0.5509138381,
+        "validation_within_30pct": 0.6919060052,
+        "test_mae_kzt": 2067864.2257930292,
+        "test_rmse_kzt": 4968153.548668226,
+        "test_r2": 0.797436282,
+        "test_median_absolute_error_kzt": 930542.1849999996,
+        "test_median_ape": 0.1572363636,
+        "test_within_10pct": 0.3263707572,
+        "test_within_20pct": 0.5665796345,
+        "test_within_30pct": 0.7023498695,
+        "selected": false,
+        "representation": "enhanced"
+      },
+      {
+        "model": "ANN previous",
+        "validation_mae_kzt": 2456897.177657078,
+        "validation_rmse_kzt": 11624205.57475083,
+        "validation_r2": 0.3680299362,
+        "validation_median_absolute_error_kzt": 921157.3528773263,
+        "validation_median_ape": 0.1563305307,
+        "validation_within_10pct": 0.3577023499,
+        "validation_within_20pct": 0.6005221932,
+        "validation_within_30pct": 0.7597911227,
+        "test_mae_kzt": 1754992.977301133,
+        "test_rmse_kzt": 3483032.1545427386,
+        "test_r2": 0.9004396058,
+        "test_median_absolute_error_kzt": 832250.4403513977,
+        "test_median_ape": 0.1687021472,
+        "test_within_10pct": 0.3211488251,
+        "test_within_20pct": 0.5691906005,
+        "test_within_30pct": 0.7441253264,
+        "selected": false,
+        "representation": "legacy"
+      },
+      {
+        "model": "ANN",
+        "validation_mae_kzt": 2445651.1517004175,
+        "validation_rmse_kzt": 11671094.816400923,
+        "validation_r2": 0.3629212237,
+        "validation_median_absolute_error_kzt": 1047888.7987336675,
+        "validation_median_ape": 0.1396409076,
+        "validation_within_10pct": 0.3577023499,
+        "validation_within_20pct": 0.6161879896,
+        "validation_within_30pct": 0.7310704961,
+        "test_mae_kzt": 1849056.7837414495,
+        "test_rmse_kzt": 3877893.110391007,
+        "test_r2": 0.8765863184,
+        "test_median_absolute_error_kzt": 888761.0801444408,
+        "test_median_ape": 0.1662037722,
+        "test_within_10pct": 0.3211488251,
+        "test_within_20pct": 0.5561357702,
+        "test_within_30pct": 0.72845953,
+        "selected": false,
+        "representation": "enhanced"
+      },
+      {
+        "model": "ANN corrected",
+        "validation_mae_kzt": 2371127.804370948,
+        "validation_rmse_kzt": 11550097.078341128,
+        "validation_r2": 0.3760623231,
+        "validation_median_absolute_error_kzt": 957786.8961057104,
+        "validation_median_ape": 0.147918362,
+        "validation_within_10pct": 0.3603133159,
+        "validation_within_20pct": 0.6161879896,
+        "validation_within_30pct": 0.7362924282,
+        "test_mae_kzt": 1735740.709386003,
+        "test_rmse_kzt": 3135177.4428504077,
+        "test_r2": 0.9193330027,
+        "test_median_absolute_error_kzt": 937115.2025240026,
+        "test_median_ape": 0.1949820407,
+        "test_within_10pct": 0.2950391645,
+        "test_within_20pct": 0.5091383812,
+        "test_within_30pct": 0.7206266319,
+        "selected": false,
+        "representation": "enhanced"
+      },
+      {
+        "model": "CatBoost",
+        "validation_mae_kzt": 2689678.454849997,
+        "validation_rmse_kzt": 11801401.223060824,
+        "validation_r2": 0.348615989,
+        "validation_median_absolute_error_kzt": 946019.3011453543,
+        "validation_median_ape": 0.1647355321,
+        "validation_within_10pct": 0.3054830287,
+        "validation_within_20pct": 0.5796344648,
+        "validation_within_30pct": 0.725848564,
+        "test_mae_kzt": 1962442.3141935207,
+        "test_rmse_kzt": 5173311.546841036,
+        "test_r2": 0.7803612788,
+        "test_median_absolute_error_kzt": 802434.0182656143,
+        "test_median_ape": 0.1572127446,
+        "test_within_10pct": 0.3315926893,
+        "test_within_20pct": 0.5822454308,
+        "test_within_30pct": 0.7389033943,
+        "selected": false,
+        "representation": "enhanced"
+      },
+      {
+        "model": "Ensemble",
+        "validation_mae_kzt": 2289371.696786993,
+        "validation_rmse_kzt": 11421405.911381075,
+        "validation_r2": 0.3898886905,
+        "validation_median_absolute_error_kzt": 928907.7797644585,
+        "validation_median_ape": 0.1400908309,
+        "validation_within_10pct": 0.362924282,
+        "validation_within_20pct": 0.6422976501,
+        "validation_within_30pct": 0.7441253264,
+        "test_mae_kzt": 1667212.1367344395,
+        "test_rmse_kzt": 3167634.1132058366,
+        "test_r2": 0.9176541603,
+        "test_median_absolute_error_kzt": 871076.4425499099,
+        "test_median_ape": 0.1724891951,
+        "test_within_10pct": 0.318537859,
+        "test_within_20pct": 0.5613577023,
+        "test_within_30pct": 0.7467362924,
+        "selected": false,
+        "representation": "mixed"
+      },
+      {
+        "model": "ANN pool MAE",
+        "validation_mae_kzt": 2274288.461998604,
+        "validation_rmse_kzt": 11526954.396664537,
+        "validation_r2": 0.3785601593,
+        "validation_median_absolute_error_kzt": 865434.5410399241,
+        "validation_median_ape": 0.135472532,
+        "validation_within_10pct": 0.3707571802,
+        "validation_within_20pct": 0.6527415144,
+        "validation_within_30pct": 0.772845953,
+        "test_mae_kzt": 1653341.8936318685,
+        "test_rmse_kzt": 3132823.4211184317,
+        "test_r2": 0.9194540935,
+        "test_median_absolute_error_kzt": 848168.5884110387,
+        "test_median_ape": 0.1636940703,
+        "test_within_10pct": 0.3524804178,
+        "test_within_20pct": 0.5587467363,
+        "test_within_30pct": 0.7493472585,
+        "selected": false,
+        "representation": "corrected+steering"
+      },
+      {
+        "model": "ANN pool dual",
+        "validation_mae_kzt": 2298694.2301891106,
+        "validation_rmse_kzt": 11515039.144431226,
+        "validation_r2": 0.3798442427,
+        "validation_median_absolute_error_kzt": 875011.7871362632,
+        "validation_median_ape": 0.134617198,
+        "validation_within_10pct": 0.3890339426,
+        "validation_within_20pct": 0.6475195822,
+        "validation_within_30pct": 0.7676240209,
+        "test_mae_kzt": 1639761.8153043883,
+        "test_rmse_kzt": 3060329.2757494226,
+        "test_r2": 0.9231386597,
+        "test_median_absolute_error_kzt": 862536.4109929018,
+        "test_median_ape": 0.1692283002,
+        "test_within_10pct": 0.3577023499,
+        "test_within_20pct": 0.5665796345,
+        "test_within_30pct": 0.7336814621,
+        "selected": false,
+        "representation": "corrected+steering"
+      },
+      {
+        "model": "Robust ensemble",
+        "validation_mae_kzt": 2248401.7333698105,
+        "validation_rmse_kzt": 11404110.23229094,
+        "validation_r2": 0.3917351006,
+        "validation_median_absolute_error_kzt": 829536.6780317724,
+        "validation_median_ape": 0.1388566633,
+        "validation_within_10pct": 0.3759791123,
+        "validation_within_20pct": 0.6631853786,
+        "validation_within_30pct": 0.7676240209,
+        "test_mae_kzt": 1646174.8054945795,
+        "test_rmse_kzt": 3246982.8581770137,
+        "test_r2": 0.9134769876,
+        "test_median_absolute_error_kzt": 795924.5400783457,
+        "test_median_ape": 0.1662828038,
+        "test_within_10pct": 0.3446475196,
+        "test_within_20pct": 0.5770234987,
+        "test_within_30pct": 0.7493472585,
+        "selected": false,
+        "representation": "mixed"
+      },
+      {
+        "model": "Usage ensemble",
+        "validation_mae_kzt": 2238371.607965701,
+        "validation_rmse_kzt": 11412167.748605328,
+        "validation_r2": 0.390875264,
+        "validation_median_absolute_error_kzt": 831039.4376099668,
+        "validation_median_ape": 0.1368460151,
+        "validation_within_10pct": 0.365535248,
+        "validation_within_20pct": 0.6762402089,
+        "validation_within_30pct": 0.7650130548,
+        "test_mae_kzt": 1634563.563433875,
+        "test_rmse_kzt": 3189732.2920589773,
+        "test_r2": 0.9165012238,
+        "test_median_absolute_error_kzt": 801611.0973327365,
+        "test_median_ape": 0.1660875802,
+        "test_within_10pct": 0.3420365535,
+        "test_within_20pct": 0.5848563969,
+        "test_within_30pct": 0.7467362924,
+        "selected": true,
+        "representation": "mixed"
+      }
+    ],
+    "test_rows": 383,
+    "baseline_improvement_fraction": 0.7253230232,
+    "improvement_over_midterm_knn_fraction": 0.3309123237,
+    "improvement_over_previous_ann_fraction": 0.0686210232,
+    "improvement_over_delivered_ensemble_fraction": 0.0195827349,
+    "within20_gain_over_delivered_ensemble_fraction": 0.0234986945,
+    "improvement_over_prior_robust_fraction": 0.0070534685,
+    "within20_gain_over_prior_robust_fraction": 0.0078328982,
+    "before_after": [
+      {
+        "version": "Previous ANN control",
+        "mae_kzt": 1754992.977301133,
+        "rmse_kzt": 3483032.1545427386,
+        "r2": 0.9004396058,
+        "median_absolute_error_kzt": 832250.4403513977,
+        "median_ape": 0.1687021472,
+        "within_10pct": 0.3211488251,
+        "within_20pct": 0.5691906005,
+        "within_30pct": 0.7441253264
+      },
+      {
+        "version": "Delivered ensemble before this round",
+        "mae_kzt": 1667212.1367344395,
+        "rmse_kzt": 3167634.1132058366,
+        "r2": 0.9176541603,
+        "median_absolute_error_kzt": 871076.4425499099,
+        "median_ape": 0.1724891951,
+        "within_10pct": 0.318537859,
+        "within_20pct": 0.5613577023,
+        "within_30pct": 0.7467362924
+      },
+      {
+        "version": "Robust ensemble before dataset enrichment",
+        "mae_kzt": 1646174.8054945795,
+        "rmse_kzt": 3246982.8581770137,
+        "r2": 0.9134769876,
+        "median_absolute_error_kzt": 795924.5400783457,
+        "median_ape": 0.1662828038,
+        "within_10pct": 0.3446475196,
+        "within_20pct": 0.5770234987,
+        "within_30pct": 0.7493472585
+      },
+      {
+        "version": "Selected improved model: Usage ensemble",
+        "mae_kzt": 1634563.563433875,
+        "rmse_kzt": 3189732.2920589773,
+        "r2": 0.9165012238,
+        "median_absolute_error_kzt": 801611.0973327365,
+        "median_ape": 0.1660875802,
+        "within_10pct": 0.3420365535,
+        "within_20pct": 0.5848563969,
+        "within_30pct": 0.7467362924
+      }
+    ],
+    "success_criterion_met": true,
+    "error_analysis": {
+      "selected_model": "Usage ensemble",
+      "quartile_cutoffs_kzt": [
+        3600000.0,
+        6700000.0,
+        11500000.0
+      ],
+      "price_bands": [
+        {
+          "price_band": "Q1",
+          "count": 112,
+          "mae_kzt": 782632.426645991,
+          "median_error_kzt": 563073.2039247197,
+          "mean_residual_kzt": -508056.856393343
+        },
+        {
+          "price_band": "Q2",
+          "count": 100,
+          "mae_kzt": 1029635.8876554278,
+          "median_error_kzt": 792537.0892876047,
+          "mean_residual_kzt": -161369.5008118098
+        },
+        {
+          "price_band": "Q3",
+          "count": 87,
+          "mae_kzt": 1057312.3344363633,
+          "median_error_kzt": 742981.854723515,
+          "mean_residual_kzt": 137455.9494703269
+        },
+        {
+          "price_band": "Q4",
+          "count": 84,
+          "mae_kzt": 4088491.085110914,
+          "median_error_kzt": 2402534.016104277,
+          "mean_residual_kzt": 2056932.3957772965
+        }
+      ],
+      "missing_mileage": [
+        {
+          "mileage_missing": 0.0,
+          "count": 313,
+          "mae_kzt": 1631750.6961942832
+        },
+        {
+          "mileage_missing": 1.0,
+          "count": 70,
+          "mae_kzt": 1647141.0983766224
+        }
+      ],
+      "age_bands": [
+        {
+          "age_band": "0-5",
+          "count": 90,
+          "mae_kzt": 2775162.2870825785
+        },
+        {
+          "age_band": "6-10",
+          "count": 51,
+          "mae_kzt": 2136028.9013989572
+        },
+        {
+          "age_band": "11-20",
+          "count": 141,
+          "mae_kzt": 1264409.7426769666
+        },
+        {
+          "age_band": "21+",
+          "count": 101,
+          "mae_kzt": 881722.6858311187
+        }
+      ],
+      "model_support": [
+        {
+          "model_support": "unseen",
+          "count": 42,
+          "mae_kzt": 3592888.653362633
+        },
+        {
+          "model_support": "rare_1_to_4",
+          "count": 86,
+          "mae_kzt": 1586472.2987638656
+        },
+        {
+          "model_support": "seen_5plus",
+          "count": 255,
+          "mae_kzt": 1328234.9163147104
+        }
+      ],
+      "fuel_groups": [
+        {
+          "fuel": "diesel",
+          "count": 8,
+          "mae_kzt": 1787418.4247189744
+        },
+        {
+          "fuel": "electric",
+          "count": 3,
+          "mae_kzt": 9395957.757870795
+        },
+        {
+          "fuel": "gas",
+          "count": 2,
+          "mae_kzt": 1886382.5427915733
+        },
+        {
+          "fuel": "gas_petrol",
+          "count": 21,
+          "mae_kzt": 1672076.6560749107
+        },
+        {
+          "fuel": "hybrid",
+          "count": 1,
+          "mae_kzt": 1085149.7669767365
+        },
+        {
+          "fuel": "petrol",
+          "count": 348,
+          "mae_kzt": 1562008.9065910259
+        }
+      ],
+      "largest_errors": [
+        {
+          "ad_id": "161795691",
+          "brand": "Mercedes-Benz",
+          "model": "EQS SUV",
+          "year": 2022.0,
+          "mileage_km": 15000.0,
+          "mileage_missing": 0.0,
+          "fuel": "electric",
+          "training_model_count": 0,
+          "model_support": "unseen",
+          "price": 58000000,
+          "prediction_kzt": 30207666.69118365,
+          "residual_kzt": 27792333.30881635,
+          "absolute_error_kzt": 27792333.30881635,
+          "absolute_percentage_error": 0.4791781605,
+          "price_band": "Q4",
+          "age_band": "0-5"
+        },
+        {
+          "ad_id": "205197485",
+          "brand": "Mercedes-Benz",
+          "model": "S 500",
+          "year": 2021.0,
+          "mileage_km": 48000.0,
+          "mileage_missing": 0.0,
+          "fuel": "petrol",
+          "training_model_count": 11,
+          "model_support": "seen_5plus",
+          "price": 62900000,
+          "prediction_kzt": 40990453.77287165,
+          "residual_kzt": 21909546.22712835,
+          "absolute_error_kzt": 21909546.22712835,
+          "absolute_percentage_error": 0.3483234694,
+          "price_band": "Q4",
+          "age_band": "0-5"
+        },
+        {
+          "ad_id": "204805620",
+          "brand": "Mercedes-Benz",
+          "model": "G 63 AMG",
+          "year": 2015.0,
+          "mileage_km": null,
+          "mileage_missing": 1.0,
+          "fuel": "petrol",
+          "training_model_count": 4,
+          "model_support": "rare_1_to_4",
+          "price": 45000000,
+          "prediction_kzt": 28223126.041643985,
+          "residual_kzt": 16776873.958356015,
+          "absolute_error_kzt": 16776873.958356015,
+          "absolute_percentage_error": 0.3728194213,
+          "price_band": "Q4",
+          "age_band": "6-10"
+        },
+        {
+          "ad_id": "206695408",
+          "brand": "Porsche",
+          "model": "Panamera",
+          "year": 2024.0,
+          "mileage_km": 20000.0,
+          "mileage_missing": 0.0,
+          "fuel": "petrol",
+          "training_model_count": 0,
+          "model_support": "unseen",
+          "price": 93500000,
+          "prediction_kzt": 77034219.32522346,
+          "residual_kzt": 16465780.67477654,
+          "absolute_error_kzt": 16465780.67477654,
+          "absolute_percentage_error": 0.1761046061,
+          "price_band": "Q4",
+          "age_band": "0-5"
+        },
+        {
+          "ad_id": "205422301",
+          "brand": "Chevrolet",
+          "model": "TrailBlazer",
+          "year": 2022.0,
+          "mileage_km": 103275.0,
+          "mileage_missing": 0.0,
+          "fuel": "petrol",
+          "training_model_count": 0,
+          "model_support": "unseen",
+          "price": 12390000,
+          "prediction_kzt": 28707263.19881919,
+          "residual_kzt": -16317263.19881919,
+          "absolute_error_kzt": 16317263.19881919,
+          "absolute_percentage_error": 1.3169703954,
+          "price_band": "Q4",
+          "age_band": "0-5"
+        }
+      ],
+      "mean_residual_kzt": 291649.2711539843,
+      "residual_sign": "actual minus prediction; positive means underestimation"
+    },
+    "historical_test_disclosure": "Historical test errors motivated feature-engineering hypotheses. Parameters/checkpoints are selected using train CV/validation only. This reused test is retrospective and cannot establish independent generalization of the improvements.",
+    "uncertainty": "Engineering was motivated by known benchmark errors; all reported benchmark gains need independent later-data confirmation. One split and sparse high-price/rare-model segments limit conclusions."
+  },
+  "environment": {
+    "python": "3.12.14",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "seed": 42,
+    "packages": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.1",
+      "matplotlib": "3.11.2",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "joblib": "1.6.0",
+      "threadpoolctl": "3.8.0",
+      "catboost": "1.2.10"
+    }
+  },
+  "elapsed_seconds": 122.940805333
+}

@@ -1,0 +1,77 @@
+{
+  "rows": 383,
+  "candidates": 51,
+  "individuals": 21,
+  "blends": 30,
+  "eligible": 8,
+  "winner": "blend_44",
+  "selected": {
+    "mae_kzt": 2248401.7333698105,
+    "within_20pct": 0.6631853785900783,
+    "median_ape": 0.13885666330915522,
+    "dual_score": 0.9618550578394909,
+    "eligible": true,
+    "hits": 254
+  },
+  "baseline": {
+    "mae_kzt": 2289371.696786993,
+    "within_20pct": 0.6422976501305483,
+    "median_ape": 0.1400908308954266,
+    "dual_score": 1.0,
+    "eligible": false,
+    "hits": 246
+  },
+  "mae_decrease_kzt": 40969.96341718268,
+  "mae_decrease_pct": 1.7895723737076752,
+  "within20_gain_pp": 2.088772845953002,
+  "hit_gains": 8,
+  "test_accessed": false,
+  "validation_artifact_predictions_reproduced": true,
+  "source_split_reproduced_from_manifest": true,
+  "source_files_hash_verified": [
+    "data.py",
+    "legacy_data.py",
+    "ann.py",
+    "ensemble.py",
+    "catboost_model.py",
+    "unsupervised.py",
+    "run_project.py",
+    "requirements.txt",
+    "requirements-lock.txt",
+    "kolesa_cars_2025.csv",
+    "results/split_manifest.csv"
+  ],
+  "ann_seeds_and_checkpoints": [
+    {
+      "seed": 11,
+      "checkpoint_epoch": 30,
+      "checkpoint_dual_score": 1.0004950043471896
+    },
+    {
+      "seed": 23,
+      "checkpoint_epoch": 61,
+      "checkpoint_dual_score": 1.0189488308551986
+    },
+    {
+      "seed": 42,
+      "checkpoint_epoch": 69,
+      "checkpoint_dual_score": 1.025461318543944
+    },
+    {
+      "seed": 71,
+      "checkpoint_epoch": 63,
+      "checkpoint_dual_score": 1.0550733224559483
+    },
+    {
+      "seed": 101,
+      "checkpoint_epoch": 24,
+      "checkpoint_dual_score": 1.0383070481090784
+    }
+  ],
+  "ann_target_scaler_n": 1787,
+  "source_steering_train_counts": {
+    "not_stated": 1694,
+    "right_explicit": 93
+  },
+  "test_labels_accessed": false
+}

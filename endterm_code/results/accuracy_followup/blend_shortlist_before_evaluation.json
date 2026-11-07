@@ -1,0 +1,63 @@
+{
+  "shortlist": {
+    "ann": [
+      "ann_steering__ann_pool_corrected_mae_kzt",
+      "ann_steering__ann_pool_corrected_dual_score"
+    ],
+    "alternative": [
+      "alternatives__local_comparable_log_k8",
+      "alternatives__extra_raw_full_mf065_leaf1"
+    ],
+    "catboost": [
+      "catboost__full_log_rmse_d7_oh2",
+      "catboost__full_log_rmse_d5_oh2"
+    ]
+  },
+  "pairs": [
+    [
+      "ann_steering__ann_pool_corrected_mae_kzt",
+      "delivered_ensemble"
+    ],
+    [
+      "ann_steering__ann_pool_corrected_dual_score",
+      "delivered_ensemble"
+    ],
+    [
+      "alternatives__local_comparable_log_k8",
+      "delivered_ensemble"
+    ],
+    [
+      "alternatives__extra_raw_full_mf065_leaf1",
+      "delivered_ensemble"
+    ],
+    [
+      "catboost__full_log_rmse_d7_oh2",
+      "delivered_ensemble"
+    ],
+    [
+      "catboost__full_log_rmse_d5_oh2",
+      "delivered_ensemble"
+    ],
+    [
+      "ann_steering__ann_pool_corrected_mae_kzt",
+      "delivered_RF"
+    ],
+    [
+      "ann_steering__ann_pool_corrected_dual_score",
+      "delivered_RF"
+    ],
+    [
+      "ann_steering__ann_pool_corrected_mae_kzt",
+      "catboost__full_log_rmse_d7_oh2"
+    ],
+    [
+      "ann_steering__ann_pool_corrected_mae_kzt",
+      "alternatives__local_comparable_log_k8"
+    ]
+  ],
+  "weights": [
+    0.25,
+    0.5,
+    0.75
+  ]
+}

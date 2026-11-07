@@ -1,0 +1,854 @@
+{
+  "data": {
+    "source_url": "https://www.kaggle.com/datasets/mutashevdarkhan/kolesa-cars-2025",
+    "source_git_blob_sha": "01e57295927f91ffd7996745ce6a867b6d41b0f7",
+    "source_sha256": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+    "raw_rows": 3999,
+    "raw_columns": 14,
+    "new_rows_removed": 527,
+    "on_order_rows_removed": 51,
+    "duplicate_used_rows_removed": 868,
+    "invalid_rows_removed": 0,
+    "clean_rows": 2553,
+    "missing_mileage": 497,
+    "missing_engine": 17,
+    "source_missing_counts": {
+      "name": 0,
+      "price": 0,
+      "price_raw": 0,
+      "desc": 0,
+      "link": 0,
+      "brand": 0,
+      "model": 0,
+      "condition": 0,
+      "year": 0,
+      "mileage_km": 1119,
+      "engine_liters": 1158,
+      "fuel": 67,
+      "transmission": 0,
+      "drive": 3964,
+      "ad_id": 0
+    },
+    "target": "advertised asking price of used cars",
+    "currency": "KZT",
+    "snapshot": "2025; individual listing dates unavailable",
+    "splits": {
+      "train": 1787,
+      "validation": 383,
+      "test": 383
+    },
+    "split_price_summary": {
+      "train": {
+        "count": 1787,
+        "median_price_kzt": 6700000.0,
+        "max_price_kzt": 160000000.0,
+        "above_100m_count": 2
+      },
+      "validation": {
+        "count": 383,
+        "median_price_kzt": 6500000.0,
+        "max_price_kzt": 222000000.0,
+        "above_100m_count": 1
+      },
+      "test": {
+        "count": 383,
+        "median_price_kzt": 6000000.0,
+        "max_price_kzt": 93500000.0,
+        "above_100m_count": 0
+      }
+    },
+    "numeric_features": [
+      "year",
+      "log_km",
+      "mileage_missing",
+      "engine_liters_clean"
+    ],
+    "categorical_features": [
+      "brand",
+      "model",
+      "body",
+      "fuel",
+      "transmission"
+    ],
+    "preprocessing": "Numeric median imputation + StandardScaler; categorical mode imputation + OHE with min_frequency=5, unseen-category handling. Fit inside train CV folds."
+  },
+  "eda": {
+    "training_mean_price_kzt": 9532173.623391159,
+    "training_median_price_kzt": 6700000.0,
+    "year_price_spearman": 0.6924940835,
+    "mileage_price_spearman": -0.5289711409,
+    "price_bands": [
+      {
+        "price_band_million_kzt": "<2",
+        "count": 205
+      },
+      {
+        "price_band_million_kzt": "2-5",
+        "count": 459
+      },
+      {
+        "price_band_million_kzt": "5-10",
+        "count": 574
+      },
+      {
+        "price_band_million_kzt": "10-20",
+        "count": 389
+      },
+      {
+        "price_band_million_kzt": "20-40",
+        "count": 113
+      },
+      {
+        "price_band_million_kzt": "40+",
+        "count": 47
+      }
+    ],
+    "fuel_groups": [
+      {
+        "fuel": "diesel",
+        "median": 5700000.0,
+        "size": 77
+      },
+      {
+        "fuel": "gas",
+        "median": 8275000.0,
+        "size": 24
+      },
+      {
+        "fuel": "hybrid",
+        "median": 19000000.0,
+        "size": 22
+      },
+      {
+        "fuel": "petrol",
+        "median": 6500000.0,
+        "size": 1652
+      }
+    ]
+  },
+  "supervised": {
+    "cv_results": [
+      {
+        "model": "KNN tuned",
+        "best_parameters": {
+          "model__n_neighbors": 5,
+          "model__p": 2,
+          "model__weights": "distance"
+        },
+        "cv_mae_kzt": 2473006.046789911,
+        "cv_std_mae_kzt": 131492.0512574351,
+        "candidate_count": 24,
+        "folds": 3,
+        "shuffle": true,
+        "seed": 42
+      },
+      {
+        "model": "Tree tuned",
+        "best_parameters": {
+          "model__max_depth": 10,
+          "model__min_samples_leaf": 3
+        },
+        "cv_mae_kzt": 2890074.245825807,
+        "cv_std_mae_kzt": 144207.0973054546,
+        "candidate_count": 12,
+        "folds": 3,
+        "shuffle": true,
+        "seed": 42
+      },
+      {
+        "model": "Random forest tuned",
+        "best_parameters": {
+          "model__max_features": 0.7,
+          "model__min_samples_leaf": 1
+        },
+        "cv_mae_kzt": 2259380.7451218446,
+        "cv_std_mae_kzt": 58230.340191963,
+        "candidate_count": 4,
+        "folds": 3,
+        "shuffle": true,
+        "seed": 42
+      }
+    ],
+    "cv_protocol": "3-fold KFold, shuffle=True, seed 42, within training only",
+    "cv_score": "negative MAE in KZT",
+    "all_final_fits": "1787 training listings; validation not refitted",
+    "midterm_tree_parameters": {
+      "max_depth": 10,
+      "min_samples_leaf": 3
+    },
+    "midterm_cv_note": "Original tree used unshuffled 3-fold CV. New searches use one shared shuffled CV."
+  },
+  "ann": {
+    "model": "ANN",
+    "selected_candidate_id": "ann_128_64",
+    "hidden_layer_sizes": [
+      128,
+      64
+    ],
+    "best_epoch": 18,
+    "epochs_run": 58,
+    "best_validation_mae_kzt": 2456897.177657078,
+    "configuration": {
+      "activation": "relu",
+      "output_activation": "identity (linear)",
+      "solver": "adam",
+      "loss": "squared_error (half squared error plus L2 penalty)",
+      "learning_rate_init": 0.001,
+      "alpha": 0.001,
+      "batch_size": 64,
+      "beta_1": 0.9,
+      "beta_2": 0.999,
+      "epsilon": 1e-08,
+      "shuffle": true,
+      "max_epochs": 400,
+      "patience": 40,
+      "minimum_validation_mae_improvement": 0.0,
+      "random_state": 42,
+      "early_stopping": "external validation MAE in KZT; sklearn internal early_stopping=False"
+    },
+    "candidate_architectures": [
+      [
+        64,
+        32
+      ],
+      [
+        128,
+        64
+      ]
+    ],
+    "target_scaler": {
+      "fit_split": "training only",
+      "n_samples_seen": 1787,
+      "mean_log1p": 15.6530337903,
+      "scale_log1p": 0.9198202842
+    },
+    "target_transform": "z = (log1p(price_KZT) - train_mean) / train_std; prediction = max(0, expm1(z_hat * train_std + train_mean)); log clipped only to avoid numerical overflow.",
+    "selection": "Lowest validation MAE in KZT across all candidate epochs; exact ties retain the first checkpoint/candidate.",
+    "history_loss": "Ordinary MSE of standardized log1p targets, without the optimizer's one-half factor or L2 term.",
+    "assessment": {
+      "stopping_reason": "validation_patience_exhausted",
+      "training_mse_first": 0.2341155417,
+      "training_mse_best_checkpoint": 0.0477856779,
+      "training_mse_final": 0.0291216797,
+      "relative_training_mse_improvement_last_up_to_20_epochs": 0.0814215383,
+      "validation_mae_deterioration_after_best_fraction": 0.0715425689,
+      "overfitting_signal": true,
+      "assessment": "Training error continues to fall while validation MAE worsens by over 5% after its best epoch; the saved checkpoint avoids the later deterioration.",
+      "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+    },
+    "candidates": [
+      {
+        "candidate_id": "ann_64_32",
+        "hidden_layer_sizes": [
+          64,
+          32
+        ],
+        "best_epoch": 42,
+        "epochs_run": 82,
+        "best_validation_mae_kzt": 2501333.349081391,
+        "checkpoint_train_mae_kzt": 1199539.226615344,
+        "checkpoint_train_scaled_log_mse": 0.0377625618,
+        "checkpoint_validation_scaled_log_mse": 0.1901722284,
+        "assessment": {
+          "stopping_reason": "validation_patience_exhausted",
+          "training_mse_first": 0.2526540038,
+          "training_mse_best_checkpoint": 0.0377625618,
+          "training_mse_final": 0.0293335301,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.0682462415,
+          "validation_mae_deterioration_after_best_fraction": 0.0399198662,
+          "overfitting_signal": false,
+          "assessment": "No post-checkpoint overfitting signal under the stated 5% validation-MAE heuristic; this does not establish generalization outside these splits.",
+          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+        }
+      },
+      {
+        "candidate_id": "ann_128_64",
+        "hidden_layer_sizes": [
+          128,
+          64
+        ],
+        "best_epoch": 18,
+        "epochs_run": 58,
+        "best_validation_mae_kzt": 2456897.177657078,
+        "checkpoint_train_mae_kzt": 1323717.7019693227,
+        "checkpoint_train_scaled_log_mse": 0.0477856779,
+        "checkpoint_validation_scaled_log_mse": 0.1812310828,
+        "assessment": {
+          "stopping_reason": "validation_patience_exhausted",
+          "training_mse_first": 0.2341155417,
+          "training_mse_best_checkpoint": 0.0477856779,
+          "training_mse_final": 0.0291216797,
+          "relative_training_mse_improvement_last_up_to_20_epochs": 0.0814215383,
+          "validation_mae_deterioration_after_best_fraction": 0.0715425689,
+          "overfitting_signal": true,
+          "assessment": "Training error continues to fall while validation MAE worsens by over 5% after its best epoch; the saved checkpoint avoids the later deterioration.",
+          "heuristic": "Overfitting signal: final validation MAE > 1.05 * best validation MAE and final train MSE < train MSE at best epoch."
+        }
+      }
+    ],
+    "artifacts": {
+      "history_csv": "ann_history.csv",
+      "history_plot": "ann_history.png"
+    },
+    "test_data_used": false,
+    "input_feature_count": 147
+  },
+  "unsupervised": {
+    "fit_rows": 1787,
+    "seed": 42,
+    "feature_columns": [
+      "year",
+      "log_km",
+      "engine_liters_clean"
+    ],
+    "numeric_dimensions": 3,
+    "price_used_as_input": false,
+    "categorical_features_used": false,
+    "preprocessing": {
+      "fit_scope": "training listings only; no validation or test listings",
+      "imputation": "per-feature training median",
+      "imputer_statistics": {
+        "year": 2013.0,
+        "log_km": 11.9511868475,
+        "engine_liters_clean": 2.4
+      },
+      "missing_numeric_counts": {
+        "year": 0,
+        "log_km": 349,
+        "engine_liters_clean": 12
+      },
+      "scaler": "StandardScaler: subtract training mean and divide by training population standard deviation",
+      "scaler_mean": {
+        "year": 2011.0453273643,
+        "log_km": 11.7145344762,
+        "engine_liters_clean": 2.4794068271
+      },
+      "scaler_scale": {
+        "year": 9.6426737743,
+        "log_km": 1.0806280887,
+        "engine_liters_clean": 0.9383402733
+      }
+    },
+    "kmeans": {
+      "candidate_k": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "n_init": 20,
+      "random_state": 42
+    },
+    "selection_rule": "Highest training silhouette over k=2..8; exact ties choose smaller k.",
+    "selected_k": 4,
+    "selected_silhouette": 0.3680917981,
+    "selection_scores": [
+      {
+        "k": 2,
+        "inertia": 3691.185211294,
+        "silhouette": 0.3270414767
+      },
+      {
+        "k": 3,
+        "inertia": 2797.7549084641,
+        "silhouette": 0.3399979139
+      },
+      {
+        "k": 4,
+        "inertia": 2054.9861359991,
+        "silhouette": 0.3680917981
+      },
+      {
+        "k": 5,
+        "inertia": 1642.3369880414,
+        "silhouette": 0.3575766226
+      },
+      {
+        "k": 6,
+        "inertia": 1390.3686173315,
+        "silhouette": 0.3419164713
+      },
+      {
+        "k": 7,
+        "inertia": 1237.2965023043,
+        "silhouette": 0.3420610987
+      },
+      {
+        "k": 8,
+        "inertia": 1110.5503359873,
+        "silhouette": 0.333368285
+      }
+    ],
+    "cluster_profiles": [
+      {
+        "cluster": 0,
+        "count": 508,
+        "median_year": 1999.0,
+        "median_mileage_km": 280000.0,
+        "median_engine_liters": 2.4,
+        "median_price_kzt": 3000000.0,
+        "observed_year_count": 508,
+        "observed_mileage_count": 334,
+        "observed_engine_count": 508,
+        "observed_price_count": 508
+      },
+      {
+        "cluster": 1,
+        "count": 815,
+        "median_year": 2015.0,
+        "median_mileage_km": 145680.0,
+        "median_engine_liters": 2.0,
+        "median_price_kzt": 7700000.0,
+        "observed_year_count": 815,
+        "observed_mileage_count": 687,
+        "observed_engine_count": 812,
+        "observed_price_count": 815
+      },
+      {
+        "cluster": 2,
+        "count": 245,
+        "median_year": 2011.0,
+        "median_mileage_km": 183500.0,
+        "median_engine_liters": 4.0,
+        "median_price_kzt": 12200000.0,
+        "observed_year_count": 245,
+        "observed_mileage_count": 198,
+        "observed_engine_count": 245,
+        "observed_price_count": 245
+      },
+      {
+        "cluster": 3,
+        "count": 219,
+        "median_year": 2023.0,
+        "median_mileage_km": 23000.0,
+        "median_engine_liters": 2.0,
+        "median_price_kzt": 14250000.0,
+        "observed_year_count": 219,
+        "observed_mileage_count": 219,
+        "observed_engine_count": 210,
+        "observed_price_count": 219
+      }
+    ],
+    "scaled_centroids": [
+      {
+        "cluster": 0,
+        "year": -1.2236506853,
+        "log_km": 0.5380881185,
+        "engine_liters_clean": -0.1001489107
+      },
+      {
+        "cluster": 1,
+        "year": 0.5018665285,
+        "log_km": 0.129521741,
+        "engine_liters_clean": -0.4487973398
+      },
+      {
+        "cluster": 2,
+        "year": 0.011384257,
+        "log_km": 0.2317513309,
+        "engine_liters_clean": 1.9319623408
+      },
+      {
+        "cluster": 3,
+        "year": 0.9580099747,
+        "log_km": -1.9894431926,
+        "engine_liters_clean": -0.2588369631
+      }
+    ],
+    "original_centroids": [
+      {
+        "cluster": 0,
+        "year": 1999.2460629921,
+        "log_km": 12.2960076112,
+        "engine_liters_clean": 2.3854330709,
+        "mileage_km_from_log_centroid": 218819.625423547
+      },
+      {
+        "cluster": 1,
+        "year": 2015.8846625767,
+        "log_km": 11.8544993076,
+        "engine_liters_clean": 2.0582822086,
+        "mileage_km_from_log_centroid": 140715.0497959963
+      },
+      {
+        "cluster": 2,
+        "year": 2011.1551020408,
+        "log_km": 11.964971474,
+        "engine_liters_clean": 4.292244898,
+        "mileage_km_from_log_centroid": 157151.4251155875
+      },
+      {
+        "cluster": 3,
+        "year": 2020.2831050228,
+        "log_km": 9.5646862815,
+        "engine_liters_clean": 2.2365296804,
+        "mileage_km_from_log_centroid": 14251.4810807081
+      }
+    ],
+    "profile_definition": "Cluster medians use observed original values; missing values are excluded, with observed counts reported. Price is added only after fitting for descriptive comparison.",
+    "centroid_definition": "Centroids are means in scaled, imputed numeric space. The original-space table inverses scaling; expm1(log-mileage centroid) is not the arithmetic mean or median mileage.",
+    "pca": {
+      "input": "The same train-imputed and train-standardized three numeric features as KMeans.",
+      "n_components": 3,
+      "svd_solver": "full",
+      "explained_variance_ratio": [
+        0.4784404913,
+        0.3248016802,
+        0.1967578285
+      ],
+      "cumulative_explained_variance_ratio": [
+        0.4784404913,
+        0.8032421715,
+        1.0
+      ],
+      "explained_variance": [
+        1.4361251253,
+        0.9749506201,
+        0.5906039858
+      ],
+      "loadings": [
+        {
+          "component": "PC1",
+          "year": 0.6909626429,
+          "log_km": -0.681111834,
+          "engine_liters_clean": -0.2421926828
+        },
+        {
+          "component": "PC2",
+          "year": 0.127818568,
+          "log_km": -0.2146425499,
+          "engine_liters_clean": 0.9682928222
+        },
+        {
+          "component": "PC3",
+          "year": 0.711500555,
+          "log_km": 0.7000108895,
+          "engine_liters_clean": 0.0612512443
+        }
+      ],
+      "loading_definition": "Signed unit-length component coefficients (sklearn PCA.components_); not feature-component correlations. Component signs are arbitrary."
+    },
+    "interpretation": [
+      "Categories are deliberately omitted so the three numeric axes remain interpretable; brand, model and equipment differences are not represented.",
+      "Silhouette is a geometric heuristic in this chosen standardized feature space; the winning k does not establish natural market segments or universal optimality.",
+      "PCA is descriptive dimensionality reduction, not a supervised predictor or evidence of causal effects on price.",
+      "The two-dimensional chart loses the variance in PC3; separation in the projection can differ from separation in all three dimensions.",
+      "Median imputation and a single seed can influence clustering; no cluster stability study is claimed.",
+      "Post-hoc price differences are descriptive asking-price summaries; price never enters clustering or PCA."
+    ],
+    "files": {
+      "cluster_selection.csv": "cluster_selection.csv",
+      "cluster_selection.png": "cluster_selection.png",
+      "cluster_profiles.csv": "cluster_profiles.csv",
+      "cluster_centroids_scaled.csv": "cluster_centroids_scaled.csv",
+      "cluster_centroids_original.csv": "cluster_centroids_original.csv",
+      "cluster_assignments.csv": "cluster_assignments.csv",
+      "pca_projection.csv": "pca_projection.csv",
+      "pca_loadings.csv": "pca_loadings.csv",
+      "pca_variance.csv": "pca_variance.csv",
+      "pca_variance.png": "pca_variance.png",
+      "pca_scatter.png": "pca_scatter.png",
+      "unsupervised_report.json": "unsupervised_report.json"
+    }
+  },
+  "evaluation": {
+    "selected_model": "ANN",
+    "selection_metric": "validation MAE in KZT",
+    "seed": 42,
+    "validation": {
+      "Median baseline": {
+        "mae_kzt": 6496552.477806789,
+        "rmse_kzt": 14996202.741611594,
+        "r2": -0.0517985048
+      },
+      "Linear regression": {
+        "mae_kzt": 4646979.751746838,
+        "rmse_kzt": 12247688.966468701,
+        "r2": 0.2984183197
+      },
+      "KNN midterm": {
+        "mae_kzt": 3179133.654159502,
+        "rmse_kzt": 11457362.485683149,
+        "r2": 0.3860411705
+      },
+      "Tree midterm": {
+        "mae_kzt": 3436400.1376930433,
+        "rmse_kzt": 9775996.406857671,
+        "r2": 0.5530159676
+      },
+      "KNN tuned": {
+        "mae_kzt": 3147904.4643605747,
+        "rmse_kzt": 12080710.50386867,
+        "r2": 0.317417897
+      },
+      "Tree tuned": {
+        "mae_kzt": 3436400.1376930433,
+        "rmse_kzt": 9775996.406857671,
+        "r2": 0.5530159676
+      },
+      "Random forest tuned": {
+        "mae_kzt": 2713453.123585312,
+        "rmse_kzt": 10674777.735137096,
+        "r2": 0.4670485785
+      },
+      "ANN": {
+        "mae_kzt": 2456897.177657078,
+        "rmse_kzt": 11624205.57475083,
+        "r2": 0.3680299362
+      }
+    },
+    "test_policy": "Historical midterm test is known. No tuning or model decisions use endterm test scores.",
+    "model_rows": [
+      {
+        "model": "Median baseline",
+        "validation_mae_kzt": 6496552.477806789,
+        "validation_rmse_kzt": 14996202.741611594,
+        "validation_r2": -0.0517985048,
+        "test_mae_kzt": 5950857.5587467365,
+        "test_rmse_kzt": 11301223.507748693,
+        "test_r2": -0.0481478993,
+        "selected": false
+      },
+      {
+        "model": "Linear regression",
+        "validation_mae_kzt": 4646979.751746838,
+        "validation_rmse_kzt": 12247688.966468701,
+        "validation_r2": 0.2984183197,
+        "test_mae_kzt": 3499175.757614889,
+        "test_rmse_kzt": 6464505.316759798,
+        "test_r2": 0.6570409766,
+        "selected": false
+      },
+      {
+        "model": "KNN midterm",
+        "validation_mae_kzt": 3179133.654159502,
+        "validation_rmse_kzt": 11457362.485683149,
+        "validation_r2": 0.3860411705,
+        "test_mae_kzt": 2442973.6510694358,
+        "test_rmse_kzt": 5889268.476338608,
+        "test_r2": 0.7153610386,
+        "selected": false
+      },
+      {
+        "model": "Tree midterm",
+        "validation_mae_kzt": 3436400.1376930433,
+        "validation_rmse_kzt": 9775996.406857671,
+        "validation_r2": 0.5530159676,
+        "test_mae_kzt": 2458743.9163376684,
+        "test_rmse_kzt": 5484572.8560049655,
+        "test_r2": 0.7531362853,
+        "selected": false
+      },
+      {
+        "model": "KNN tuned",
+        "validation_mae_kzt": 3147904.4643605747,
+        "validation_rmse_kzt": 12080710.50386867,
+        "validation_r2": 0.317417897,
+        "test_mae_kzt": 2424822.2249636836,
+        "test_rmse_kzt": 5594974.636870001,
+        "test_r2": 0.7430977641,
+        "selected": false
+      },
+      {
+        "model": "Tree tuned",
+        "validation_mae_kzt": 3436400.1376930433,
+        "validation_rmse_kzt": 9775996.406857671,
+        "validation_r2": 0.5530159676,
+        "test_mae_kzt": 2458743.9163376684,
+        "test_rmse_kzt": 5484572.8560049655,
+        "test_r2": 0.7531362853,
+        "selected": false
+      },
+      {
+        "model": "Random forest tuned",
+        "validation_mae_kzt": 2713453.123585312,
+        "validation_rmse_kzt": 10674777.735137096,
+        "validation_r2": 0.4670485785,
+        "test_mae_kzt": 2025850.6276882591,
+        "test_rmse_kzt": 4363971.144916041,
+        "test_r2": 0.8437084924,
+        "selected": false
+      },
+      {
+        "model": "ANN",
+        "validation_mae_kzt": 2456897.177657078,
+        "validation_rmse_kzt": 11624205.57475083,
+        "validation_r2": 0.3680299362,
+        "test_mae_kzt": 1754992.977301133,
+        "test_rmse_kzt": 3483032.1545427386,
+        "test_r2": 0.9004396058,
+        "selected": true
+      }
+    ],
+    "test_rows": 383,
+    "baseline_improvement_fraction": 0.7050857024,
+    "improvement_over_midterm_knn_fraction": 0.2816160843,
+    "success_criterion_met": true,
+    "error_analysis": {
+      "selected_model": "ANN",
+      "quartile_cutoffs_kzt": [
+        3600000.0,
+        6700000.0,
+        11500000.0
+      ],
+      "price_bands": [
+        {
+          "price_band": "Q1",
+          "count": 112,
+          "mae_kzt": 725939.1172465576,
+          "median_error_kzt": 535058.2013268995,
+          "mean_residual_kzt": -361701.2461741579
+        },
+        {
+          "price_band": "Q2",
+          "count": 100,
+          "mae_kzt": 979331.6459275262,
+          "median_error_kzt": 719565.9017981233,
+          "mean_residual_kzt": 49488.9279637737
+        },
+        {
+          "price_band": "Q3",
+          "count": 87,
+          "mae_kzt": 1224969.44790738,
+          "median_error_kzt": 872119.8210794926,
+          "mean_residual_kzt": 561188.28177472
+        },
+        {
+          "price_band": "Q4",
+          "count": 84,
+          "mae_kzt": 4599424.078738392,
+          "median_error_kzt": 2886922.8808524096,
+          "mean_residual_kzt": 3345907.4366061217
+        }
+      ],
+      "missing_mileage": [
+        {
+          "mileage_missing": 0.0,
+          "count": 313,
+          "mae_kzt": 1735898.5251985327
+        },
+        {
+          "mileage_missing": 1.0,
+          "count": 70,
+          "mae_kzt": 1840372.4559884754
+        }
+      ],
+      "age_bands": [
+        {
+          "age_band": "0-5",
+          "count": 90,
+          "mae_kzt": 2968198.0332957446
+        },
+        {
+          "age_band": "6-10",
+          "count": 51,
+          "mae_kzt": 2650898.324878142
+        },
+        {
+          "age_band": "11-20",
+          "count": 141,
+          "mae_kzt": 1304668.293669297
+        },
+        {
+          "age_band": "21+",
+          "count": 101,
+          "mae_kzt": 850202.4092431776
+        }
+      ],
+      "largest_errors": [
+        {
+          "ad_id": "205197485",
+          "brand": "Mercedes-Benz",
+          "model": "S 500",
+          "year": 2021.0,
+          "mileage_km": 48000.0,
+          "mileage_missing": 0.0,
+          "price": 62900000,
+          "prediction_kzt": 31736402.53509894,
+          "residual_kzt": 31163597.46490106,
+          "absolute_error_kzt": 31163597.46490106,
+          "price_band": "Q4",
+          "age_band": "0-5"
+        },
+        {
+          "ad_id": "161795691",
+          "brand": "Mercedes-Benz",
+          "model": "EQS SUV",
+          "year": 2022.0,
+          "mileage_km": 15000.0,
+          "mileage_missing": 0.0,
+          "price": 58000000,
+          "prediction_kzt": 32870855.431709915,
+          "residual_kzt": 25129144.568290085,
+          "absolute_error_kzt": 25129144.568290085,
+          "price_band": "Q4",
+          "age_band": "0-5"
+        },
+        {
+          "ad_id": "204805620",
+          "brand": "Mercedes-Benz",
+          "model": "G 63 AMG",
+          "year": 2015.0,
+          "mileage_km": null,
+          "mileage_missing": 1.0,
+          "price": 45000000,
+          "prediction_kzt": 25411772.37751478,
+          "residual_kzt": 19588227.62248522,
+          "absolute_error_kzt": 19588227.62248522,
+          "price_band": "Q4",
+          "age_band": "6-10"
+        },
+        {
+          "ad_id": "206695408",
+          "brand": "Porsche",
+          "model": "Panamera",
+          "year": 2024.0,
+          "mileage_km": 20000.0,
+          "mileage_missing": 0.0,
+          "price": 93500000,
+          "prediction_kzt": 77137131.47985247,
+          "residual_kzt": 16362868.520147532,
+          "absolute_error_kzt": 16362868.520147532,
+          "price_band": "Q4",
+          "age_band": "0-5"
+        },
+        {
+          "ad_id": "204763183",
+          "brand": "Jaguar",
+          "model": "F-Type",
+          "year": 2016.0,
+          "mileage_km": 10500.0,
+          "mileage_missing": 0.0,
+          "price": 27000000,
+          "prediction_kzt": 14830394.96988773,
+          "residual_kzt": 12169605.03011227,
+          "absolute_error_kzt": 12169605.03011227,
+          "price_band": "Q4",
+          "age_band": "6-10"
+        }
+      ],
+      "mean_residual_kzt": 768454.1995148475,
+      "residual_sign": "actual minus prediction; positive means underestimation"
+    },
+    "historical_test_disclosure": "Same test IDs were examined in midterm. It is a reused benchmark, not new unseen external validation.",
+    "uncertainty": "One split and a small high-price tail limit precision. CV variability is reported for tuned supervised models."
+  },
+  "environment": {
+    "python": "3.12.14",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "seed": 42,
+    "packages": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.1",
+      "matplotlib": "3.11.2",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "joblib": "1.6.0",
+      "threadpoolctl": "3.8.0"
+    }
+  },
+  "elapsed_seconds": 9.037001875
+}

@@ -1,0 +1,5 @@
+cluster,count,median_year,median_mileage_km,median_engine_liters,median_price_kzt,observed_year_count,observed_mileage_count,observed_engine_count,observed_price_count
+0,813,2015.0,146000.0,2.0,7690000.0,813,685,812,813
+1,245,2011.0,183500.0,4.0,12200000.0,245,198,245,245
+2,210,2023.0,23900.0,2.0,14125000.0,210,210,210,210
+3,507,1999.0,280000.0,2.4,3000000.0,507,334,507,507

@@ -1,0 +1,40 @@
+{
+  "input_features": 307,
+  "comparisons": {
+    "ANN pool MAE": {
+      "exact_array_match": true,
+      "max_absolute_prediction_difference_kzt": 0.0,
+      "checkpoint_epochs_match_scratch": true,
+      "best_epochs": [
+        56,
+        54,
+        72,
+        24,
+        21
+      ]
+    },
+    "ANN pool dual": {
+      "exact_array_match": true,
+      "max_absolute_prediction_difference_kzt": 0.0,
+      "checkpoint_epochs_match_scratch": true,
+      "best_epochs": [
+        30,
+        61,
+        69,
+        63,
+        24
+      ]
+    }
+  },
+  "selected_components": [
+    "ANN pool dual",
+    "Random forest tuned"
+  ],
+  "weights": [
+    0.75,
+    0.25
+  ],
+  "validation_mae_kzt": 2248401.7333698105,
+  "validation_within_20pct": 0.6631853785900783,
+  "test_data_evaluated": false
+}

@@ -1,0 +1,169 @@
+{
+  "selected_model": "Usage ensemble",
+  "selection_metric": "Each follow-up requires strictly lower validation MAE and higher within ±20% than its preceding retained ensemble; then minimize equal-weight normalized MAE and miss fraction.",
+  "seed": 42,
+  "validation": {
+    "Median baseline": {
+      "mae_kzt": 6496552.477806789,
+      "rmse_kzt": 14996202.741611594,
+      "r2": -0.0517985048,
+      "median_absolute_error_kzt": 3800000.0,
+      "median_ape": 0.5379310345,
+      "within_10pct": 0.0704960836,
+      "within_20pct": 0.1644908616,
+      "within_30pct": 0.27154047
+    },
+    "Linear regression": {
+      "mae_kzt": 4646979.751746838,
+      "rmse_kzt": 12247688.966468701,
+      "r2": 0.2984183197,
+      "median_absolute_error_kzt": 2595597.0962787587,
+      "median_ape": 0.3690072451,
+      "within_10pct": 0.1723237598,
+      "within_20pct": 0.3289817232,
+      "within_30pct": 0.4308093995
+    },
+    "KNN midterm": {
+      "mae_kzt": 3179133.654159502,
+      "rmse_kzt": 11457362.485683149,
+      "r2": 0.3860411705,
+      "median_absolute_error_kzt": 1198971.8674195483,
+      "median_ape": 0.1924687113,
+      "within_10pct": 0.3002610966,
+      "within_20pct": 0.5091383812,
+      "within_30pct": 0.6605744125
+    },
+    "Tree midterm": {
+      "mae_kzt": 3436400.1376930433,
+      "rmse_kzt": 9775996.406857671,
+      "r2": 0.5530159676,
+      "median_absolute_error_kzt": 1281111.111111111,
+      "median_ape": 0.2271706804,
+      "within_10pct": 0.2140992167,
+      "within_20pct": 0.4673629243,
+      "within_30pct": 0.6083550914
+    },
+    "KNN tuned": {
+      "mae_kzt": 3409617.569199459,
+      "rmse_kzt": 12121621.783664122,
+      "r2": 0.3127869456,
+      "median_absolute_error_kzt": 1195273.5775082437,
+      "median_ape": 0.1868015361,
+      "within_10pct": 0.2819843342,
+      "within_20pct": 0.5274151436,
+      "within_30pct": 0.6318537859
+    },
+    "Tree tuned": {
+      "mae_kzt": 3363974.385484718,
+      "rmse_kzt": 12195953.616532544,
+      "r2": 0.3043328908,
+      "median_absolute_error_kzt": 1323529.4117647056,
+      "median_ape": 0.216031746,
+      "within_10pct": 0.2036553525,
+      "within_20pct": 0.4569190601,
+      "within_30pct": 0.6214099217
+    },
+    "Random forest tuned": {
+      "mae_kzt": 2697353.057279622,
+      "rmse_kzt": 11393308.77427621,
+      "r2": 0.392886797,
+      "median_absolute_error_kzt": 945150.0,
+      "median_ape": 0.1718454545,
+      "within_10pct": 0.318537859,
+      "within_20pct": 0.5509138381,
+      "within_30pct": 0.6919060052
+    },
+    "ANN previous": {
+      "mae_kzt": 2456897.177657078,
+      "rmse_kzt": 11624205.57475083,
+      "r2": 0.3680299362,
+      "median_absolute_error_kzt": 921157.3528773263,
+      "median_ape": 0.1563305307,
+      "within_10pct": 0.3577023499,
+      "within_20pct": 0.6005221932,
+      "within_30pct": 0.7597911227
+    },
+    "ANN": {
+      "mae_kzt": 2445651.1517004175,
+      "rmse_kzt": 11671094.816400923,
+      "r2": 0.3629212237,
+      "median_absolute_error_kzt": 1047888.7987336675,
+      "median_ape": 0.1396409076,
+      "within_10pct": 0.3577023499,
+      "within_20pct": 0.6161879896,
+      "within_30pct": 0.7310704961
+    },
+    "ANN corrected": {
+      "mae_kzt": 2371127.804370948,
+      "rmse_kzt": 11550097.078341128,
+      "r2": 0.3760623231,
+      "median_absolute_error_kzt": 957786.8961057104,
+      "median_ape": 0.147918362,
+      "within_10pct": 0.3603133159,
+      "within_20pct": 0.6161879896,
+      "within_30pct": 0.7362924282
+    },
+    "CatBoost": {
+      "mae_kzt": 2689678.454849997,
+      "rmse_kzt": 11801401.223060824,
+      "r2": 0.348615989,
+      "median_absolute_error_kzt": 946019.3011453543,
+      "median_ape": 0.1647355321,
+      "within_10pct": 0.3054830287,
+      "within_20pct": 0.5796344648,
+      "within_30pct": 0.725848564
+    },
+    "Ensemble": {
+      "mae_kzt": 2289371.696786993,
+      "rmse_kzt": 11421405.911381075,
+      "r2": 0.3898886905,
+      "median_absolute_error_kzt": 928907.7797644585,
+      "median_ape": 0.1400908309,
+      "within_10pct": 0.362924282,
+      "within_20pct": 0.6422976501,
+      "within_30pct": 0.7441253264
+    },
+    "ANN pool MAE": {
+      "mae_kzt": 2274288.461998604,
+      "rmse_kzt": 11526954.396664537,
+      "r2": 0.3785601593,
+      "median_absolute_error_kzt": 865434.5410399241,
+      "median_ape": 0.135472532,
+      "within_10pct": 0.3707571802,
+      "within_20pct": 0.6527415144,
+      "within_30pct": 0.772845953
+    },
+    "ANN pool dual": {
+      "mae_kzt": 2298694.2301891106,
+      "rmse_kzt": 11515039.144431226,
+      "r2": 0.3798442427,
+      "median_absolute_error_kzt": 875011.7871362632,
+      "median_ape": 0.134617198,
+      "within_10pct": 0.3890339426,
+      "within_20pct": 0.6475195822,
+      "within_30pct": 0.7676240209
+    },
+    "Robust ensemble": {
+      "mae_kzt": 2248401.7333698105,
+      "rmse_kzt": 11404110.23229094,
+      "r2": 0.3917351006,
+      "median_absolute_error_kzt": 829536.6780317724,
+      "median_ape": 0.1388566633,
+      "within_10pct": 0.3759791123,
+      "within_20pct": 0.6631853786,
+      "within_30pct": 0.7676240209
+    },
+    "Usage ensemble": {
+      "mae_kzt": 2238371.607965701,
+      "rmse_kzt": 11412167.748605328,
+      "r2": 0.390875264,
+      "median_absolute_error_kzt": 831039.4376099668,
+      "median_ape": 0.1368460151,
+      "within_10pct": 0.365535248,
+      "within_20pct": 0.6762402089,
+      "within_30pct": 0.7650130548
+    }
+  },
+  "test_policy": "Historical test errors motivated feature-engineering hypotheses. Parameters/checkpoints are selected using train CV/validation only. This reused test is retrospective and cannot establish independent generalization of the improvements.",
+  "follow_up": "First preserve the frozen steering pool control; then test only the TRAIN-OOF-supported age/usage pair with two checkpoints and 12 fixed pool/reference mixtures. No further test-guided tuning."
+}

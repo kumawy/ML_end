@@ -1,0 +1,52 @@
+{
+  "train_rows": 1787,
+  "source_sha256": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+  "feature_source_columns": [
+    "desc",
+    "brand",
+    "model",
+    "year",
+    "mileage_km",
+    "drive"
+  ],
+  "labels_or_identity_used_in_extraction": false,
+  "targets_and_identity_checked_for_preservation_only": true,
+  "validation_or_test_analyzed": false,
+  "model_experiment_run": false,
+  "source_proposal_sha256": "e395aa8040633e8bc0a50d43914114d634fca0537d0d31debbf361daf87fc6ab",
+  "source_boundaries_match_all_train_rows": true,
+  "all_original_train_cells_and_row_index_preserved": true,
+  "original_train_column_count": 32,
+  "expected_counts": {
+    "color_literal_known": 1281,
+    "alloy_wheels_claim": 642,
+    "sunroof_claim": 194,
+    "description_truncation_signal": 1545,
+    "review_low_mileage_old_vehicle": 11,
+    "review_repeated_digit_mileage": 43,
+    "original_drive_requires_review": 23
+  },
+  "actual_counts": {
+    "color_literal_known": 1281,
+    "alloy_wheels_claim": 642,
+    "sunroof_claim": 194,
+    "description_truncation_signal": 1545,
+    "review_low_mileage_old_vehicle": 11,
+    "review_repeated_digit_mileage": 43,
+    "original_drive_requires_review": 23
+  },
+  "upholstery_counts": {
+    "not_stated": 1466,
+    "велюр": 158,
+    "кожа": 130,
+    "multiple_literals": 15,
+    "комбинированный": 14,
+    "алькантара": 4
+  },
+  "model_family_distinct": 384,
+  "missing_mileage": 349,
+  "missing_annual_mileage_proxy": 349,
+  "default_snapshot_year": 2025,
+  "min_age_proxy": 0.0,
+  "max_age_proxy": 69.0
+}

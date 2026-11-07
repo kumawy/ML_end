@@ -1,0 +1,314 @@
+{
+  "selected_name": "Usage ANN pool MAE 0.25 + Robust ensemble 0.75",
+  "selected_components": [
+    "Usage ANN pool MAE",
+    "Robust ensemble"
+  ],
+  "weights": [
+    0.25,
+    0.75
+  ],
+  "validation_mae_kzt": 2238371.607965701,
+  "validation_within_20pct": 0.6762402089,
+  "mae_kzt": 2238371.607965701,
+  "within_20pct": 0.6762402089,
+  "median_ape": 0.1368460151,
+  "dual_score": 0.9783896539,
+  "candidates": [
+    {
+      "name": "Robust ensemble",
+      "candidate": "Robust ensemble",
+      "components": [
+        "Robust ensemble"
+      ],
+      "weights": [
+        1.0
+      ],
+      "mae_kzt": 2248401.7333698105,
+      "within_20pct": 0.6631853786,
+      "median_ape": 0.1388566633,
+      "dual_score": 1.0,
+      "validation_mae_kzt": 2248401.7333698105,
+      "validation_within_20pct": 0.6631853786,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool MAE",
+      "candidate": "Usage ANN pool MAE",
+      "components": [
+        "Usage ANN pool MAE"
+      ],
+      "weights": [
+        1.0
+      ],
+      "mae_kzt": 2257650.404213965,
+      "within_20pct": 0.6475195822,
+      "median_ape": 0.1348593578,
+      "dual_score": 1.0253125351,
+      "validation_mae_kzt": 2257650.404213965,
+      "validation_within_20pct": 0.6475195822,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool dual",
+      "candidate": "Usage ANN pool dual",
+      "components": [
+        "Usage ANN pool dual"
+      ],
+      "weights": [
+        1.0
+      ],
+      "mae_kzt": 2270380.088956957,
+      "within_20pct": 0.6553524804,
+      "median_ape": 0.1354401659,
+      "dual_score": 1.0165154578,
+      "validation_mae_kzt": 2270380.088956957,
+      "validation_within_20pct": 0.6553524804,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool MAE 0.25 + Random forest tuned 0.75",
+      "candidate": "Usage ANN pool MAE 0.25 + Random forest tuned 0.75",
+      "components": [
+        "Usage ANN pool MAE",
+        "Random forest tuned"
+      ],
+      "weights": [
+        0.25,
+        0.75
+      ],
+      "mae_kzt": 2506106.3694153116,
+      "within_20pct": 0.5953002611,
+      "median_ape": 0.1585395971,
+      "dual_score": 1.1580835992,
+      "validation_mae_kzt": 2506106.3694153116,
+      "validation_within_20pct": 0.5953002611,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool MAE 0.5 + Random forest tuned 0.5",
+      "candidate": "Usage ANN pool MAE 0.5 + Random forest tuned 0.5",
+      "components": [
+        "Usage ANN pool MAE",
+        "Random forest tuned"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ],
+      "mae_kzt": 2338514.8223478594,
+      "within_20pct": 0.6240208877,
+      "median_ape": 0.1420459515,
+      "dual_score": 1.0781789005,
+      "validation_mae_kzt": 2338514.8223478594,
+      "validation_within_20pct": 0.6240208877,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool MAE 0.75 + Random forest tuned 0.25",
+      "candidate": "Usage ANN pool MAE 0.75 + Random forest tuned 0.25",
+      "components": [
+        "Usage ANN pool MAE",
+        "Random forest tuned"
+      ],
+      "weights": [
+        0.75,
+        0.25
+      ],
+      "mae_kzt": 2258713.6369350264,
+      "within_20pct": 0.6553524804,
+      "median_ape": 0.1423452932,
+      "dual_score": 1.01392107,
+      "validation_mae_kzt": 2258713.6369350264,
+      "validation_within_20pct": 0.6553524804,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool MAE 0.25 + Robust ensemble 0.75",
+      "candidate": "Usage ANN pool MAE 0.25 + Robust ensemble 0.75",
+      "components": [
+        "Usage ANN pool MAE",
+        "Robust ensemble"
+      ],
+      "weights": [
+        0.25,
+        0.75
+      ],
+      "mae_kzt": 2238371.607965701,
+      "within_20pct": 0.6762402089,
+      "median_ape": 0.1368460151,
+      "dual_score": 0.9783896539,
+      "validation_mae_kzt": 2238371.607965701,
+      "validation_within_20pct": 0.6762402089,
+      "eligible": true
+    },
+    {
+      "name": "Usage ANN pool MAE 0.5 + Robust ensemble 0.5",
+      "candidate": "Usage ANN pool MAE 0.5 + Robust ensemble 0.5",
+      "components": [
+        "Usage ANN pool MAE",
+        "Robust ensemble"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ],
+      "mae_kzt": 2233223.135899448,
+      "within_20pct": 0.6631853786,
+      "median_ape": 0.1388161373,
+      "dual_score": 0.9966245806,
+      "validation_mae_kzt": 2233223.135899448,
+      "validation_within_20pct": 0.6631853786,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool MAE 0.75 + Robust ensemble 0.25",
+      "candidate": "Usage ANN pool MAE 0.75 + Robust ensemble 0.25",
+      "components": [
+        "Usage ANN pool MAE",
+        "Robust ensemble"
+      ],
+      "weights": [
+        0.75,
+        0.25
+      ],
+      "mae_kzt": 2239886.9664337942,
+      "within_20pct": 0.6657963446,
+      "median_ape": 0.1351923323,
+      "dual_score": 0.9942305155,
+      "validation_mae_kzt": 2239886.9664337942,
+      "validation_within_20pct": 0.6657963446,
+      "eligible": true
+    },
+    {
+      "name": "Usage ANN pool dual 0.25 + Random forest tuned 0.75",
+      "candidate": "Usage ANN pool dual 0.25 + Random forest tuned 0.75",
+      "components": [
+        "Usage ANN pool dual",
+        "Random forest tuned"
+      ],
+      "weights": [
+        0.25,
+        0.75
+      ],
+      "mae_kzt": 2506384.925586784,
+      "within_20pct": 0.5979112272,
+      "median_ape": 0.1604243226,
+      "dual_score": 1.1542695756,
+      "validation_mae_kzt": 2506384.925586784,
+      "validation_within_20pct": 0.5979112272,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool dual 0.5 + Random forest tuned 0.5",
+      "candidate": "Usage ANN pool dual 0.5 + Random forest tuned 0.5",
+      "components": [
+        "Usage ANN pool dual",
+        "Random forest tuned"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ],
+      "mae_kzt": 2342289.739207425,
+      "within_20pct": 0.6161879896,
+      "median_ape": 0.1413228456,
+      "dual_score": 1.0906462742,
+      "validation_mae_kzt": 2342289.739207425,
+      "validation_within_20pct": 0.6161879896,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool dual 0.75 + Random forest tuned 0.25",
+      "candidate": "Usage ANN pool dual 0.75 + Random forest tuned 0.25",
+      "components": [
+        "Usage ANN pool dual",
+        "Random forest tuned"
+      ],
+      "weights": [
+        0.75,
+        0.25
+      ],
+      "mae_kzt": 2261623.1782700275,
+      "within_20pct": 0.6501305483,
+      "median_ape": 0.1396386894,
+      "dual_score": 1.0223200324,
+      "validation_mae_kzt": 2261623.1782700275,
+      "validation_within_20pct": 0.6501305483,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool dual 0.25 + Robust ensemble 0.75",
+      "candidate": "Usage ANN pool dual 0.25 + Robust ensemble 0.75",
+      "components": [
+        "Usage ANN pool dual",
+        "Robust ensemble"
+      ],
+      "weights": [
+        0.25,
+        0.75
+      ],
+      "mae_kzt": 2239468.46579332,
+      "within_20pct": 0.6736292428,
+      "median_ape": 0.138268089,
+      "dual_score": 0.9825095423,
+      "validation_mae_kzt": 2239468.46579332,
+      "validation_within_20pct": 0.6736292428,
+      "eligible": true
+    },
+    {
+      "name": "Usage ANN pool dual 0.5 + Robust ensemble 0.5",
+      "candidate": "Usage ANN pool dual 0.5 + Robust ensemble 0.5",
+      "components": [
+        "Usage ANN pool dual",
+        "Robust ensemble"
+      ],
+      "weights": [
+        0.5,
+        0.5
+      ],
+      "mae_kzt": 2237521.8364445297,
+      "within_20pct": 0.6605744125,
+      "median_ape": 0.1387424894,
+      "dual_score": 1.0014564955,
+      "validation_mae_kzt": 2237521.8364445297,
+      "validation_within_20pct": 0.6605744125,
+      "eligible": false
+    },
+    {
+      "name": "Usage ANN pool dual 0.75 + Robust ensemble 0.25",
+      "candidate": "Usage ANN pool dual 0.75 + Robust ensemble 0.25",
+      "components": [
+        "Usage ANN pool dual",
+        "Robust ensemble"
+      ],
+      "weights": [
+        0.75,
+        0.25
+      ],
+      "mae_kzt": 2249009.7745731315,
+      "within_20pct": 0.6605744125,
+      "median_ape": 0.1371225485,
+      "dual_score": 1.0040111853,
+      "validation_mae_kzt": 2249009.7745731315,
+      "validation_within_20pct": 0.6605744125,
+      "eligible": false
+    }
+  ],
+  "eligible_count": 3,
+  "baseline_validation_metrics": {
+    "mae_kzt": 2248401.7333698105,
+    "within_20pct": 0.6631853786,
+    "median_ape": 0.1388566633
+  },
+  "selection": "Strict validation MAE decrease and within-20% increase versus baseline; then lowest 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction). Baseline retained if none; exact score ties retain the first declared candidate.",
+  "declared_blend_weights": [
+    0.25,
+    0.5,
+    0.75
+  ],
+  "include_baseline_blends": true,
+  "test_data_used": false,
+  "test_data_policy": "No test targets or predictions accepted.",
+  "checkpoint_selection_caveat": "Validation has already selected pool checkpoints and now selects the mixture; results are selection-dependent. Historical-test reuse prevents an independent generalization claim."
+}

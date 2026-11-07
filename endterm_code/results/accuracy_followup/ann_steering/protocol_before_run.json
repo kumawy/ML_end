@@ -1,0 +1,25 @@
+{
+  "feature_sets": [
+    "corrected"
+  ],
+  "seeds": [
+    11,
+    23,
+    42,
+    71,
+    101
+  ],
+  "architecture": [
+    128,
+    64
+  ],
+  "checkpoint_metrics": [
+    "mae_kzt",
+    "dual_score"
+  ],
+  "epochs_max": 300,
+  "patience_after_both_best": 45,
+  "aggregation": "equal arithmetic mean of all five seeds",
+  "target": "train-standardized log1p KZT",
+  "test": "not accepted or evaluated"
+}

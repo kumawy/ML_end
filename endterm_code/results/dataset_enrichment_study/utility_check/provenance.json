@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-11-07T12:13:07.916636+00:00",
+  "project_source_relative_to_output": "../utility_source_snapshot",
+  "python_version": "3.12.14",
+  "numpy_version": "2.5.4",
+  "pandas_version": "3.1.1",
+  "sklearn_version": "1.9.1",
+  "source_sha256": {
+    "data.py": "7f3e8a64d6dfd02e5cde3354f4f957fb23c32e6ef0ed0e6a735074becf57ec19",
+    "ann.py": "b787b21825b4591f5620a00d261390af251ddd0b5a8c372f9a9945279cf6df0e",
+    "robust_ann.py": "b141c1718b46ef58ce1ebe1277368d272cd8f3f12e2100c6562c4342e9cbab89",
+    "structured_features.py": "f74da6d2b44df1cca1cf493cf792790ab2a4f66255ef317904ea589dd4b8fa4e",
+    "dataset_features.py": "782599a5f5bb401eeeef14d6599737a718112dba8bd043a9e5074edbf2a814b7",
+    "kolesa_cars_2025.csv": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+    "results/split_manifest.csv": "81b60d1c3aa9d1c56e6d421c32e9668d376c710ff36fdedce871ed57f6644efb"
+  },
+  "script_sha256": "5dcf4ee610efd5eafd3ada8fbd339477cf3cbdaa49aa1c1c1b23c282ea5db208",
+  "original_source_git_blob": "01e57295927f91ffd7996745ce6a867b6d41b0f7",
+  "original_split_counts": {
+    "train": 1787,
+    "validation": 383,
+    "test": 383
+  },
+  "extracted_target_split": "train only",
+  "validation_test_targets_extracted": false,
+  "validation_test_predictions_made": false,
+  "new_price_based_filtering": false,
+  "packaging_relocation": {
+    "original_project_source_relative_to_output": "../../code",
+    "explanation": "Only the source-directory pointer is relocated to the byte-identical historical source snapshot. Algorithm, source hashes, predictions, protocol and original provenance remain preserved."
+  }
+}

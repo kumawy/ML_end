@@ -1,0 +1,180 @@
+{
+  "dataset_url": "https://www.kaggle.com/datasets/mutashevdarkhan/kolesa-cars-2025",
+  "dataset_last_updated": "2025-12-18",
+  "dataset_license": "MIT (Kaggle catalog metadata)",
+  "currency": "KZT",
+  "target": "advertised asking price of used cars",
+  "audit": {
+    "raw_rows": 3999,
+    "raw_columns": 14,
+    "raw_unique_ads": 3031,
+    "repeated_ad_rows": 968,
+    "new_car_rows_excluded": 527,
+    "raw_missing_by_column": {
+      "name": 0,
+      "price": 0,
+      "price_raw": 0,
+      "desc": 0,
+      "link": 0,
+      "brand": 0,
+      "model": 0,
+      "condition": 0,
+      "year": 0,
+      "mileage_km": 1119,
+      "engine_liters": 1158,
+      "fuel": 67,
+      "transmission": 0,
+      "drive": 3964
+    },
+    "used_year_range": [
+      1956,
+      2025
+    ],
+    "all_prices_labelled_kzt": true
+  },
+  "on_order_used_rows_excluded": 51,
+  "clean_unique_used_rows": 2553,
+  "remaining_missing_engine_liters": 17,
+  "remaining_missing_mileage_km": 497,
+  "split_rows": {
+    "train": 1787,
+    "validation": 383,
+    "test": 383
+  },
+  "feature_columns": [
+    "year",
+    "log_km",
+    "mileage_missing",
+    "engine_liters_clean",
+    "brand",
+    "model",
+    "body",
+    "fuel",
+    "transmission"
+  ],
+  "eda": {
+    "training_price_median_kzt": 6700000.0,
+    "training_price_mean_kzt": 9532173.623391159,
+    "year_price_spearman": 0.6924940834830627,
+    "km_price_spearman": -0.5289711408808843,
+    "fuel_medians_kzt": {
+      "diesel": 5700000.0,
+      "gas": 8275000.0,
+      "hybrid": 19000000.0,
+      "petrol": 6500000.0
+    },
+    "fuel_counts": {
+      "petrol": 1652,
+      "diesel": 77,
+      "gas": 24,
+      "hybrid": 22
+    }
+  },
+  "year_medians_kzt": {
+    "1990": 1500000.0,
+    "1991": 1400000.0,
+    "1992": 1450000.0,
+    "1993": 1950000.0,
+    "1994": 1900000.0,
+    "1995": 2200000.0,
+    "1996": 2200000.0,
+    "1997": 2600000.0,
+    "1998": 3500000.0,
+    "1999": 3500000.0,
+    "2000": 3800000.0,
+    "2001": 3800000.0,
+    "2002": 3850000.0,
+    "2003": 4000000.0,
+    "2004": 5700000.0,
+    "2005": 5500000.0,
+    "2006": 5800000.0,
+    "2007": 6000000.0,
+    "2008": 6075000.0,
+    "2009": 6000000.0,
+    "2010": 6600000.0,
+    "2011": 7400000.0,
+    "2012": 5100000.0,
+    "2013": 6500000.0,
+    "2014": 5500000.0,
+    "2015": 7500000.0,
+    "2016": 10440000.0,
+    "2017": 9985000.0,
+    "2018": 12250000.0,
+    "2019": 10800000.0,
+    "2020": 10900000.0,
+    "2021": 12975000.0,
+    "2022": 12500000.0,
+    "2023": 13000000.0,
+    "2024": 15500000.0,
+    "2025": 15300000.0
+  },
+  "tree_cv": {
+    "best_parameters": {
+      "model__max_depth": 10,
+      "model__min_samples_leaf": 3
+    },
+    "mean_mae_kzt": 2857177.5791548416,
+    "folds": 3
+  },
+  "validation": {
+    "Median baseline": {
+      "mae_kzt": 6496552.477806789,
+      "rmse_kzt": 14996202.741611594,
+      "r2": -0.051798504816810365
+    },
+    "Linear regression": {
+      "mae_kzt": 4647022.207840401,
+      "rmse_kzt": 12247701.833569683,
+      "r2": 0.29841684556823067
+    },
+    "KNN regression": {
+      "mae_kzt": 3180760.027377207,
+      "rmse_kzt": 11458013.330703102,
+      "r2": 0.38597141559443326
+    },
+    "Decision tree": {
+      "mae_kzt": 3436400.1376930433,
+      "rmse_kzt": 9775996.406857671,
+      "r2": 0.5530159675527593
+    }
+  },
+  "selected_model": "KNN regression",
+  "test": {
+    "mae_kzt": 2444769.3755302415,
+    "rmse_kzt": 5891765.760450267,
+    "r2": 0.715119590903974
+  },
+  "baseline_test": {
+    "mae_kzt": 5950857.5587467365,
+    "rmse_kzt": 11301223.507748693,
+    "r2": -0.04814789927307728
+  },
+  "test_mae_improvement_fraction": 0.5891736020572613,
+  "success_criterion_met": true,
+  "error_by_price_band": [
+    {
+      "band": "highest quarter",
+      "size": 84,
+      "median": 2607742.206322781,
+      "mean": 6436350.311584998
+    },
+    {
+      "band": "lower middle",
+      "size": 100,
+      "median": 801189.7084438638,
+      "mean": 1355894.3524423388
+    },
+    {
+      "band": "lowest quarter",
+      "size": 112,
+      "median": 830874.212827738,
+      "mean": 1129184.3935649763
+    },
+    {
+      "band": "upper middle",
+      "size": 87,
+      "median": 1335532.6689278316,
+      "mean": 1536036.2911658804
+    }
+  ]
+}
