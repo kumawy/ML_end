@@ -114,3 +114,33 @@ Python 3.12.14 and recorded packages remain numpy 2.5.4, pandas 3.1.1, matplotli
 `results/dataset_enrichment_study/` retains source/quality audits, the utility protocol/all outcomes and the usage validation/frozen evaluation. Its paired bootstrap uses 10,000 NumPy default_rng resamples of paired fixed predictions, seed 20261107, percentile 2.5/97.5. The main entry point does not rerun this bootstrap or the utility experiment. The wider preceding research records remain separately under `results/accuracy_followup/`.
 
 No test labels are used for fitting/checkpointing/candidate selection in this round, while the loader parses the original source for unchanged eligibility. Historical test feedback, TRAIN-study-informed choice, repeated validation and disclosed test acceptance prevent independent generalization claims. Both usage-round intervals include zero; listing dependence, sparse premium/claim groups and unavailable verified condition/location/dates remain limits. The extra export fields are source claims, proxies or review metadata, not recovered truth. Independent later-data validation/calibration remain future work, not new observations promised for this submission. Actual student contributions/defense remain unverified.
+
+## 12. Bounded simplicity review — 2026-11-07
+
+The user allowed up to 3% higher global KZT MAE for simpler inference and better
+affordable-car performance. The protocol and runnable source were committed as
+`1275c7c` before fitting. Three fixed simpler recipes and a rebuilt historical
+recipe were assessed on exactly 1,787 original TRAIN rows in five stratified
+outer folds with separate inner checkpoints. Original validation/test identities
+were excluded; targets, source and split were unchanged. This is development
+OOF evidence, not a new independent test.
+
+| Fixed recipe | Inference estimators | OOF MAE, KZT | Overall ±20% hits / 1,787 | Affordable ±20% hits / 905 | Affordable median APE |
+|---|---:|---:|---:|---:|---:|
+| single_mae | 1 | 1,959,116 | 1,070 | 453 | 20.00% |
+| single_log | 1 | 1,987,068 | 1,074 | 451 | 20.06% |
+| single_forest | 2 | 1,890,899 | 1,101 | 465 | 19.06% |
+| historical_recipe | 11 | 1,878,399 | 1,124 | 471 | 18.77% |
+
+Neither single ANN met the 3% MAE cap. The ANN/forest mixture met the cap
+(+0.6655%) but failed overall hits, Q2 hits and affordable median APE. Q1 hits
+were 204/452 versus 203/452; Q2 were 261/453 versus 268/453. No recipe met
+every frozen gate. No more candidates were added and no gates were loosened.
+The historical selected model remains unchanged; no development replacement
+was fitted. The original 16-row historical comparison and presentation remain.
+
+The completed run took 36.27 seconds. All 64 tests passed (six new checks).
+`results/simplicity_review/` retains hashes, identities, all predictions, learning
+histories, all outcomes and the decision. The independent verifier recomputes
+the metrics/gates and checks the recorded checkpoint boundaries and preserved
+artifacts without fitting or evaluating new candidates on old holdouts.

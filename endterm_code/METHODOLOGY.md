@@ -123,6 +123,30 @@ One frozen selected-winner historical-test evaluation preceded integration; both
 
 Median APE = median(abs(y−prediction)/y), not mean percentage error. Within ±10/20/30% are empirical fractions, not confidence levels. Positive residual means actual−prediction>0, or underestimation. Train quartiles at 3.6/6.7/11.5m KZT define evaluation segments, not predictors. Selected-model band MAE: Q1 0.783m (n=112), Q2 1.030m (n=100), Q3 1.057m (n=87), Q4 4.088m (n=84). Largest test error: 2022 Mercedes-Benz EQS SUV, actual 58.000m, prediction 30.208m, error 27.792m KZT. All error groups retain counts; tiny groups cannot support broad claims.
 
+## Separate simplicity decision
+
+The later [fixed simplicity protocol](experiments/simplicity_review/PROTOCOL.md)
+uses only the original 1,787 TRAIN rows, with five outer assessment folds and
+an inner checkpoint split in each fold. The three simpler recipes are compared
+with a fold-local rebuild of the historical recipe, never the full-TRAIN saved
+artifact. Preprocessing and models fit the same inner training rows. A/B share
+one trajectory; their checkpoint criteria differ. Source/protocol/code hashes
+and row identities were recorded before fitting; no new recipe or relaxed gate
+was added after viewing results.
+
+No simpler recipe satisfied the user's joint preference. The two-component
+ANN/forest mixture was within the 3% global-MAE allowance (+0.6655%), but lost
+23 overall ±20% hits and 6 affordable-car hits relative to the rebuilt reference.
+Its Q1 hit count increased by one while Q2 lost seven. The fixed decision
+therefore preserves the current model and produces no replacement artifact.
+All four outcomes and segment counts are in `results/simplicity_review/`.
+
+These OOF results assess different rows/training sizes from the historical
+383-row test table; their absolute scores must not be read as a change in that
+test's accuracy. Historical research feedback and OOF-based recipe selection
+still prevent independent generalization claims. The original validation/test
+were excluded from candidate fitting, checkpointing and prediction in this round.
+
 Test maximum is 93.5m versus validation maximum 222m, so tail composition differs. Advertised 2025 prices, capped/unverified seller text, missing city/dates/detailed condition and sparse premium models limit use. The new export exposes those limits; it does not recover hidden ground truth or validate seller claims. Do not remove valid expensive ads, multiply suspicious mileage automatically, call the result current 2026 pricing or infer catalogue identity/causality. Estimates need human inspection for a real purchase. No geographical fairness guarantee, transfer guarantee or automated financial suitability decision is provided. Independent later-data validation and uncertainty calibration remain future work; no new rows are promised in this submission.
 
 ## Reproducing saved inference

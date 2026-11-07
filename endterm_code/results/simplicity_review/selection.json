@@ -1,0 +1,48 @@
+{
+  "selected_name": "historical_recipe",
+  "eligible_names": [],
+  "candidates": [
+    {
+      "name": "single_mae",
+      "eligible": false,
+      "estimator_count": 1,
+      "gates": {
+        "mae_within_3pct": false,
+        "overall_hits_not_worse": false,
+        "q1_hits_not_worse": false,
+        "q2_hits_not_worse": false,
+        "affordable_band_strict_hit_gain": false,
+        "affordable_median_ape_not_worse": false
+      }
+    },
+    {
+      "name": "single_log",
+      "eligible": false,
+      "estimator_count": 1,
+      "gates": {
+        "mae_within_3pct": false,
+        "overall_hits_not_worse": false,
+        "q1_hits_not_worse": false,
+        "q2_hits_not_worse": false,
+        "affordable_band_strict_hit_gain": false,
+        "affordable_median_ape_not_worse": false
+      }
+    },
+    {
+      "name": "single_forest",
+      "eligible": false,
+      "estimator_count": 2,
+      "gates": {
+        "mae_within_3pct": true,
+        "overall_hits_not_worse": false,
+        "q1_hits_not_worse": true,
+        "q2_hits_not_worse": false,
+        "affordable_band_strict_hit_gain": true,
+        "affordable_median_ape_not_worse": false
+      }
+    }
+  ],
+  "ranking": "estimator count, affordable median APE, global MAE, name",
+  "decision": "No tested simplification met the joint preference; retain historical recipe",
+  "status": "development/not_independent"
+}

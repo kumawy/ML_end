@@ -1,0 +1,254 @@
+{
+  "fold": 2,
+  "training_rows": 1143,
+  "checkpoint_rows": 286,
+  "assessment_rows": 358,
+  "selected_epochs": {
+    "single_mae": 38,
+    "single_log": 35,
+    "reference_mae": 45
+  },
+  "pool_selected_epochs": {
+    "corrected": {
+      "mae_kzt": [
+        45,
+        44,
+        18,
+        30,
+        36
+      ],
+      "dual_score": [
+        45,
+        21,
+        20,
+        30,
+        36
+      ]
+    },
+    "usage": {
+      "mae_kzt": [
+        63,
+        99,
+        38,
+        31,
+        13
+      ],
+      "dual_score": [
+        45,
+        92,
+        38,
+        31,
+        13
+      ]
+    }
+  },
+  "summaries": {
+    "single_mae": {
+      "n": 358,
+      "mae_kzt": 1830468.123466766,
+      "within_20pct_count": 207,
+      "within_20pct": 0.5782122905027933,
+      "median_ape": 0.15914829571114708,
+      "affordable": {
+        "n": 181,
+        "mae_kzt": 932074.4396543575,
+        "within_20pct_count": 89,
+        "within_20pct": 0.49171270718232046,
+        "median_ape": 0.21097860091122891
+      },
+      "bands": {
+        "Q1": {
+          "n": 90,
+          "mae_kzt": 679860.3863786985,
+          "within_20pct_count": 40,
+          "within_20pct": 0.4444444444444444,
+          "median_ape": 0.22892420880237324
+        },
+        "Q2": {
+          "n": 91,
+          "mae_kzt": 1181516.909926987,
+          "within_20pct_count": 49,
+          "within_20pct": 0.5384615384615384,
+          "median_ape": 0.13941741612862066
+        },
+        "Q3": {
+          "n": 88,
+          "mae_kzt": 1597020.454289038,
+          "within_20pct_count": 57,
+          "within_20pct": 0.6477272727272727,
+          "median_ape": 0.1513025493953915
+        },
+        "Q4": {
+          "n": 89,
+          "mae_kzt": 3888363.0859126775,
+          "within_20pct_count": 61,
+          "within_20pct": 0.6853932584269663,
+          "median_ape": 0.11597596305572709
+        }
+      }
+    },
+    "single_log": {
+      "n": 358,
+      "mae_kzt": 1947041.6506182854,
+      "within_20pct_count": 212,
+      "within_20pct": 0.5921787709497207,
+      "median_ape": 0.16975439889603947,
+      "affordable": {
+        "n": 181,
+        "mae_kzt": 1061929.7042296608,
+        "within_20pct_count": 90,
+        "within_20pct": 0.4972375690607735,
+        "median_ape": 0.20268887036265917
+      },
+      "bands": {
+        "Q1": {
+          "n": 90,
+          "mae_kzt": 821098.9399452766,
+          "within_20pct_count": 38,
+          "within_20pct": 0.4222222222222222,
+          "median_ape": 0.27492446412827953
+        },
+        "Q2": {
+          "n": 91,
+          "mae_kzt": 1300113.976598832,
+          "within_20pct_count": 52,
+          "within_20pct": 0.5714285714285714,
+          "median_ape": 0.15862482637191525
+        },
+        "Q3": {
+          "n": 88,
+          "mae_kzt": 1474919.9462800166,
+          "within_20pct_count": 64,
+          "within_20pct": 0.7272727272727273,
+          "median_ape": 0.11843544004148594
+        },
+        "Q4": {
+          "n": 89,
+          "mae_kzt": 4213917.743630744,
+          "within_20pct_count": 58,
+          "within_20pct": 0.651685393258427,
+          "median_ape": 0.15140334052768922
+        }
+      }
+    },
+    "single_forest": {
+      "n": 358,
+      "mae_kzt": 1700113.4979729,
+      "within_20pct_count": 217,
+      "within_20pct": 0.6061452513966481,
+      "median_ape": 0.14826851172379096,
+      "affordable": {
+        "n": 181,
+        "mae_kzt": 889987.4359889518,
+        "within_20pct_count": 95,
+        "within_20pct": 0.5248618784530387,
+        "median_ape": 0.18536486432721316
+      },
+      "bands": {
+        "Q1": {
+          "n": 90,
+          "mae_kzt": 682045.3883357102,
+          "within_20pct_count": 41,
+          "within_20pct": 0.45555555555555555,
+          "median_ape": 0.2207385356564705
+        },
+        "Q2": {
+          "n": 91,
+          "mae_kzt": 1095644.4061954545,
+          "within_20pct_count": 54,
+          "within_20pct": 0.5934065934065934,
+          "median_ape": 0.14670939609234446
+        },
+        "Q3": {
+          "n": 88,
+          "mae_kzt": 1449987.2456110178,
+          "within_20pct_count": 59,
+          "within_20pct": 0.6704545454545454,
+          "median_ape": 0.1307625494108126
+        },
+        "Q4": {
+          "n": 89,
+          "mae_kzt": 3594989.087039645,
+          "within_20pct_count": 63,
+          "within_20pct": 0.7078651685393258,
+          "median_ape": 0.11174914178176353
+        }
+      }
+    },
+    "historical_recipe": {
+      "n": 358,
+      "mae_kzt": 1751215.1427070769,
+      "within_20pct_count": 228,
+      "within_20pct": 0.6368715083798883,
+      "median_ape": 0.14158261626745805,
+      "affordable": {
+        "n": 181,
+        "mae_kzt": 852979.1113807592,
+        "within_20pct_count": 101,
+        "within_20pct": 0.5580110497237569,
+        "median_ape": 0.16145802851858101
+      },
+      "bands": {
+        "Q1": {
+          "n": 90,
+          "mae_kzt": 666342.330578621,
+          "within_20pct_count": 45,
+          "within_20pct": 0.5,
+          "median_ape": 0.20395048429602816
+        },
+        "Q2": {
+          "n": 91,
+          "mae_kzt": 1037564.9385477088,
+          "within_20pct_count": 56,
+          "within_20pct": 0.6153846153846154,
+          "median_ape": 0.11006709291658497
+        },
+        "Q3": {
+          "n": 88,
+          "mae_kzt": 1515901.548126922,
+          "within_20pct_count": 60,
+          "within_20pct": 0.6818181818181818,
+          "median_ape": 0.1312641540221619
+        },
+        "Q4": {
+          "n": 89,
+          "mae_kzt": 3810634.4460005285,
+          "within_20pct_count": 67,
+          "within_20pct": 0.7528089887640449,
+          "median_ape": 0.11032300204730928
+        }
+      }
+    }
+  },
+  "component_counts": {
+    "single_mae": 1,
+    "single_log": 1,
+    "single_forest": 2,
+    "historical_recipe": 11
+  },
+  "artifact_bytes": {
+    "single_mae": 1319403,
+    "single_log": 1319355,
+    "single_forest": 21315426,
+    "historical_recipe": 33006915
+  },
+  "historical_flat_weights": [
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.1125,
+    0.1125,
+    0.1125,
+    0.1125,
+    0.1125,
+    0.1875
+  ],
+  "artifacts": {
+    "single_history": "single_history.csv",
+    "reference_history": "reference_history.csv",
+    "corrected_report": "corrected_pool/robust_ann_report.json",
+    "usage_report": "usage_pool/robust_ann_report.json"
+  }
+}

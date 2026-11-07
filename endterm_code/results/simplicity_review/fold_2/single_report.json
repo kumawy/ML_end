@@ -1,0 +1,24 @@
+{
+  "status": "development/not_independent",
+  "training_rows": 1143,
+  "checkpoint_rows": 286,
+  "epochs_run": 83,
+  "max_epochs": 300,
+  "patience": 45,
+  "stopping_rule": "Stop after neither selected criterion improves for patience epochs; strict comparisons keep first ties",
+  "selected_epochs": {
+    "single_mae": 38,
+    "single_log": 35
+  },
+  "selected_values": {
+    "single_mae": 1961065.2770878272,
+    "single_log": 0.23743932747477817
+  },
+  "target_scaler": {
+    "n_samples_seen": 1143,
+    "mean_log1p": 15.649053420729409,
+    "scale_log1p": 0.9306115655000344
+  },
+  "preprocessing_fit_split": "inner training only",
+  "min_frequency": 2
+}

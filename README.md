@@ -13,6 +13,7 @@ The project continues the original midterm dataset and preserves its cleaned adv
 - [Experiment history](endterm_code/EXPERIMENT_LOG.md)
 - [Course requirement mapping](endterm_code/REGULATION_COMPLIANCE.md)
 - [Contribution records and assistance disclosure](endterm_code/CONTRIBUTIONS.md)
+- [Simplicity and affordable-car review](endterm_code/SIMPLICITY_REVIEW_RU.md)
 
 ## Run
 
@@ -50,7 +51,9 @@ The validation-selected `Usage ensemble` has the following recorded historical-t
 
 All 16 model rows and additional error measures are retained. R² is not a percentage of accurate individual predictions. The historical test has informed earlier development, and validation has been reused; these results are a retrospective benchmark, not independent confirmation on new market data. The latest paired improvement intervals include zero. See the full methodology and experiment log for mixed metric changes and limitations.
 
-The project includes 58 behavioral and regression tests. Source descriptions are often truncated; literal equipment claims are not verified vehicle condition, and missing equipment remains unknown. The age/usage fields are fixed-2025 mathematical proxies. No original price, mileage or difficult evaluation row was altered to improve the score.
+The project includes 64 behavioral and regression tests. Source descriptions are often truncated; literal equipment claims are not verified vehicle condition, and missing equipment remains unknown. The age/usage fields are fixed-2025 mathematical proxies. No original price, mileage or difficult evaluation row was altered to improve the score.
+
+An optional [TRAIN-only simplicity experiment](endterm_code/experiments/simplicity_review/README.md) compared four fixed recipes under a user-approved 3% global-MAE tolerance and explicit affordable-car checks. None of the three simpler recipes met every condition: the closest two-component mixture increased MAE by 0.67%, but lost 23/1,787 overall ±20% hits and 6/905 affordable-car hits. Its out-of-fold results are development evidence, separate from the historical test table above. The original selected model and course-project pipeline are preserved.
 
 ## Data provenance
 

@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "experiment_prefit_commit": "1275c7c",
+  "tests": {
+    "total": 64,
+    "new": 6,
+    "result": "passed"
+  },
+  "run_seconds": 36.27,
+  "historical_protected_artifacts": 190,
+  "root_protected_hashes_match": {
+    "endterm_code/kolesa_cars_2025.csv": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+    "endterm_code/results/selected_model.joblib": "00a8820cfd5b9deee4f7993a1bbcc595ae01a4f9db9c9fb371715478ef557296",
+    "endterm_code/results/model_comparison.csv": "782511a39ddd2cc7b8127d6e390432f6fc06327ec7651ce044cebea9b8a80080",
+    "endterm_code/results/all_test_predictions.csv": "095696d34c5f50db121eaa08a2ddb10fdc01d9cbf3e85e2897affdaf3cb3bfc1",
+    "endterm_code/results/selected_model_test_predictions.csv": "48b6394efccceb70d1563d34ab6eeb24d85ed6688212708de9c2e6738701fd45",
+    "ML_Endterm_Presentation.pptx": "28f41a64ff6428e727bc07ab88505da977c718db1e69d8312a2710afaf43c596",
+    "ML_Endterm_Presentation.pdf": "bf548b8ea811404e7b4ee5b4a02a968e02e8f8573123215ed71d9b1dc5b22e6b"
+  },
+  "corruption_copy_verifier_check": {
+    "modification": "one copied OOF prediction made negative",
+    "expected_exit_code": 1,
+    "actual_exit_code": 1,
+    "actual_error": "OOF labels/predictions contain nonfinite or negative values",
+    "original_evidence_untouched": true
+  },
+  "decision": "historical_recipe retained; no simpler candidate eligible; no replacement artifact fitted",
+  "independent_evaluation": false
+}

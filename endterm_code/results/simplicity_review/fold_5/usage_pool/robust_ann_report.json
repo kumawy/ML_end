@@ -1,0 +1,302 @@
+{
+  "model": "Fixed five-seed ANN pools",
+  "configuration": {
+    "seeds": [
+      11,
+      23,
+      42,
+      71,
+      101
+    ],
+    "hidden_layer_sizes": [
+      128,
+      64
+    ],
+    "activation": "relu",
+    "solver": "adam",
+    "alpha": 0.001,
+    "batch_size": 64,
+    "learning_rate_init": 0.001,
+    "max_epochs": 300,
+    "patience": 45,
+    "min_frequency": 2
+  },
+  "split_seed": 20261108,
+  "representation": "enhanced",
+  "feature_set": "corrected_steering_plus_age_usage",
+  "numeric_inputs": [
+    "year",
+    "log_km",
+    "mileage_missing",
+    "engine_liters_clean",
+    "engine_missing",
+    "engine_not_applicable",
+    "engine_source_conflict",
+    "log_vehicle_age",
+    "log_annual_mileage_proxy"
+  ],
+  "categorical_inputs": [
+    "brand",
+    "model",
+    "body",
+    "fuel",
+    "transmission",
+    "steering"
+  ],
+  "additional_numeric_inputs": [
+    "log_vehicle_age",
+    "log_annual_mileage_proxy"
+  ],
+  "input_features": 245,
+  "training_rows": 1144,
+  "validation_rows": 286,
+  "preprocessing_fit_split": "training only",
+  "target_scaler": {
+    "fit_split": "training only",
+    "n_samples_seen": 1144,
+    "mean_log1p": 15.66212126891188,
+    "scale_log1p": 0.9261989648301271
+  },
+  "target_transform": "Training-standardized log1p KZT; ANNRegressor converts predictions back to finite nonnegative KZT.",
+  "aggregation": "Equal arithmetic mean of every fixed seed; no seed subsets are searched.",
+  "baseline_validation_metrics": {
+    "mae_kzt": 2045414.479261292,
+    "within_20pct": 0.6433566433566433,
+    "median_ape": 0.13566735718772566
+  },
+  "candidate_validation_metrics": {
+    "ANN pool MAE": {
+      "mae_kzt": 2056822.7373559438,
+      "within_20pct": 0.6608391608391608,
+      "median_ape": 0.1365660851861233,
+      "dual_score": 0.978278936016063,
+      "validation_mae_kzt": 2056822.7373559438,
+      "validation_within_20pct": 0.6608391608391608,
+      "checkpoint_metric": "mae_kzt"
+    },
+    "ANN pool dual": {
+      "mae_kzt": 2063597.2241212467,
+      "within_20pct": 0.6608391608391608,
+      "median_ape": 0.13260052218177387,
+      "dual_score": 0.9799349541077481,
+      "validation_mae_kzt": 2063597.2241212467,
+      "validation_within_20pct": 0.6608391608391608,
+      "checkpoint_metric": "dual_score"
+    }
+  },
+  "members": [
+    {
+      "seed": 11,
+      "epochs_run": 74,
+      "stopped_after_both_checkpoints_stale": true,
+      "checkpoints": {
+        "mae_kzt": {
+          "best_epoch": 29,
+          "best_value": 2123425.3115966693,
+          "validation_mae_kzt": 2123425.3115966693,
+          "validation_within_20pct": 0.6328671328671329,
+          "dual_score": 1.033775570459273,
+          "train_scaled_log_mse": 0.016814153794012212,
+          "val_scaled_log_mse": 0.13941156761368365,
+          "generalization_gap_scaled_log_mse": 0.12259741381967143,
+          "validation_log_mse_change_after_checkpoint": 0.013679041789081553,
+          "validation_mae_change_after_checkpoint_kzt": 192987.64363255398,
+          "artifact": "robust_ann_checkpoints/seed_11_mae_kzt.joblib"
+        },
+        "dual_score": {
+          "best_epoch": 29,
+          "best_value": 1.033775570459273,
+          "validation_mae_kzt": 2123425.3115966693,
+          "validation_within_20pct": 0.6328671328671329,
+          "dual_score": 1.033775570459273,
+          "train_scaled_log_mse": 0.016814153794012212,
+          "val_scaled_log_mse": 0.13941156761368365,
+          "generalization_gap_scaled_log_mse": 0.12259741381967143,
+          "validation_log_mse_change_after_checkpoint": 0.013679041789081553,
+          "validation_mae_change_after_checkpoint_kzt": 192987.64363255398,
+          "artifact": "robust_ann_checkpoints/seed_11_dual_score.joblib"
+        }
+      },
+      "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+    },
+    {
+      "seed": 23,
+      "epochs_run": 86,
+      "stopped_after_both_checkpoints_stale": true,
+      "checkpoints": {
+        "mae_kzt": {
+          "best_epoch": 41,
+          "best_value": 2226953.2488366705,
+          "validation_mae_kzt": 2226953.2488366705,
+          "validation_within_20pct": 0.5909090909090909,
+          "dual_score": 1.11790642469192,
+          "train_scaled_log_mse": 0.015071275997166724,
+          "val_scaled_log_mse": 0.1354364836340455,
+          "generalization_gap_scaled_log_mse": 0.12036520763687879,
+          "validation_log_mse_change_after_checkpoint": 0.010799046258501449,
+          "validation_mae_change_after_checkpoint_kzt": 197083.22896447591,
+          "artifact": "robust_ann_checkpoints/seed_23_mae_kzt.joblib"
+        },
+        "dual_score": {
+          "best_epoch": 40,
+          "best_value": 1.090134048328057,
+          "validation_mae_kzt": 2293818.9555305066,
+          "validation_within_20pct": 0.6223776223776224,
+          "dual_score": 1.090134048328057,
+          "train_scaled_log_mse": 0.015889989400707454,
+          "val_scaled_log_mse": 0.13527207705480052,
+          "generalization_gap_scaled_log_mse": 0.11938208765409306,
+          "validation_log_mse_change_after_checkpoint": 0.01096345283774644,
+          "validation_mae_change_after_checkpoint_kzt": 130217.52227063989,
+          "artifact": "robust_ann_checkpoints/seed_23_dual_score.joblib"
+        }
+      },
+      "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+    },
+    {
+      "seed": 42,
+      "epochs_run": 93,
+      "stopped_after_both_checkpoints_stale": true,
+      "checkpoints": {
+        "mae_kzt": {
+          "best_epoch": 48,
+          "best_value": 2055090.8198079562,
+          "validation_mae_kzt": 2055090.8198079562,
+          "validation_within_20pct": 0.6258741258741258,
+          "dual_score": 1.0268751779435026,
+          "train_scaled_log_mse": 0.02141880493649444,
+          "val_scaled_log_mse": 0.13757279962726476,
+          "generalization_gap_scaled_log_mse": 0.11615399469077033,
+          "validation_log_mse_change_after_checkpoint": 0.0010666619812842448,
+          "validation_mae_change_after_checkpoint_kzt": 58491.208607185865,
+          "artifact": "robust_ann_checkpoints/seed_42_mae_kzt.joblib"
+        },
+        "dual_score": {
+          "best_epoch": 48,
+          "best_value": 1.0268751779435026,
+          "validation_mae_kzt": 2055090.8198079562,
+          "validation_within_20pct": 0.6258741258741258,
+          "dual_score": 1.0268751779435026,
+          "train_scaled_log_mse": 0.02141880493649444,
+          "val_scaled_log_mse": 0.13757279962726476,
+          "generalization_gap_scaled_log_mse": 0.11615399469077033,
+          "validation_log_mse_change_after_checkpoint": 0.0010666619812842448,
+          "validation_mae_change_after_checkpoint_kzt": 58491.208607185865,
+          "artifact": "robust_ann_checkpoints/seed_42_dual_score.joblib"
+        }
+      },
+      "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+    },
+    {
+      "seed": 71,
+      "epochs_run": 79,
+      "stopped_after_both_checkpoints_stale": true,
+      "checkpoints": {
+        "mae_kzt": {
+          "best_epoch": 24,
+          "best_value": 2181385.2607479114,
+          "validation_mae_kzt": 2181385.2607479114,
+          "validation_within_20pct": 0.6223776223776224,
+          "dual_score": 1.0626497179093146,
+          "train_scaled_log_mse": 0.021235214121425813,
+          "val_scaled_log_mse": 0.14056310007628914,
+          "generalization_gap_scaled_log_mse": 0.11932788595486332,
+          "validation_log_mse_change_after_checkpoint": 0.016190910918232854,
+          "validation_mae_change_after_checkpoint_kzt": 83992.54330786457,
+          "artifact": "robust_ann_checkpoints/seed_71_mae_kzt.joblib"
+        },
+        "dual_score": {
+          "best_epoch": 34,
+          "best_value": 0.9989689628107611,
+          "validation_mae_kzt": 2201621.347510341,
+          "validation_within_20pct": 0.6713286713286714,
+          "dual_score": 0.9989689628107611,
+          "train_scaled_log_mse": 0.02021475845959789,
+          "val_scaled_log_mse": 0.13924391756892832,
+          "generalization_gap_scaled_log_mse": 0.11902915910933043,
+          "validation_log_mse_change_after_checkpoint": 0.017510093425593676,
+          "validation_mae_change_after_checkpoint_kzt": 63756.45654543489,
+          "artifact": "robust_ann_checkpoints/seed_71_dual_score.joblib"
+        }
+      },
+      "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+    },
+    {
+      "seed": 101,
+      "epochs_run": 91,
+      "stopped_after_both_checkpoints_stale": true,
+      "checkpoints": {
+        "mae_kzt": {
+          "best_epoch": 42,
+          "best_value": 2122848.3338780305,
+          "validation_mae_kzt": 2122848.3338780305,
+          "validation_within_20pct": 0.6258741258741258,
+          "dual_score": 1.043438450267297,
+          "train_scaled_log_mse": 0.021936926547135593,
+          "val_scaled_log_mse": 0.14539498815637805,
+          "generalization_gap_scaled_log_mse": 0.12345806160924246,
+          "validation_log_mse_change_after_checkpoint": 0.019636809746393702,
+          "validation_mae_change_after_checkpoint_kzt": 201880.51770094223,
+          "artifact": "robust_ann_checkpoints/seed_101_mae_kzt.joblib"
+        },
+        "dual_score": {
+          "best_epoch": 46,
+          "best_value": 1.0419896693709443,
+          "validation_mae_kzt": 2136974.702162689,
+          "validation_within_20pct": 0.6293706293706294,
+          "dual_score": 1.0419896693709443,
+          "train_scaled_log_mse": 0.026973570120223098,
+          "val_scaled_log_mse": 0.13830504341355515,
+          "generalization_gap_scaled_log_mse": 0.11133147329333205,
+          "validation_log_mse_change_after_checkpoint": 0.026726754489216603,
+          "validation_mae_change_after_checkpoint_kzt": 187754.1494162837,
+          "artifact": "robust_ann_checkpoints/seed_101_dual_score.joblib"
+        }
+      },
+      "assessment": "Checkpoint losses and post-checkpoint deltas describe validation behavior; the validation split also selects checkpoints, so the gap is descriptive rather than independent overfitting evidence."
+    }
+  ],
+  "member_best_epochs": {
+    "mae_kzt": [
+      29,
+      41,
+      48,
+      24,
+      42
+    ],
+    "dual_score": [
+      29,
+      40,
+      48,
+      34,
+      46
+    ]
+  },
+  "member_epochs_run": [
+    74,
+    86,
+    93,
+    79,
+    91
+  ],
+  "loss": "Ordinary MSE of training-standardized log1p targets, without optimizer one-half factor or L2 term.",
+  "checkpoint_selection": "Strictly lower validation original-KZT MAE or 0.5*(MAE/baselineMAE + missFraction/baselineMissFraction); ties keep the first checkpoint. Stop 45 epochs after both best epochs stop improving under the default protocol.",
+  "checkpoint_selection_caveat": "Validation is reused to select every checkpoint and the blend. Its reported gains and convergence are selection-dependent, not independent generalization evidence. The historical test was already known and any final evaluation is retrospective.",
+  "source": {
+    "csv": "kolesa_cars_2025.csv",
+    "source_url": "https://www.kaggle.com/datasets/mutashevdarkhan/kolesa-cars-2025",
+    "features": "Original per-row vehicle fields and literal pre-\u041a\u041f\u041f steering clauses plus explicitly declared fixed-snapshot age/usage proxies only; price, price_raw, ad_id and link are not predictors."
+  },
+  "artifacts": {
+    "history_csv": "robust_ann_history.csv",
+    "history_plot": "robust_ann_history.png",
+    "models": {
+      "ANN pool MAE": "robust_ann_pool_mae.joblib",
+      "ANN pool dual": "robust_ann_pool_dual.joblib"
+    },
+    "report_json": "robust_ann_report.json"
+  },
+  "test_data_used": false,
+  "test_data_policy": "Test data is not accepted or evaluated by this API.",
+  "checkpoint_artifact_retention": "Temporary joblib checkpoints deleted; history and report retained"
+}

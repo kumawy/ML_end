@@ -8,6 +8,8 @@ Estimate the **advertised asking price** of a used car in Kazakhstan from its ex
 
 The original country, theme, group, source CSV, 2,553 clean listings, target values and historical split are retained. The package includes midterm controls, tuned supervised models, K-Means, PCA, ANN, native-categorical CatBoost, fixed five-seed ANN pools and a lossless derived dataset with explicit source-quality metadata. K-Means is exploratory. For this tabular dataset the feedforward ANN satisfies the required deep-learning component; no CNN/NLP/RL extension is forced onto it.
 
+The separate [simplicity review](SIMPLICITY_REVIEW_RU.md) asks whether one or two prediction components can replace an 11-component recipe with at most 3% higher global MAE and better affordable-car performance. Its [fixed protocol and commands](experiments/simplicity_review/README.md) use only the original TRAIN rows. It adds development OOF evidence without replacing the saved historical model or treating the old validation/test as fresh data.
+
 ## Quick start
 
 Use **Python 3.12**. In this directory:
@@ -187,7 +189,7 @@ This recipe applies to the selected mixed bundle. An individual model uses its s
 
 Seed 42, exact split IDs, CSV hashes, search candidates, checkpoints and environment are recorded. Recorded runtime: Python 3.12.14; numpy 2.5.4, pandas 3.1.1, matplotlib 3.11.2, scikit-learn 1.9.1, scipy 1.18.1, joblib 1.6.0, threadpoolctl 3.8.0, catboost 1.2.10. Hardware/BLAS differences can change numerical details.
 
-The completed current run took **122.9 seconds**, produced **16 model rows**, retained the source CSV and exact split, and reproduced the frozen Usage ensemble result. All **58 tests passed**. Earlier 35-test steering and 54-test dataset-only counts describe prior stages, not the current total. A prior clean-environment check of the unchanged 22-package lock reproduced the earlier 12 controls (KZT metrics within 1e−6) with byte-identical CSV/split in 114.5 seconds; that historical check is not presented as a new clean installation of the current extension. The derived export fits no learned transformation; model fitting/scaling remains training-only.
+The completed main-pipeline run took **122.9 seconds**, produced **16 model rows**, retained the source CSV and exact split, and reproduced the frozen Usage ensemble result. Its **58 tests passed**. The separate simplicity experiment adds six behavioral checks; the current full suite has **64 passing tests**. Earlier 35-test steering and 54-test dataset-only counts describe prior stages. A prior clean-environment check of the unchanged 22-package lock reproduced the earlier 12 controls (KZT metrics within 1e−6) with byte-identical CSV/split in 114.5 seconds; that historical check is not presented as a new clean installation of the current extension. The derived export fits no learned transformation; model fitting/scaling remains training-only.
 
 To verify the preserved TRAIN utility evidence without fitting networks:
 

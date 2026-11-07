@@ -1,0 +1,1187 @@
+{
+  "status": "passed",
+  "evaluation_status": "development/not_independent",
+  "original_train_rows": 1787,
+  "excluded_original_validation_rows": 383,
+  "excluded_original_test_rows": 383,
+  "oof_rows": 1787,
+  "every_original_train_row_predicted_exactly_once": true,
+  "source_labels_match": true,
+  "outer_and_inner_fold_identities_reconstructed": true,
+  "fold_partitions_disjoint": true,
+  "checkpoint_histories_and_target_scaler_statistics_verified": true,
+  "pooled_and_fold_metrics_recomputed": true,
+  "all_fixed_preference_gates_recomputed": true,
+  "protocol_sha256": "5e58f6a8518327e05e221145447e3a03998d257e42cab7205dc2f6adf674508d",
+  "source_sha256": "b348551cd876bde7d25fce79c3fcdbd05920403c567a6aedc0e0a5e19e260468",
+  "code_hashes_verified": 14,
+  "protected_artifacts_verified": 190,
+  "historical_selected_model_sha256": "00a8820cfd5b9deee4f7993a1bbcc595ae01a4f9db9c9fb371715478ef557296",
+  "selected_name": "historical_recipe",
+  "selection": {
+    "selected_name": "historical_recipe",
+    "eligible_names": [],
+    "candidates": [
+      {
+        "name": "single_mae",
+        "eligible": false,
+        "gates": {
+          "mae_within_3pct": false,
+          "overall_hits_not_worse": false,
+          "q1_hits_not_worse": false,
+          "q2_hits_not_worse": false,
+          "affordable_band_strict_hit_gain": false,
+          "affordable_median_ape_not_worse": false
+        },
+        "estimator_count": 1
+      },
+      {
+        "name": "single_log",
+        "eligible": false,
+        "gates": {
+          "mae_within_3pct": false,
+          "overall_hits_not_worse": false,
+          "q1_hits_not_worse": false,
+          "q2_hits_not_worse": false,
+          "affordable_band_strict_hit_gain": false,
+          "affordable_median_ape_not_worse": false
+        },
+        "estimator_count": 1
+      },
+      {
+        "name": "single_forest",
+        "eligible": false,
+        "gates": {
+          "mae_within_3pct": true,
+          "overall_hits_not_worse": false,
+          "q1_hits_not_worse": true,
+          "q2_hits_not_worse": false,
+          "affordable_band_strict_hit_gain": true,
+          "affordable_median_ape_not_worse": false
+        },
+        "estimator_count": 2
+      }
+    ],
+    "ranking": "estimator count, affordable median APE, global MAE, name",
+    "decision": "No tested simplification met the joint preference; retain historical recipe",
+    "status": "development/not_independent"
+  },
+  "recomputed_summaries": {
+    "single_mae": {
+      "n": 1787,
+      "mae_kzt": 1959115.7061715533,
+      "within_20pct_count": 1070,
+      "within_20pct": 0.5987688864017907,
+      "median_ape": 0.15965051667497782,
+      "affordable": {
+        "n": 905,
+        "mae_kzt": 947555.8773492784,
+        "within_20pct_count": 453,
+        "within_20pct": 0.5005524861878453,
+        "median_ape": 0.19997746938603222
+      },
+      "bands": {
+        "Q1": {
+          "n": 452,
+          "mae_kzt": 711328.633249406,
+          "within_20pct_count": 191,
+          "within_20pct": 0.4225663716814159,
+          "median_ape": 0.23914647354113477
+        },
+        "Q2": {
+          "n": 453,
+          "mae_kzt": 1183261.648504118,
+          "within_20pct_count": 262,
+          "within_20pct": 0.5783664459161147,
+          "median_ape": 0.1707710802861566
+        },
+        "Q3": {
+          "n": 440,
+          "mae_kzt": 1465323.7200812232,
+          "within_20pct_count": 308,
+          "within_20pct": 0.7,
+          "median_ape": 0.12586850215521905
+        },
+        "Q4": {
+          "n": 442,
+          "mae_kzt": 4521853.531881745,
+          "within_20pct_count": 309,
+          "within_20pct": 0.6990950226244343,
+          "median_ape": 0.13421471834930027
+        }
+      }
+    },
+    "single_log": {
+      "n": 1787,
+      "mae_kzt": 1987067.963457277,
+      "within_20pct_count": 1074,
+      "within_20pct": 0.6010072747621712,
+      "median_ape": 0.1607855669780534,
+      "affordable": {
+        "n": 905,
+        "mae_kzt": 965709.3513351731,
+        "within_20pct_count": 451,
+        "within_20pct": 0.4983425414364641,
+        "median_ape": 0.20059851906944573
+      },
+      "bands": {
+        "Q1": {
+          "n": 452,
+          "mae_kzt": 725918.2611571328,
+          "within_20pct_count": 186,
+          "within_20pct": 0.41150442477876104,
+          "median_ape": 0.2478790924523581
+        },
+        "Q2": {
+          "n": 453,
+          "mae_kzt": 1204971.101358295,
+          "within_20pct_count": 265,
+          "within_20pct": 0.5849889624724062,
+          "median_ape": 0.16644519482893788
+        },
+        "Q3": {
+          "n": 440,
+          "mae_kzt": 1453087.7199075343,
+          "within_20pct_count": 317,
+          "within_20pct": 0.7204545454545455,
+          "median_ape": 0.11688537898042152
+        },
+        "Q4": {
+          "n": 442,
+          "mae_kzt": 4609875.318960424,
+          "within_20pct_count": 306,
+          "within_20pct": 0.6923076923076923,
+          "median_ape": 0.1433066014204251
+        }
+      }
+    },
+    "single_forest": {
+      "n": 1787,
+      "mae_kzt": 1890899.3234540713,
+      "within_20pct_count": 1101,
+      "within_20pct": 0.6161163961947398,
+      "median_ape": 0.14884355643135855,
+      "affordable": {
+        "n": 905,
+        "mae_kzt": 922387.4362575758,
+        "within_20pct_count": 465,
+        "within_20pct": 0.5138121546961326,
+        "median_ape": 0.19055055145642139
+      },
+      "bands": {
+        "Q1": {
+          "n": 452,
+          "mae_kzt": 707113.7709658615,
+          "within_20pct_count": 204,
+          "within_20pct": 0.45132743362831856,
+          "median_ape": 0.22986232362714693
+        },
+        "Q2": {
+          "n": 453,
+          "mae_kzt": 1137185.883745114,
+          "within_20pct_count": 261,
+          "within_20pct": 0.5761589403973509,
+          "median_ape": 0.15924818036130947
+        },
+        "Q3": {
+          "n": 440,
+          "mae_kzt": 1375004.0285323642,
+          "within_20pct_count": 320,
+          "within_20pct": 0.7272727272727273,
+          "median_ape": 0.11585993523156467
+        },
+        "Q4": {
+          "n": 442,
+          "mae_kzt": 4387499.295577102,
+          "within_20pct_count": 316,
+          "within_20pct": 0.7149321266968326,
+          "median_ape": 0.12496004414738138
+        }
+      }
+    },
+    "historical_recipe": {
+      "n": 1787,
+      "mae_kzt": 1878398.9692679467,
+      "within_20pct_count": 1124,
+      "within_20pct": 0.6289871292669278,
+      "median_ape": 0.1429528810688521,
+      "affordable": {
+        "n": 905,
+        "mae_kzt": 897117.0535702829,
+        "within_20pct_count": 471,
+        "within_20pct": 0.5204419889502763,
+        "median_ape": 0.187737321002081
+      },
+      "bands": {
+        "Q1": {
+          "n": 452,
+          "mae_kzt": 685115.1601963768,
+          "within_20pct_count": 203,
+          "within_20pct": 0.4491150442477876,
+          "median_ape": 0.23459315888579685
+        },
+        "Q2": {
+          "n": 453,
+          "mae_kzt": 1108650.9515945779,
+          "within_20pct_count": 268,
+          "within_20pct": 0.5916114790286976,
+          "median_ape": 0.1412757454484265
+        },
+        "Q3": {
+          "n": 440,
+          "mae_kzt": 1387612.6885465654,
+          "within_20pct_count": 326,
+          "within_20pct": 0.740909090909091,
+          "median_ape": 0.11551046894463951
+        },
+        "Q4": {
+          "n": 442,
+          "mae_kzt": 4376150.320452999,
+          "within_20pct_count": 327,
+          "within_20pct": 0.7398190045248869,
+          "median_ape": 0.12295983225553742
+        }
+      }
+    }
+  },
+  "recomputed_folds": [
+    {
+      "fold": 1,
+      "summaries": {
+        "single_mae": {
+          "n": 358,
+          "mae_kzt": 1846324.4678648245,
+          "within_20pct_count": 233,
+          "within_20pct": 0.6508379888268156,
+          "median_ape": 0.1458789167816678,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 899078.3096815404,
+            "within_20pct_count": 102,
+            "within_20pct": 0.56353591160221,
+            "median_ape": 0.17350374575368144
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 624550.5853779064,
+              "within_20pct_count": 49,
+              "within_20pct": 0.5444444444444444,
+              "median_ape": 0.1815735767495344
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1170589.2458060132,
+              "within_20pct_count": 53,
+              "within_20pct": 0.5824175824175825,
+              "median_ape": 0.16862175011979696
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1270261.8928082155,
+              "within_20pct_count": 65,
+              "within_20pct": 0.7386363636363636,
+              "median_ape": 0.11216559609860638
+            },
+            "Q4": {
+              "n": 89,
+              "mae_kzt": 4342336.391866578,
+              "within_20pct_count": 66,
+              "within_20pct": 0.7415730337078652,
+              "median_ape": 0.14470019873645174
+            }
+          }
+        },
+        "single_log": {
+          "n": 358,
+          "mae_kzt": 1846324.4678648245,
+          "within_20pct_count": 233,
+          "within_20pct": 0.6508379888268156,
+          "median_ape": 0.1458789167816678,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 899078.3096815404,
+            "within_20pct_count": 102,
+            "within_20pct": 0.56353591160221,
+            "median_ape": 0.17350374575368144
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 624550.5853779064,
+              "within_20pct_count": 49,
+              "within_20pct": 0.5444444444444444,
+              "median_ape": 0.1815735767495344
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1170589.2458060132,
+              "within_20pct_count": 53,
+              "within_20pct": 0.5824175824175825,
+              "median_ape": 0.16862175011979696
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1270261.8928082155,
+              "within_20pct_count": 65,
+              "within_20pct": 0.7386363636363636,
+              "median_ape": 0.11216559609860638
+            },
+            "Q4": {
+              "n": 89,
+              "mae_kzt": 4342336.391866578,
+              "within_20pct_count": 66,
+              "within_20pct": 0.7415730337078652,
+              "median_ape": 0.14470019873645174
+            }
+          }
+        },
+        "single_forest": {
+          "n": 358,
+          "mae_kzt": 1771579.7322474027,
+          "within_20pct_count": 240,
+          "within_20pct": 0.6703910614525139,
+          "median_ape": 0.13364725295417668,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 894290.7307287293,
+            "within_20pct_count": 105,
+            "within_20pct": 0.580110497237569,
+            "median_ape": 0.16820758353497314
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 650928.0813635974,
+              "within_20pct_count": 54,
+              "within_20pct": 0.6,
+              "median_ape": 0.16237444330607811
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1134979.065265673,
+              "within_20pct_count": 51,
+              "within_20pct": 0.5604395604395604,
+              "median_ape": 0.17296579907445314
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1203896.8431346398,
+              "within_20pct_count": 67,
+              "within_20pct": 0.7613636363636364,
+              "median_ape": 0.1017376697504764
+            },
+            "Q4": {
+              "n": 89,
+              "mae_kzt": 4117033.7043463127,
+              "within_20pct_count": 68,
+              "within_20pct": 0.7640449438202247,
+              "median_ape": 0.11474189101556634
+            }
+          }
+        },
+        "historical_recipe": {
+          "n": 358,
+          "mae_kzt": 1777333.812194685,
+          "within_20pct_count": 240,
+          "within_20pct": 0.6703910614525139,
+          "median_ape": 0.1311604773980057,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 900362.7286720971,
+            "within_20pct_count": 105,
+            "within_20pct": 0.580110497237569,
+            "median_ape": 0.16042567941285465
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 666907.0885256462,
+              "within_20pct_count": 52,
+              "within_20pct": 0.5777777777777777,
+              "median_ape": 0.16194270972704888
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1131252.9222235319,
+              "within_20pct_count": 53,
+              "within_20pct": 0.5824175824175825,
+              "median_ape": 0.16019208013388356
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1258644.0852892352,
+              "within_20pct_count": 69,
+              "within_20pct": 0.7840909090909091,
+              "median_ape": 0.11744583221325239
+            },
+            "Q4": {
+              "n": 89,
+              "mae_kzt": 4073698.554725786,
+              "within_20pct_count": 66,
+              "within_20pct": 0.7415730337078652,
+              "median_ape": 0.1151802978739075
+            }
+          }
+        }
+      },
+      "selected_epochs": {
+        "single_mae": 18,
+        "single_log": 18,
+        "reference_mae": 16
+      }
+    },
+    {
+      "fold": 2,
+      "summaries": {
+        "single_mae": {
+          "n": 358,
+          "mae_kzt": 1830468.123466766,
+          "within_20pct_count": 207,
+          "within_20pct": 0.5782122905027933,
+          "median_ape": 0.15914829571114708,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 932074.4396543575,
+            "within_20pct_count": 89,
+            "within_20pct": 0.49171270718232046,
+            "median_ape": 0.21097860091122891
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 679860.3863786985,
+              "within_20pct_count": 40,
+              "within_20pct": 0.4444444444444444,
+              "median_ape": 0.22892420880237324
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1181516.909926987,
+              "within_20pct_count": 49,
+              "within_20pct": 0.5384615384615384,
+              "median_ape": 0.13941741612862066
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1597020.454289038,
+              "within_20pct_count": 57,
+              "within_20pct": 0.6477272727272727,
+              "median_ape": 0.1513025493953915
+            },
+            "Q4": {
+              "n": 89,
+              "mae_kzt": 3888363.0859126775,
+              "within_20pct_count": 61,
+              "within_20pct": 0.6853932584269663,
+              "median_ape": 0.11597596305572709
+            }
+          }
+        },
+        "single_log": {
+          "n": 358,
+          "mae_kzt": 1947041.6506182854,
+          "within_20pct_count": 212,
+          "within_20pct": 0.5921787709497207,
+          "median_ape": 0.16975439889603947,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 1061929.7042296608,
+            "within_20pct_count": 90,
+            "within_20pct": 0.4972375690607735,
+            "median_ape": 0.20268887036265917
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 821098.9399452766,
+              "within_20pct_count": 38,
+              "within_20pct": 0.4222222222222222,
+              "median_ape": 0.27492446412827953
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1300113.976598832,
+              "within_20pct_count": 52,
+              "within_20pct": 0.5714285714285714,
+              "median_ape": 0.15862482637191525
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1474919.9462800166,
+              "within_20pct_count": 64,
+              "within_20pct": 0.7272727272727273,
+              "median_ape": 0.11843544004148594
+            },
+            "Q4": {
+              "n": 89,
+              "mae_kzt": 4213917.743630744,
+              "within_20pct_count": 58,
+              "within_20pct": 0.651685393258427,
+              "median_ape": 0.15140334052768922
+            }
+          }
+        },
+        "single_forest": {
+          "n": 358,
+          "mae_kzt": 1700113.4979729,
+          "within_20pct_count": 217,
+          "within_20pct": 0.6061452513966481,
+          "median_ape": 0.14826851172379096,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 889987.4359889518,
+            "within_20pct_count": 95,
+            "within_20pct": 0.5248618784530387,
+            "median_ape": 0.18536486432721316
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 682045.3883357102,
+              "within_20pct_count": 41,
+              "within_20pct": 0.45555555555555555,
+              "median_ape": 0.2207385356564705
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1095644.4061954545,
+              "within_20pct_count": 54,
+              "within_20pct": 0.5934065934065934,
+              "median_ape": 0.14670939609234446
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1449987.2456110178,
+              "within_20pct_count": 59,
+              "within_20pct": 0.6704545454545454,
+              "median_ape": 0.1307625494108126
+            },
+            "Q4": {
+              "n": 89,
+              "mae_kzt": 3594989.087039645,
+              "within_20pct_count": 63,
+              "within_20pct": 0.7078651685393258,
+              "median_ape": 0.11174914178176353
+            }
+          }
+        },
+        "historical_recipe": {
+          "n": 358,
+          "mae_kzt": 1751215.1427070769,
+          "within_20pct_count": 228,
+          "within_20pct": 0.6368715083798883,
+          "median_ape": 0.14158261626745805,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 852979.1113807592,
+            "within_20pct_count": 101,
+            "within_20pct": 0.5580110497237569,
+            "median_ape": 0.16145802851858101
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 666342.330578621,
+              "within_20pct_count": 45,
+              "within_20pct": 0.5,
+              "median_ape": 0.20395048429602816
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1037564.9385477088,
+              "within_20pct_count": 56,
+              "within_20pct": 0.6153846153846154,
+              "median_ape": 0.11006709291658497
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1515901.548126922,
+              "within_20pct_count": 60,
+              "within_20pct": 0.6818181818181818,
+              "median_ape": 0.1312641540221619
+            },
+            "Q4": {
+              "n": 89,
+              "mae_kzt": 3810634.4460005285,
+              "within_20pct_count": 67,
+              "within_20pct": 0.7528089887640449,
+              "median_ape": 0.11032300204730928
+            }
+          }
+        }
+      },
+      "selected_epochs": {
+        "single_mae": 38,
+        "single_log": 35,
+        "reference_mae": 45
+      }
+    },
+    {
+      "fold": 3,
+      "summaries": {
+        "single_mae": {
+          "n": 357,
+          "mae_kzt": 2378050.2403343725,
+          "within_20pct_count": 201,
+          "within_20pct": 0.5630252100840336,
+          "median_ape": 0.17683521188177284,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 1145558.1502470328,
+            "within_20pct_count": 85,
+            "within_20pct": 0.4696132596685083,
+            "median_ape": 0.22865010573211125
+          },
+          "bands": {
+            "Q1": {
+              "n": 91,
+              "mae_kzt": 817862.3743573459,
+              "within_20pct_count": 32,
+              "within_20pct": 0.3516483516483517,
+              "median_ape": 0.2749534210760794
+            },
+            "Q2": {
+              "n": 90,
+              "mae_kzt": 1476894.990313272,
+              "within_20pct_count": 53,
+              "within_20pct": 0.5888888888888889,
+              "median_ape": 0.17254681549744108
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1652584.1614652073,
+              "within_20pct_count": 61,
+              "within_20pct": 0.6931818181818182,
+              "median_ape": 0.13503804639713396
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 5638528.459042272,
+              "within_20pct_count": 55,
+              "within_20pct": 0.625,
+              "median_ape": 0.1703347787977651
+            }
+          }
+        },
+        "single_log": {
+          "n": 357,
+          "mae_kzt": 2393265.814897809,
+          "within_20pct_count": 194,
+          "within_20pct": 0.5434173669467787,
+          "median_ape": 0.17520979814723986,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 1123772.900052171,
+            "within_20pct_count": 81,
+            "within_20pct": 0.44751381215469616,
+            "median_ape": 0.2266804397047704
+          },
+          "bands": {
+            "Q1": {
+              "n": 91,
+              "mae_kzt": 807068.4599735709,
+              "within_20pct_count": 30,
+              "within_20pct": 0.32967032967032966,
+              "median_ape": 0.2903324668211599
+            },
+            "Q2": {
+              "n": 90,
+              "mae_kzt": 1443996.2783538662,
+              "within_20pct_count": 51,
+              "within_20pct": 0.5666666666666667,
+              "median_ape": 0.16741886547028928
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1635534.7774427123,
+              "within_20pct_count": 59,
+              "within_20pct": 0.6704545454545454,
+              "median_ape": 0.1309637225443986
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 5762112.961296776,
+              "within_20pct_count": 54,
+              "within_20pct": 0.6136363636363636,
+              "median_ape": 0.15898216227438972
+            }
+          }
+        },
+        "single_forest": {
+          "n": 357,
+          "mae_kzt": 2307868.0118616554,
+          "within_20pct_count": 199,
+          "within_20pct": 0.5574229691876751,
+          "median_ape": 0.17348318392742867,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 1106840.1910226638,
+            "within_20pct_count": 82,
+            "within_20pct": 0.4530386740331492,
+            "median_ape": 0.22491702879294578
+          },
+          "bands": {
+            "Q1": {
+              "n": 91,
+              "mae_kzt": 828277.8812654819,
+              "within_20pct_count": 30,
+              "within_20pct": 0.32967032967032966,
+              "median_ape": 0.2745344769645188
+            },
+            "Q2": {
+              "n": 90,
+              "mae_kzt": 1388497.6375549254,
+              "within_20pct_count": 52,
+              "within_20pct": 0.5777777777777777,
+              "median_ape": 0.16653698777526038
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1595413.345018819,
+              "within_20pct_count": 60,
+              "within_20pct": 0.6818181818181818,
+              "median_ape": 0.11555222849584856
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 5490618.5374756,
+              "within_20pct_count": 57,
+              "within_20pct": 0.6477272727272727,
+              "median_ape": 0.15710930273645063
+            }
+          }
+        },
+        "historical_recipe": {
+          "n": 357,
+          "mae_kzt": 2274108.6815717095,
+          "within_20pct_count": 201,
+          "within_20pct": 0.5630252100840336,
+          "median_ape": 0.1595456975067118,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 1082188.4054646736,
+            "within_20pct_count": 80,
+            "within_20pct": 0.4419889502762431,
+            "median_ape": 0.2342556030887953
+          },
+          "bands": {
+            "Q1": {
+              "n": 91,
+              "mae_kzt": 773488.4110500647,
+              "within_20pct_count": 32,
+              "within_20pct": 0.3516483516483517,
+              "median_ape": 0.2741448983266373
+            },
+            "Q2": {
+              "n": 90,
+              "mae_kzt": 1394318.3998172225,
+              "within_20pct_count": 48,
+              "within_20pct": 0.5333333333333333,
+              "median_ape": 0.15777287190734562
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1539182.8148505776,
+              "within_20pct_count": 60,
+              "within_20pct": 0.6818181818181818,
+              "median_ape": 0.12121685490540449
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 5460597.84346754,
+              "within_20pct_count": 61,
+              "within_20pct": 0.6931818181818182,
+              "median_ape": 0.1299487053689455
+            }
+          }
+        }
+      },
+      "selected_epochs": {
+        "single_mae": 11,
+        "single_log": 13,
+        "reference_mae": 20
+      }
+    },
+    {
+      "fold": 4,
+      "summaries": {
+        "single_mae": {
+          "n": 357,
+          "mae_kzt": 1988788.735534535,
+          "within_20pct_count": 226,
+          "within_20pct": 0.6330532212885154,
+          "median_ape": 0.14135345022402926,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 821610.6033010749,
+            "within_20pct_count": 97,
+            "within_20pct": 0.5359116022099447,
+            "median_ape": 0.18892652293419057
+          },
+          "bands": {
+            "Q1": {
+              "n": 91,
+              "mae_kzt": 639739.0086909274,
+              "within_20pct_count": 40,
+              "within_20pct": 0.43956043956043955,
+              "median_ape": 0.23950902323744344
+            },
+            "Q2": {
+              "n": 90,
+              "mae_kzt": 1005502.9934068907,
+              "within_20pct_count": 57,
+              "within_20pct": 0.6333333333333333,
+              "median_ape": 0.16058872153605297
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1335794.8573947947,
+              "within_20pct_count": 63,
+              "within_20pct": 0.7159090909090909,
+              "median_ape": 0.1128863197670329
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 5042455.817472643,
+              "within_20pct_count": 66,
+              "within_20pct": 0.75,
+              "median_ape": 0.10955942887269376
+            }
+          }
+        },
+        "single_log": {
+          "n": 357,
+          "mae_kzt": 2009248.853794647,
+          "within_20pct_count": 227,
+          "within_20pct": 0.6358543417366946,
+          "median_ape": 0.1472683468890895,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 830237.1305955822,
+            "within_20pct_count": 96,
+            "within_20pct": 0.5303867403314917,
+            "median_ape": 0.19373900194860944
+          },
+          "bands": {
+            "Q1": {
+              "n": 91,
+              "mae_kzt": 639239.1782423795,
+              "within_20pct_count": 40,
+              "within_20pct": 0.43956043956043955,
+              "median_ape": 0.2568199835085878
+            },
+            "Q2": {
+              "n": 90,
+              "mae_kzt": 1023357.2824193761,
+              "within_20pct_count": 56,
+              "within_20pct": 0.6222222222222222,
+              "median_ape": 0.1615477289091175
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1343342.7334051616,
+              "within_20pct_count": 65,
+              "within_20pct": 0.7386363636363636,
+              "median_ape": 0.10344297623272763
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 5100167.723036754,
+              "within_20pct_count": 66,
+              "within_20pct": 0.75,
+              "median_ape": 0.1185286127761587
+            }
+          }
+        },
+        "single_forest": {
+          "n": 357,
+          "mae_kzt": 1998662.556061736,
+          "within_20pct_count": 234,
+          "within_20pct": 0.6554621848739496,
+          "median_ape": 0.14252275631865782,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 819533.9753018185,
+            "within_20pct_count": 98,
+            "within_20pct": 0.5414364640883977,
+            "median_ape": 0.1826247344953285
+          },
+          "bands": {
+            "Q1": {
+              "n": 91,
+              "mae_kzt": 611041.7018160301,
+              "within_20pct_count": 45,
+              "within_20pct": 0.4945054945054945,
+              "median_ape": 0.2107749231827828
+            },
+            "Q2": {
+              "n": 90,
+              "mae_kzt": 1030342.8296041156,
+              "within_20pct_count": 53,
+              "within_20pct": 0.5888888888888889,
+              "median_ape": 0.15200493452790323
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1243437.4930682112,
+              "within_20pct_count": 70,
+              "within_20pct": 0.7954545454545454,
+              "median_ape": 0.11062686119587894
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 5179140.722663727,
+              "within_20pct_count": 66,
+              "within_20pct": 0.75,
+              "median_ape": 0.12256422346782307
+            }
+          }
+        },
+        "historical_recipe": {
+          "n": 357,
+          "mae_kzt": 1992491.6688253286,
+          "within_20pct_count": 233,
+          "within_20pct": 0.6526610644257703,
+          "median_ape": 0.1388863198613194,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 809263.9444004814,
+            "within_20pct_count": 94,
+            "within_20pct": 0.5193370165745856,
+            "median_ape": 0.19064847336967122
+          },
+          "bands": {
+            "Q1": {
+              "n": 91,
+              "mae_kzt": 611657.9601441472,
+              "within_20pct_count": 44,
+              "within_20pct": 0.4835164835164835,
+              "median_ape": 0.21309083235736656
+            },
+            "Q2": {
+              "n": 90,
+              "mae_kzt": 1009065.5507041086,
+              "within_20pct_count": 50,
+              "within_20pct": 0.5555555555555556,
+              "median_ape": 0.15466830691030628
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1236036.3439262134,
+              "within_20pct_count": 70,
+              "within_20pct": 0.7954545454545454,
+              "median_ape": 0.09595646118818366
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 5182631.290552824,
+              "within_20pct_count": 69,
+              "within_20pct": 0.7840909090909091,
+              "median_ape": 0.11186589511246556
+            }
+          }
+        }
+      },
+      "selected_epochs": {
+        "single_mae": 16,
+        "single_log": 14,
+        "reference_mae": 11
+      }
+    },
+    {
+      "fold": 5,
+      "summaries": {
+        "single_mae": {
+          "n": 357,
+          "mae_kzt": 1752623.2628757893,
+          "within_20pct_count": 203,
+          "within_20pct": 0.5686274509803921,
+          "median_ape": 0.16960827238063916,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 939457.8838623868,
+            "within_20pct_count": 80,
+            "within_20pct": 0.4419889502762431,
+            "median_ape": 0.22366552173266188
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 794242.5434804913,
+              "within_20pct_count": 30,
+              "within_20pct": 0.3333333333333333,
+              "median_ape": 0.34539491151349483
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1083077.4512730525,
+              "within_20pct_count": 50,
+              "within_20pct": 0.5494505494505495,
+              "median_ape": 0.1788538904900035
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1470957.2344488597,
+              "within_20pct_count": 62,
+              "within_20pct": 0.7045454545454546,
+              "median_ape": 0.13103785256696765
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 3706822.6276825587,
+              "within_20pct_count": 61,
+              "within_20pct": 0.6931818181818182,
+              "median_ape": 0.11617789859625083
+            }
+          }
+        },
+        "single_log": {
+          "n": 357,
+          "mae_kzt": 1739965.38811763,
+          "within_20pct_count": 208,
+          "within_20pct": 0.5826330532212886,
+          "median_ape": 0.1751135684097163,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 913528.7121169115,
+            "within_20pct_count": 82,
+            "within_20pct": 0.4530386740331492,
+            "median_ape": 0.21383121721426934
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 737695.5742920678,
+              "within_20pct_count": 29,
+              "within_20pct": 0.32222222222222224,
+              "median_ape": 0.291069390785688
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1087429.6176579662,
+              "within_20pct_count": 53,
+              "within_20pct": 0.5824175824175825,
+              "median_ape": 0.17633836472517003
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1541379.2496015655,
+              "within_20pct_count": 64,
+              "within_20pct": 0.7272727272727273,
+              "median_ape": 0.11830615760682187
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 3638381.507953353,
+              "within_20pct_count": 62,
+              "within_20pct": 0.7045454545454546,
+              "median_ape": 0.13935114663762627
+            }
+          }
+        },
+        "single_forest": {
+          "n": 357,
+          "mae_kzt": 1677141.461750438,
+          "within_20pct_count": 211,
+          "within_20pct": 0.5910364145658263,
+          "median_ape": 0.1454998921300379,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 901284.848245716,
+            "within_20pct_count": 85,
+            "within_20pct": 0.4696132596685083,
+            "median_ape": 0.22084188461496257
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 762997.0015912685,
+              "within_20pct_count": 34,
+              "within_20pct": 0.37777777777777777,
+              "median_ape": 0.317686523846893
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 1038053.048233631,
+              "within_20pct_count": 51,
+              "within_20pct": 0.5604395604395604,
+              "median_ape": 0.15924818036130947
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1382285.2158291326,
+              "within_20pct_count": 64,
+              "within_20pct": 0.7272727272727273,
+              "median_ape": 0.12332290368757126
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 3567793.696812138,
+              "within_20pct_count": 62,
+              "within_20pct": 0.7045454545454546,
+              "median_ape": 0.12075416068373927
+            }
+          }
+        },
+        "historical_recipe": {
+          "n": 357,
+          "mae_kzt": 1597484.8939362662,
+          "within_20pct_count": 222,
+          "within_20pct": 0.6218487394957983,
+          "median_ape": 0.146451292526828,
+          "affordable": {
+            "n": 181,
+            "mae_kzt": 840791.0779334038,
+            "within_20pct_count": 91,
+            "within_20pct": 0.5027624309392266,
+            "median_ape": 0.19596453014686938
+          },
+          "bands": {
+            "Q1": {
+              "n": 90,
+              "mae_kzt": 707014.2767856106,
+              "within_20pct_count": 30,
+              "within_20pct": 0.3333333333333333,
+              "median_ape": 0.26689240515087775
+            },
+            "Q2": {
+              "n": 91,
+              "mae_kzt": 973097.8043433093,
+              "within_20pct_count": 61,
+              "within_20pct": 0.6703296703296703,
+              "median_ape": 0.1357092866638911
+            },
+            "Q3": {
+              "n": 88,
+              "mae_kzt": 1388298.6505398795,
+              "within_20pct_count": 67,
+              "within_20pct": 0.7613636363636364,
+              "median_ape": 0.10531476755927971
+            },
+            "Q4": {
+              "n": 88,
+              "mae_kzt": 3363052.736156721,
+              "within_20pct_count": 64,
+              "within_20pct": 0.7272727272727273,
+              "median_ape": 0.12455571055211273
+            }
+          }
+        }
+      },
+      "selected_epochs": {
+        "single_mae": 48,
+        "single_log": 19,
+        "reference_mae": 39
+      }
+    }
+  ],
+  "limitations": [
+    "No candidate fitting, model loading, or estimator prediction is performed.",
+    "CSV identities, recorded histories, scaler statistics and frozen source code are checked; actual runtime fit boundaries cannot be proved from saved metadata alone.",
+    "Transient fold artifact sizes are checked for internal consistency; deleted artifacts cannot be remeasured.",
+    "A refit artifact hash and declared contract are checked without deserializing or independently evaluating it.",
+    "Development OOF selection does not provide independent generalization evidence."
+  ],
+  "verifier_sha256": "7bd9954b267b790fcbb4ec2d9cd33d90124fede8b99bd184adc9cc99236cdaeb"
+}
